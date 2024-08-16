@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginSignUpPage from "./pages/LoginSignupPage";
+import LoginSignUpPage from "./pages/LoginSignUpPage";
 
 const router = createBrowserRouter([
   {
