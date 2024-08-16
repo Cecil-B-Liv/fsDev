@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginSignUpPage from "./pages/LoginSignUpPage";
+import LoginSignupPage from "./pages/LoginSignupPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginSignUpPage />,
+    element: <LoginSignupPage />,
   },
 ]);
 

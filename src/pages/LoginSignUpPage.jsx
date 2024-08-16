@@ -1,7 +1,7 @@
 import React from "react";
-import LoginComponent from "../components/loginComponent";
+import LoginComponent from "../components/LoginComponent";
 
-function LoginSignUpPage() {
+function LoginSignupPage() {
   return (
     <>
       <div>
@@ -11,4 +11,4 @@ function LoginSignUpPage() {
   );
 }
 
-export default LoginSignUpPage;
+export default LoginSignupPage;

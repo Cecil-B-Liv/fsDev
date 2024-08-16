@@ -1,3 +1,7 @@
+:root {
+  background-color: #eff3fb;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -5,7 +9,13 @@
   width: 25%;
   height: 500px;
   margin: 0 auto;
-  background-color: aliceblue;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust height as needed */
 }
 
 input {
@@ -24,7 +34,7 @@ input {
   margin-top: 10px;
   border: 1px solid;
   border-radius: 5px;
-  background-color: #5FB2FF;
+  background-color: #454bcf;
   color: white;
   font-weight: bold;
   font-size: 100%;
@@ -41,8 +51,10 @@ input {
 
 .option {
   width: 100%;
+  font-size: 100%;
+  font-weight: bold;
   border: 1px solid darkgray;
-  border-radius: 0;
+  border: 0;
   height: 50%;
 }
 
@@ -61,7 +73,6 @@ a {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 80%;
 }
-
 
 .line {
   border-bottom: 1px solid black;
@@ -108,7 +119,16 @@ a {
   right: 0px;
 }
 
-.user-input {
-  width: 90%;
-  height: 30%;
+.login-input,
+.password-input,
+.displayname-input,
+.telephone-input {
+  border: 0;
+}
+
+.login-input:focus,
+.password-input:focus,
+.displayname-input:focus,
+.telephone-input:focus {
+  outline: none;
 }
