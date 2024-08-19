@@ -5,7 +5,7 @@ function LoginSignupPage() {
   return (
     <>
       <div>
-        <LoginComponent></LoginComponent>
+        <LoginComponent/>
       </div>
     </>
   );
