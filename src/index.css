@@ -1,5 +1,11 @@
 @import 'bootstrap/scss/bootstrap.scss';
 
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
 :root {
   background-color: #eff3fb;
 }
