@@ -141,3 +141,280 @@ a {
 .telephone-input:focus {
   outline: none;
 }
+
+
+/* ////////////// */
+
+.light-mode {
+  background-color: #eff3f4;
+  border-color: #dbdbdb;
+  border-radius: 0px 16px 16px 0px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  height: 530px;
+  overflow: hidden;
+  width: 379px;
+}
+
+.light-mode .overlap {
+  height: 578px;
+  position: relative;
+  top: 13px;
+}
+
+.light-mode .frame {
+  height: 578px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 379px;
+}
+
+.light-mode .text-wrapper {
+  color: #262626;
+  font-family: "Roboto-Bold", Helvetica;
+  font-size: 24px;
+  font-weight: 700;
+  height: 32px;
+  left: 43px;
+  letter-spacing: 0;
+  line-height: 30px;
+  position: absolute;
+  top: -1px;
+  white-space: nowrap;
+  width: 146px;
+}
+
+.light-mode .div {
+  height: 96px;
+  left: 0;
+  position: absolute;
+  top: 55px;
+  width: 379px;
+}
+
+.light-mode .text-wrapper-2 {
+  color: #262626;
+  font-family: "Roboto-Bold", Helvetica;
+  font-size: 16px;
+  font-weight: 700;
+  height: 21px;
+  left: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 14px;
+  white-space: nowrap;
+  width: 72px;
+}
+
+.light-mode .frame-2 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 36px;
+  width: 379px;
+}
+
+.light-mode .overlap-group-wrapper {
+  background-color: #fafafa;
+  border-radius: 22px;
+  height: 44px;
+  left: 24px;
+  overflow: hidden;
+  position: absolute;
+  top: 8px;
+  width: 44px;
+}
+
+.light-mode .overlap-group {
+  border: 1px solid;
+  border-color: #00000019;
+  border-radius: 22px;
+  height: 44px;
+  position: relative;
+}
+
+.light-mode .avatar {
+  height: 43px;
+  left: -1px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 44px;
+}
+
+.light-mode .ellipse {
+  height: 12px;
+  left: 327px;
+  position: absolute;
+  top: 25px;
+  width: 12px;
+}
+
+.light-mode .p {
+  color: transparent;
+  font-family: "Roboto-Bold", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  left: 77px;
+  letter-spacing: 0;
+  line-height: 18px;
+  position: absolute;
+  top: 8px;
+  width: 232px;
+}
+
+.light-mode .span {
+  color: #000000;
+  font-weight: 700;
+}
+
+.light-mode .text-wrapper-3 {
+  color: #000000;
+  font-family: "Roboto-Regular", Helvetica;
+}
+
+.light-mode .text-wrapper-4 {
+  color: #808080;
+  font-family: "Roboto-Regular", Helvetica;
+}
+
+.light-mode .text-wrapper-5 {
+  color: #3180c9;
+  font-family: "Roboto-SemiBold", Helvetica;
+  font-size: 14px;
+  font-weight: 600;
+  height: 14px;
+  left: 213px;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  text-align: right;
+  top: 2px;
+  white-space: nowrap;
+  width: 148px;
+}
+
+.light-mode .frame-3 {
+  height: 417px;
+  left: 0;
+  position: absolute;
+  top: 161px;
+  width: 379px;
+}
+
+.light-mode .frame-4 {
+  background-color: #dbdbdb;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 379px;
+}
+
+.light-mode .text-wrapper-6 {
+  color: #262626;
+  font-family: "Roboto-Bold", Helvetica;
+  font-size: 16px;
+  font-weight: 700;
+  height: 21px;
+  left: 24px;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: absolute;
+  top: 17px;
+  white-space: nowrap;
+  width: 48px;
+}
+
+.light-mode .frame-5 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 159px;
+  width: 379px;
+}
+
+.light-mode .img {
+  height: 44px;
+  left: 23px;
+  object-fit: cover;
+  position: absolute;
+  top: 8px;
+  width: 44px;
+}
+
+.light-mode .text-wrapper-7 {
+  color: #8e8e8e;
+  font-family: "Roboto-Regular", Helvetica;
+}
+
+.light-mode .frame-6 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 219px;
+  width: 379px;
+}
+
+.light-mode .images {
+  height: 44px;
+  left: 23px;
+  position: absolute;
+  top: 8px;
+  width: 44px;
+}
+
+.light-mode .ellipse-2 {
+  height: 12px;
+  left: 327px;
+  position: absolute;
+  top: 23px;
+  width: 12px;
+}
+
+.light-mode .frame-7 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 99px;
+  width: 379px;
+}
+
+.light-mode .firefly-tagged-you {
+  color: transparent;
+  font-family: "Roboto-Bold", Helvetica;
+  font-size: 14px;
+  font-weight: 400;
+  left: 77px;
+  letter-spacing: 0;
+  line-height: 18px;
+  position: absolute;
+  top: 11px;
+  width: 183px;
+}
+
+.light-mode .frame-8 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 39px;
+  width: 379px;
+}
+
+.light-mode .frame-9 {
+  height: 60px;
+  left: 0;
+  position: absolute;
+  top: 279px;
+  width: 379px;
+}
+
+.light-mode .feather-icons-check {
+  height: 24px !important;
+  left: 12px !important;
+  position: absolute !important;
+  top: 4px !important;
+  width: 24px !important;
+}
