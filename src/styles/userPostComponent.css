@@ -1,0 +1,17 @@
+.postCard {
+    height: fit-content;
+    width: 70%;
+}
+
+.userPostHeader>a {
+    color: black;
+    text-decoration: none;
+}
+
+.postText {
+    white-space: pre-wrap;
+}
+
+.postText>Button {
+    text-decoration: none;
+}

@@ -1,0 +1,9 @@
+.sideNav {
+    /* border: .5px solid black; */
+    /* For development */
+    position: fixed;
+    top: 100px;
+    left: 12px;
+    margin-top: 6px;
+    font-size: 24px;
+}

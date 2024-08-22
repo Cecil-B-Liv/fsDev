@@ -1,0 +1,9 @@
+.headerNav {
+    /* border: .5px solid black; */
+    /* For development */
+    z-index: 100;
+}
+
+#headerDivider {
+    padding-bottom: 73px;
+}
