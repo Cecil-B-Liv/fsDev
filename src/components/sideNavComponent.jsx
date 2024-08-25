@@ -12,7 +12,8 @@ export default function SideNav() {
                         <Nav.Link href="#home">📰 Feed</Nav.Link>
 
                         <Nav.Link href="#friends">🙂 Friend</Nav.Link>
-                        <Nav.Link href="#groups">🫂 Group</Nav.Link>
+                        <Nav.Link href="../pages/UserGroupPage">🫂 Group</Nav.Link>
+                        <Nav.Link href="#discovery"> Discovery </Nav.Link>
                         <Nav.Link href="#new_group">➕ Create new group</Nav.Link>
                     </Nav>
                 </Navbar>
