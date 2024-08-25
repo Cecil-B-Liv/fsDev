@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import "../styles/profileCard.css";
 
-const ProfileCard = ({ username, location, imageSrc }) => {
+const ProfileCard = ({ username, location, imageSrc, mode }) => {
   const [status, setStatus] = useState(null);
 
   const handleAccept = () => {
@@ -24,7 +24,7 @@ const ProfileCard = ({ username, location, imageSrc }) => {
           <p>{location}</p>
         </div>
         <div className="profile-actions">
-          {status === 'accepted' ? (
+          {mode === 'view' || status === 'accepted' ? (
             <button className="btn btn-primary">Check Profile</button>
           ) : status === 'denied' ? (
             <p>Denied</p>
