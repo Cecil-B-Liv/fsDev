@@ -5,7 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import LoginSignupPage from "./pages/LoginSignupPage";
 import HomePage from "./pages/Homepage";
-import UserGroupPage from "./pages/UserGroupPage";
+// import UserGroupPage from "./pages/UserGroupPage";
 
 const router = createBrowserRouter([
   /* Commented out by Tung for testing */
@@ -18,10 +18,11 @@ const router = createBrowserRouter([
     element: <HomePage />,
 
   },
-  {
-    path: "/yourGroups",
-    element: <UserGroupPage />,
-  }
+  /* Commented out by Tung for testing */
+  // {
+  //   path: "/yourGroups",
+  //   element: <UserGroupPage />,
+  // }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
