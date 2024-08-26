@@ -1,0 +1,34 @@
+.friend-request-card {
+    background-color: #f0f4f8; /* Light grey-blue background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Padding inside the card */
+    width: 60%; /* Set a specific width */
+    margin: 20px auto; /* Center the card horizontally */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .header input {
+    margin-right: 10px;
+  }
+  
+  .header h5 {
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .content p {
+    color: #007bff; /* Blue color for the text */
+    margin-bottom: 20px;
+  }
+  
+  /* Ensure profile cards are styled appropriately */
+  .profile-card {
+    margin-bottom: 10px;
+  }
+  

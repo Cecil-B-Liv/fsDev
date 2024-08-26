@@ -1,0 +1,41 @@
+.group-card {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .group-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+  }
+  
+  .group-card p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 1em;
+  }
+  
+  .group-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .join-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  .join-button:hover {
+    background-color: #0056b3;
+  }
+  
