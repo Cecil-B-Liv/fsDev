@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 
-/* READ */
+/* READ PERMISSION */
 export const getUser = async (req, res) => {
     try {
         const { id } = req.params;

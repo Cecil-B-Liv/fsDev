@@ -39,7 +39,7 @@ const UserSchema = new mongoose.Schema(
             type: Array,
             default: []
         },
-        groupSelf:
+        groupList:
         {
             type: Array,
             default: []
@@ -49,7 +49,7 @@ const UserSchema = new mongoose.Schema(
             type: String,
             default: ""
         },
-        role:
+        userRole:
         {
             type: String,
             enum: ["user", "groupAdmin", "siteAdmin"],
