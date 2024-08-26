@@ -1,46 +1,21 @@
-/* Wrapper to center the card */
 .card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-  }
-  
-  /* Profile card styling */
-  .profile-card {
-    display: flex;
-    align-items: center;
-    background-color: #e0e0e0;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    width: 100%; 
-  }
-  
-  .profile-image img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
-  
-  .profile-info {
-    flex-grow: 1;
-    padding-left: 10px;
-  }
-  
-  .profile-info h5 {
-    margin: 0;
-    font-weight: bold;
-  }
-  
-  .profile-info p {
-    margin: 0;
-    color: grey;
-  }
-  
-  .profile-actions {
-    display: flex;
-    gap: 10px;
-  }
- 
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px; /* Ensure consistent spacing between cards */
+}
+
+.profile-card {
+  width: 100%; 
+  border-radius: 5px; /* Rounded corners for the card */
+}
+
+.profile-info {
+  flex-grow: 1;
+  padding-left: 10px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+}

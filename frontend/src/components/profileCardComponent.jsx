@@ -1,45 +1,50 @@
 import { useState } from "react";
-import "../styles/profileCardComponent.css";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import "../styles/ProfileCardComponent.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfileCard = ({ username, location, imageSrc, mode }) => {
   const [status, setStatus] = useState(null);
 
   const handleAccept = () => {
-    setStatus('accepted');
+    setStatus("accepted");
   };
 
   const handleDeny = () => {
-    setStatus('denied');
+    setStatus("denied");
   };
 
   return (
-    <div className=" card-container">
-      <div className="profile-card">
-        <div className="profile-image">
-          <img src={imageSrc} alt={`${username}`} />
-        </div>
-        <div className="profile-info">
-          <h5>{username}</h5>
-          <p>{location}</p>
-        </div>
-        <div className="profile-actions">
-          {mode === 'view' || status === 'accepted' ? (
-            <button className="btn btn-primary">Check Profile</button>
-          ) : status === 'denied' ? (
-            <p>Denied</p>
-          ) : (
-            <>
-              <button className="btn btn-primary" onClick={handleAccept}>
-                Accept
-              </button>
-              <button className="btn btn-secondary" onClick={handleDeny}>
-                Deny
-              </button>
-            </>
-          )}
-        </div>
-      </div>
+    <div className="card-container">
+      <Card className="profile-card bg-light">
+        <Card.Body className="d-flex align-items-center">
+          <Image src={imageSrc} roundedCircle width={50} height={50} />
+          <div className="profile-info ms-3">
+            <Card.Title as="h5" className="mb-1">
+              {username}
+            </Card.Title>
+            <Card.Text className="text-muted mb-0">{location}</Card.Text>
+          </div>
+          <div className="profile-actions ms-auto">
+            {mode === "view" || status === "accepted" ? (
+              <Button variant="primary">Check Profile</Button>
+            ) : status === "denied" ? (
+              <p>Denied</p>
+            ) : (
+              <>
+                <Button variant="primary" onClick={handleAccept}>
+                  Accept
+                </Button>
+                <Button variant="secondary" onClick={handleDeny}>
+                  Deny
+                </Button>
+              </>
+            )}
+          </div>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

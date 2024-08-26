@@ -1,7 +1,9 @@
 import React from "react";
-import ProfileCard from "./ProfileCardComponent";
-import "../styles/FriendRequestCardComponent.css";
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import ProfileCard from "./profileCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/FriendRequestCardComponent.css"; // Import any necessary custom styles
 
 const FriendList = () => {
   const profiles = [
@@ -20,13 +22,11 @@ const FriendList = () => {
   const numFriends = profiles.length;
 
   return (
-    <div className="container marginS">
-      <div className="card bg">
-        <h5 className="card-header">Friends List</h5>
-        <div className="card-body">
-          <div className="card-title">
-            You have {numFriends} friend(s)
-          </div>
+    <Container className="marginS">
+      <Card className="bg">
+        <Card.Header as="h5">Friends List</Card.Header>
+        <Card.Body>
+          <Card.Title>You have {numFriends} friend(s)</Card.Title>
           {profiles.map((profile, index) => (
             <ProfileCard
               key={index}
@@ -36,9 +36,9 @@ const FriendList = () => {
               mode="view"
             />
           ))}
-        </div>
-      </div>
-    </div>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 };
 
