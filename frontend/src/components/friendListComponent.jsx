@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileCard from "./ProfileCard";
-import "../styles/FriendRequestCardComponent"; 
+import ProfileCard from "./profileCardComponent.jsx";
+import "../styles/FriendRequestCardComponent.css"; 
 
 const FriendList = () => {
   const profiles = [
