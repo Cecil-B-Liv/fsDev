@@ -1,6 +1,5 @@
-import React from "react";
-import ProfileCard from "./profileCard";
-import "../styles/FriendRequestCard.css";
+import ProfileCard from "./profileCardComponent";
+import "../styles/friendRequestCardComponent.css";
 
 const FriendRequestCard = () => {
   const profiles = [

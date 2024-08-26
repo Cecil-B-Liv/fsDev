@@ -1,5 +1,4 @@
-import React from 'react';
-import '../styles/groupCard.css';
+import '../styles/groupCardComponent.css';
 import { Link } from 'react-router-dom';
 
 const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {

@@ -1,6 +1,5 @@
 import { useState } from "react";
-import React from "react";
-import "../styles/profileCard.css";
+import "../styles/profileCardComponent.css";
 
 const ProfileCard = ({ username, location, imageSrc, mode }) => {
   const [status, setStatus] = useState(null);

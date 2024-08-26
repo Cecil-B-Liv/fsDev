@@ -1,5 +1,8 @@
-import React from 'react';
-import { Card, ListGroup, ListGroupItem, Badge } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import ListGroupItem from 'react-bootstrap/ListGroupItem';
+
 
 const NotificationComponent = () => {
     const notifications = [
