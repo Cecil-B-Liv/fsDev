@@ -20,7 +20,7 @@ const FriendList = () => {
   const numFriends = profiles.length;
 
   return (
-    <div className="friend-list-card">
+    <div className="friend-request-card">
       <div className="header">
         <h5>Friend List</h5>
       </div>
