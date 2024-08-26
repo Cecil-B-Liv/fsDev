@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 // import { Link } from "react-router-dom";
 export default function LoginComponent() {
   const [focusedButton, setFocusedButton] = useState(0);
@@ -15,7 +16,11 @@ export default function LoginComponent() {
           placeholder="Email address or phone number"
         ></input>
         <input className="password-input" placeholder="Password"></input>
-        <button className="login-btn">Log in</button>
+        <button className="login-btn">
+          <Link to="/HomePage" style={{ color: 'inherit', textDecoration: 'none', display: 'block', width: '100%', height: '100%' }}>
+            Log in
+          </Link>
+        </button>
         <a href="" className="forget-password">
           Forgotten password?
         </a>
@@ -41,10 +46,18 @@ export default function LoginComponent() {
     );
   }
 
+  // Style variables
+  const containerStyle = {
+    border: "2px solid #454BCF",
+    borderRadius: "10px",
+    padding: "20px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+  };
+  
   return (
     <>
       <div className="center-container">
-        <div className="login-container">
+        <div className="login-container" style={containerStyle}>
           {focusedButton === 0 ? (
             <h1 style={{ fontFamily: "arial" }}>Welcome Back</h1>
           ) : (
@@ -61,7 +74,7 @@ export default function LoginComponent() {
               }}
               onFocus={() => handleFocus(0)}
             >
-              Log in
+              Login
             </button>
             <button
               className="option"

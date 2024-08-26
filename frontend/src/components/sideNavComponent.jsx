@@ -9,10 +9,9 @@ export default function SideNav() {
             <Container fluid>
                 <Navbar expand="lg" className='my-3'>
                     <Nav className="sideNav flex-column">
-                        <Nav.Link href="#home">📰 Feed</Nav.Link>
-
+                        <Nav.Link href="/HomePage/">📰 Feed</Nav.Link>
                         <Nav.Link href="#friends">🙂 Friend</Nav.Link>
-                        <Nav.Link href="../pages/UserGroupPage">🫂 Group</Nav.Link>
+                        <Nav.Link href="/HomePage/Groups">🫂 Group</Nav.Link>
                         <Nav.Link href="#discovery">🔍 Discovery</Nav.Link>
                         <Nav.Link href="#new_group">➕ Create new group</Nav.Link>
                     </Nav>
