@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/profileCardComponent.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfileCard = ({ username, location, imageSrc, mode }) => {
   const [status, setStatus] = useState(null);
@@ -13,7 +14,7 @@ const ProfileCard = ({ username, location, imageSrc, mode }) => {
   };
 
   return (
-    <div className="card-container">
+    <div className=" card-container">
       <div className="profile-card">
         <div className="profile-image">
           <img src={imageSrc} alt={`${username}`} />

@@ -1,6 +1,6 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/createGroupComponent.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/createGroupComponent.css";
 
 const CreateGroupComponent = () => {
   return (
@@ -8,12 +8,20 @@ const CreateGroupComponent = () => {
       <h3 className="text-center my-4">CREATE A NEW GROUP</h3>
 
       <div className="mb-3">
-        <label className="form-label"><strong>Group name</strong></label>
-        <input type="text" className="form-control" placeholder="Enter group name..." />
+        <label className="form-label">
+          <strong>Group name</strong>
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter group name..."
+        />
       </div>
 
       <div className="mb-3">
-        <label className="form-label"><strong>Group's description</strong></label>
+        <label className="form-label">
+          <strong>Group's description</strong>
+        </label>
         <textarea
           className="form-control auto-resize"
           rows="3"
@@ -22,15 +30,23 @@ const CreateGroupComponent = () => {
       </div>
 
       <div className="text-center my-4">
-        <label className="form-label"><strong>Choose an avatar for your group</strong></label>
+        <label className="form-label">
+          <strong>Choose an avatar for your group</strong>
+        </label>
         <div className="avatar-container my-3">
-          <img src="path_to_avatar_image" alt="Group Avatar" className="rounded-circle avatar-image" />
+          <img
+            src="path_to_avatar_image"
+            alt="Group Avatar"
+            className="rounded-circle avatar-image"
+          />
         </div>
         <button className="btn btn-secondary">Choose from library</button>
       </div>
 
       <div className="mb-3">
-        <label className="form-label"><strong>Reason to create the group</strong></label>
+        <label className="form-label">
+          <strong>Reason to create the group</strong>
+        </label>
         <textarea
           className="form-control auto-resize"
           rows="3"

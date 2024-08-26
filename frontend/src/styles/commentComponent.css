@@ -1,0 +1,22 @@
+.comment-container {
+    background-color: #808080; 
+    width: 70%;
+  }
+  
+  .comment-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .comment-divider {
+    border-top: 1px solid #ffffff;
+  }
+  
+  .text-muted {
+    color: #d3d3d3; 
+  }
+  

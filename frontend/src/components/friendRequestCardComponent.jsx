@@ -1,6 +1,6 @@
-import ProfileCard from "./profileCardComponent";
+import ProfileCard from "./ProfileCardComponent";
 import "../styles/friendRequestCardComponent.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 const FriendRequestCard = () => {
   const profiles = [
     {
@@ -16,12 +16,11 @@ const FriendRequestCard = () => {
   const numRequests = profiles.length;
 
   return (
-    <div className="friend-request-card">
-      <div className="header">
-        <h5>Friend request</h5>
-      </div>
-      <div className="content">
-        <p>You have {numRequests} friend requests</p>
+    <div className='container marginS'> 
+    <div className="card bg">
+      <h5 className="card-header">Friend request</h5>
+      <div className="card-body">
+        <div className="card-title">You have {numRequests} friend request(s)</div>
         {profiles.map((profile, index) => (
           <ProfileCard
             key={index}
@@ -31,6 +30,7 @@ const FriendRequestCard = () => {
           />
         ))}
       </div>
+    </div>
     </div>
   );
 };
