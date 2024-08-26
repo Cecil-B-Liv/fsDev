@@ -1,0 +1,26 @@
+.create-group-container {
+    background-color: #f0f4f8;
+    padding: 20px;
+    border-radius: 10px;
+    width: 60%;
+  }
+  
+  .avatar-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+  }
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  textarea.form-control {
+    resize: none;
+  }
+
+ 
+  
+  
