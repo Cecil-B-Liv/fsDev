@@ -11,11 +11,19 @@ import SideNavComponent from "../components/sideNavComponent";
 export default function HomePage() {
   return (
     <>
-      <HeaderComponent />
-      <SideNavComponent />
+      <Row style={{ backgroundColor: "lightblue" }}>
+        <HeaderComponent />
+      </Row>
       <Row>
-        <Col>
-          <Outlet/>
+        <Col xs={3} style={{ backgroundColor: "lightgreen" }}>
+          <SideNavComponent />
+        </Col>
+        <Col xs={9} style={{ backgroundColor: "lightyellow" }}>
+          <Row>
+            <Col style={{ backgroundColor: "lightcoral" }}>
+              <Outlet />
+            </Col>
+          </Row>
         </Col>
       </Row>
     </>
