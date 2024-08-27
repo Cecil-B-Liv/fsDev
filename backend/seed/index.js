@@ -14,7 +14,7 @@ const userIds = [
 export const users = [
     {
         _id: userIds[0],
-        userName: "test",
+        username: "test",
         displayName: "me",
         email: "aaaaaaa@gmail.com",
         telephone: "0987654321",
@@ -29,7 +29,7 @@ export const users = [
     },
     {
         _id: userIds[1],
-        userName: "Steve",
+        username: "Steve",
         displayName: "Ralph",
         email: "thataaa@gmail.com",
         telephone: "0987654321",
@@ -44,7 +44,7 @@ export const users = [
     },
     {
         _id: userIds[2],
-        userName: "Some",
+        username: "Some",
         displayName: "Guy",
         email: "someguy@gmail.com",
         telephone: "0987654321",
@@ -59,7 +59,7 @@ export const users = [
     },
     {
         _id: userIds[3],
-        userName: "Whatcha",
+        username: "Whatcha",
         displayName: "Doing",
         email: "whatchadoing@gmail.com",
         telephone: "0987654321",
@@ -74,7 +74,7 @@ export const users = [
     },
     {
         _id: userIds[4],
-        userName: "Jane",
+        username: "Jane",
         displayName: "Doe",
         email: "janedoe@gmail.com",
         telephone: "0987654321",
@@ -89,7 +89,7 @@ export const users = [
     },
     {
         _id: userIds[5],
-        userName: "Harvey",
+        username: "Harvey",
         displayName: "Dunn",
         email: "harveydunn@gmail.com",
         telephone: "0987654321",
@@ -104,7 +104,7 @@ export const users = [
     },
     {
         _id: userIds[6],
-        userName: "Carly",
+        username: "Carly",
         displayName: "Vowel",
         email: "carlyvowel@gmail.com",
         telephone: "0987654321",
@@ -119,7 +119,7 @@ export const users = [
     },
     {
         _id: userIds[7],
-        userName: "Jessica",
+        username: "Jessica",
         displayName: "Dunn",
         email: "jessicadunn@gmail.com",
         telephone: "0987654321",
