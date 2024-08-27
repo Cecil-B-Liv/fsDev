@@ -8,15 +8,20 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import http from "http";
+import cookieparser from 'cookie-parser';   // Dont know if will use
 
+// Import routes and controllers
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
+import groupRoutes from "./routes/groups.js";
+import notificationRoutes from "./routes/notifications.js";
+
 import { register } from './controllers/auth.js';
 import { createPost } from './controllers/posts.js';
 import { verifyToken } from './controllers/auth.js';
 
-import cookieparser from 'cookie-parser';
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url);
@@ -30,8 +35,9 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
-app.use(cookieparser());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+
+app.use(cookieparser());
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
@@ -52,6 +58,8 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
+app.use("/groups", groupRoutes);
+app.use("/notifications", notificationRoutes);
 
 /* MONGODB CONNECTION */
 const port = process.env.PORT || 6001;
@@ -63,18 +71,35 @@ mongoose.connect(URL, {
     .then(() => {
         console.log(`Connected to MongoDB`);
         app.listen(port, () => {
-            console.log(`Server is running at http://localhost:${port}`);
+            console.log(`Server is running at http://localhost:${port}`);   // Start server
         })
     })
     .catch((error) => {
         console.log(`Error connecting to MongoDB: ${error.message}`);
     });
 
+/* NOTIFICATION SYSTEM (Example with Socket.IO) */
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000", // Adjust origin as needed
+        methods: ["GET", "POST"],
+    },
+});
 
-// Middleware
-// app.use(express.urlencoded({ extended: true }));
+io.on("connection", (socket) => {
+    console.log(`User connected: ${socket.id}`);
 
-// Hello World
-app.get('/', (req, res) => {
-    res.status(500).send('Hello World!');
-})
+    // Handle socket events for real-time notifications
+    socket.on("sendNotification", (data) => {
+        // ... logic to send notification to specific user or group
+    });
+
+    // ... other socket event handlers
+});
+
+/* ERROR HANDLING MIDDLEWARE */
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "Something went wrong!" });
+});
