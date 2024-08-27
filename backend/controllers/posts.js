@@ -10,7 +10,7 @@ export const getPosts = async (req, res) => {
         const user = await User.findById(userId);
         const newPost = new Post({
             userId,
-            postOwnerName: user.userName,
+            postOwnerName: user.username,
             postOwnerDisplayName: user.displayName,
             ownerPicturePath: user.picturePath,
             postVisibility,
@@ -36,7 +36,7 @@ export const getPosts = async (req, res) => {
 //         const newComment = new Comment({
 //             userId,
 //             postId,
-//             commentOwnerName: user.userName,
+//             commentOwnerName: user.username,
 //             ownerPicturePath: user.picturePath,
 //             commentDescription,
 //         })
