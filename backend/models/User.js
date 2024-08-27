@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
     {
-        userName:
+        username:
         {
             type: String,
             required: true
@@ -30,15 +30,15 @@ const UserSchema = new mongoose.Schema(
             min: 5,
         },
         friendList:
-        {
-            type: Array,
-            default: []
-        },
+            [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            }],
         groupList:
-        {
-            type: Array,
-            default: []
-        },
+            [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Group",
+            }],
         picturePath:
         {
             type: String,
@@ -50,6 +50,21 @@ const UserSchema = new mongoose.Schema(
             enum: ["user", "groupAdmin", "siteAdmin"],
             default: "user"
         },
+        friendRequests:
+            [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
+            }],
+        groupRequests:
+            [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Group",
+            }],
+        isSuspended:
+        {
+            type: Boolean,
+            default: false
+        }
     },
     { timestamps: true }
 );

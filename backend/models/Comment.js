@@ -1,21 +1,25 @@
+// Comment.js
 import mongoose from "mongoose";
 
-const commentSchema = mongoose.Schema(
+const commentSchema = new mongoose.Schema(
     {
-        userId: {
-            type: String,
-            required: true,
+        postId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Post',
+            required: true
         },
-        postId: {
-            type: String,
-            required: true,
+        userId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
         },
-        commentOwnerName: {
+        commentMessage:
+        {
             type: String,
-            required: true,
+            required: true
         },
-        ownerPicturePath: String,
-        commentDescription: String,
     },
     { timestamps: true }
 );

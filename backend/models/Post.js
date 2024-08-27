@@ -1,35 +1,48 @@
 import mongoose from "mongoose";
 
+const reactionSchema = new mongoose.Schema({
+    userId:
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    type:
+    {
+        type: String,
+        enum: ["like", "love", "haha", "angry"],
+        required: true
+    }
+});
+
 const postSchema = mongoose.Schema(
     {
-        userId: {
-            type: String,
+        userId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
             required: true,
         },
-        postOwnerName: {
-            type: String,
-            required: true,
+        groudId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Group',
+
         },
-        postOwnerDisplayName: {
+        postVisibility:
+        {
             type: String,
-            required: true,
-        },
-        ownerPicturePath: String,
-        postVisibility: {
-            type: String,
-            enum: ["public", "friends"],
+            enum: ["public", "friends", "group"],
             default: "public",
         },
         postDescription: String,
         postPicturePath: String,
-        postReaction: {
-            type: Map,
-            of: Boolean,
-        },
-        postComments: {
-            type: Array,
-            default: [],
-        },
+        postReaction: [reactionSchema],
+        postComments:
+            [{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Comment'
+            }],
     },
     { timestamps: true }
 );
