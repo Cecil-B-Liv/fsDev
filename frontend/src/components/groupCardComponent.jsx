@@ -10,10 +10,10 @@ const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {
         src="https://placehold.co/50x50" //{groupAvatar} 
         alt={`${groupName} Avatar`} 
         className="rounded-circle mx-auto mt-3" 
-        style={{ width: '80px', height: '80px' }}  // Reduced size of the image
+        style={{ width: '80px', height: '80px' }}
       />
       <Card.Body style={{ flex: '1', display: 'flex', flexDirection: 'column', textAlign: 'center', overflow: 'hidden' }}>
-        <div style={{ marginTop: '0.5rem' }}>  {/* Reduced margin to move the name closer to the avatar */}
+        <div style={{ marginTop: '0.5rem' }}>
           <Card.Title>{groupName}</Card.Title>
         </div>   
           <Card.Text className="text-muted" style={{ fontSize: '0.875rem', textAlign: 'center' }}>

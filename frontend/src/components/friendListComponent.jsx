@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import ProfileCard from "./profileCardComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/FriendRequestCardComponent.css"; // Import any necessary custom styles
+import "../styles/FriendRequestCardComponent.css";
 
 const FriendList = () => {
   const profiles = [

@@ -48,7 +48,7 @@ const ProfileComponent = () => {
 
                         <p>Bangboos are cure as shit<br />Cats are no match fr fr...</p>
                         <img
-                            src="image-url" // Replace with actual image URL
+                            src="image-url"
                             alt="Post"
                             className="img-fluid rounded"
                         />

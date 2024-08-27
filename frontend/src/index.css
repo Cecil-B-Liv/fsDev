@@ -24,7 +24,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* Adjust height as needed */
 }
 
 input {
@@ -87,14 +86,12 @@ a {
   border-bottom: 1px solid black;
   width: 80%;
   margin: 20px;
-  /* Adjust width as needed */
 }
 
 .line2 {
   border-bottom: 1px solid black;
   width: 100%;
   margin: 20px;
-  /* Adjust width as needed */
 }
 
 .new-account-btn {
