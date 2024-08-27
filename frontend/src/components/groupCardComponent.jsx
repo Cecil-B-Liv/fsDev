@@ -21,7 +21,7 @@ const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {
           </Card.Text>
       </Card.Body>
       <Card.Footer className="text-center">
-        <Link to={`/group/${groupId}`} className="btn btn-primary">Go to Group</Link>
+        <Link to={`/HomePage/Group/`} className="btn btn-primary">Go to Group</Link> { /* ${groupId} */}
       </Card.Footer>
     </Card>
   );

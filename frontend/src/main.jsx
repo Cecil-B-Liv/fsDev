@@ -10,14 +10,14 @@ import NotFound from "./pages/NotFound";
 import UserGroupsComponent from "./components/userGroupsComponent";
 import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
-// import UserGroupPage from "./pages/UserGroupPage";
+import GroupWall from "./components/groupWallComponent";
 
 // Data test add by NA
 const groups = [
   {
     groupId: 1,
     groupName: "Group 1",
-    groupDescription: "Description 1",
+    groupDescription: "Demo Group, This group link is active",
   },
   {
     groupId: 2,
@@ -63,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "Groups",
         element: <UserGroupsComponent groups={groups} />,
+      },
+      {
+        path :"Group",
+        element: <GroupWall/>
       },
       {
         path: "Friends",
