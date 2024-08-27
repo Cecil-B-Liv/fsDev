@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import UserGroupsComponent from "./components/userGroupsComponent";
 import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
-import HomePageTest from "./NA_Test/HomepageTest";
 // import UserGroupPage from "./pages/UserGroupPage";
 
 // Data test add by NA
@@ -75,28 +74,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/HomePageTest",
-    element: <HomePageTest />,
-    children: [
-      {
-        index: true,
-        element: <Feed />,
-      },
-      {
-        path: "Groups",
-        element: <UserGroupsComponent groups={groups} />,
-      },
-      {
-        path: "Friends",
-        element: <FriendList />,
-      },
-      {
-        path: "CreateGroup",
-        element: <CreateGroupComponent />,
-      },
-    ],
-  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
