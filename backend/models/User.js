@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
     {
-        username:
+        userName:
         {
             type: String,
             required: true
@@ -28,11 +28,6 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: true,
             min: 5,
-        },
-        postList:
-        {
-            type: Array,
-            default: []
         },
         friendList:
         {

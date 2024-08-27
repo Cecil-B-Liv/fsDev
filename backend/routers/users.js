@@ -15,13 +15,13 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-/* READ PERMISSION */
+/* READ */
 router.get("/:id", verifyToken, getUser);
 router.get("/:id/friends", verifyToken, getUserFriendList);
 router.get("/:id/groups", verifyToken, getUserGroupList);
 router.get("/:id/friendRequests", verifyToken, getFriendRequests);
 
-/* UPDATE PERMISSION */
+/* UPDATE */
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 router.patch("/:id/:groupId", verifyToken, addUserGroup);
 router.patch("/:id/acceptFriendRequest/:friendId", verifyToken, acceptFriendRequest);

@@ -6,7 +6,7 @@ import User from '../models/userModel.js';
 export const register = async (req, res) => {
     try {
         const {
-            username,
+            userName,
             displayName,
             email,
             telephone,
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
 
         // Save new registered user
         const newUser = new User({
-            username,
+            userName,
             displayName,
             email,
             telephone,
