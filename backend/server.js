@@ -16,7 +16,6 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
 import groupRoutes from "./routes/groups.js";
-import upload from "./middlewares/upload.js";
 import { isAuthenticated } from './middlewares/auth.js';
 import notificationRoutes from "./routes/notifications.js";
 
