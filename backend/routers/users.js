@@ -14,6 +14,7 @@ import {
     getUserGroups,
 } from "../controllers/users.js";
 import { isAuthenticated, isSiteAdmin } from "../middlewares/auth.js";
+import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
@@ -28,7 +29,10 @@ router.get("/users/:userId/groups", isAuthenticated, getUserGroups);  // Get use
 router.get('/search', isAuthenticated, searchUsers);  // Search user
 
 /* UPDATE */
-router.patch("/users/:userId", isAuthenticated, updateUserProfile);
+router.patch("/users/:userId",
+    isAuthenticated,
+    upload.single("picture"),   // add upload middleware
+    updateUserProfile);
 router.patch('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
 router.patch('/friendRequests/:requestId/decline', isAuthenticated, declineFriendRequest);    // Decline a friend request
 
