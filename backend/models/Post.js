@@ -15,6 +15,7 @@ const reactionSchema = new mongoose.Schema({
     }
 });
 
+// add post history description[]
 const postSchema = mongoose.Schema(
     {
         userId:
@@ -23,7 +24,7 @@ const postSchema = mongoose.Schema(
             ref: 'User',
             required: true,
         },
-        groudId:
+        groupId:
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Group',

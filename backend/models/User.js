@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
+
+    // add id adminOfGrp[]
+    // add string bio 
     {
         username:
         {
