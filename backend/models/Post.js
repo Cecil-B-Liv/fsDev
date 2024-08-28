@@ -15,7 +15,7 @@ const reactionSchema = new mongoose.Schema({
     }
 });
 
-// add post history description[]
+// add post history description[] (not a priority)
 const postSchema = mongoose.Schema(
     {
         userId:

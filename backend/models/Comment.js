@@ -1,7 +1,7 @@
 // Comment.js
 import mongoose from "mongoose";
 
-// add string comment history[]
+// add string comment history[] (not a priority rn)
 const commentSchema = new mongoose.Schema(
     {
         postId:
