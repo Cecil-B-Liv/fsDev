@@ -42,7 +42,7 @@ export default function GroupHeader() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="#"
+                to="/HomePage/Group/GroupFeeds"
                 onClick={() => handleTabClick('posts')}
                 className={activeTab === 'posts' ? 'active text-white' : 'text-dark'}
                 style={{ 
@@ -58,7 +58,7 @@ export default function GroupHeader() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="#"
+                to="/HomePage/Group/GroupMemebers"
                 onClick={() => handleTabClick('members')}
                 className={activeTab === 'members' ? 'active text-white' : 'text-dark'}
                 style={{ 

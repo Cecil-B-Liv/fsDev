@@ -66,7 +66,17 @@ const router = createBrowserRouter([
       },
       {
         path :"Group",
-        element: <GroupWall/>
+        element: <GroupWall/>,
+        children: [
+          {
+            path: "GroupFeeds",
+            element: <Feed/>,
+          },
+          {
+            path: "GroupMemebers",
+            element: <FriendList/>
+          }
+        ]
       },
       {
         path: "Friends",
