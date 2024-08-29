@@ -11,6 +11,7 @@ export const register = async (req, res) => {
             telephone,
             password,
             picturePath,
+            userBio,
         } = req.body;
 
         // Check if user with the same email or username already exists
@@ -33,6 +34,7 @@ export const register = async (req, res) => {
             telephone,
             password: passwordHash, // Save encrypted password
             picturePath,
+            userBio,
         });
         const savedUser = await newUser.save();
         // Respond with a success message and the saved user data
