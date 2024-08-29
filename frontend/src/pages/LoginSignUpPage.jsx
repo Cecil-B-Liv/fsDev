@@ -6,8 +6,8 @@ function LoginSignupPage() {
   return (
     <>
       <div>
-        <LoginComponent/>
-        <NotificationComponent/>
+        <LoginComponent />
+        {/* <NotificationComponent/> */}
       </div>
     </>
   );

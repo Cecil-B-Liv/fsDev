@@ -11,6 +11,8 @@ import UserGroupsComponent from "./components/userGroupsComponent";
 import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
 import GroupWall from "./components/groupWallComponent";
+import store from "./redux/store";
+import { Provider } from 'react-redux';
 
 // Data test add by NA
 const groups = [
@@ -65,16 +67,16 @@ const router = createBrowserRouter([
         element: <UserGroupsComponent groups={groups} />,
       },
       {
-        path :"Group",
-        element: <GroupWall/>,
+        path: "Group",
+        element: <GroupWall />,
         children: [
           {
             path: "GroupFeeds",
-            element: <Feed/>,
+            element: <Feed />,
           },
           {
             path: "GroupMemebers",
-            element: <FriendList/>
+            element: <FriendList />
           }
         ]
       },
@@ -92,7 +94,9 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </Provider>
+  // </React.StrictMode>
 );
