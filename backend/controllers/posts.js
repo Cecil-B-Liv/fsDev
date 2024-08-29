@@ -299,11 +299,11 @@ export const deletePost = async (req, res) => {
             return res.status(403).json({ msg: "Unauthorized to delete this post" });
         }
 
-        // Delete the post
-        await Post.findByIdAndDelete(id);
-
-        // Delete associated comments
-        await Comment.deleteMany({ postId: id });
+        // Delete the post and associated comments
+        await Promise.all([
+            Post.findByIdAndDelete(id),
+            Comment.deleteMany({ postId: id }),
+        ]);
 
         res.status(200).json({ msg: "Post and associated comments deleted successfully" });
     } catch (err) {
@@ -323,20 +323,22 @@ export const deleteComment = async (req, res) => {
             return res.status(404).json({ msg: "Comment not found" });
         }
 
+        // Find the post associated with the comment
+        const post = await Post.findById(comment.postId);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
         // Check if the current user is the owner of the comment or a site admin
         if (comment.userId.toString() !== userId && userRole !== "siteAdmin") {
             return res.status(403).json({ msg: "Unauthorized to delete this comment" });
         }
 
-        // Delete the comment
-        await Comment.findByIdAndDelete(id);
-
-        // Remove the comment's ID from the post's comments array
-        const post = await Post.findById(comment.postId);
-        post.comments = post.comments.filter(
-            (commentId) => commentId.toString() !== id
-        );
-        await post.save();
+        // Delete the comment and update the post
+        await Promise.all([
+            Comment.findByIdAndDelete(id),
+            Post.findByIdAndUpdate(post._id, { $pull: { postComments: id } }),
+        ]);
 
         res.status(200).json({ msg: "Comment deleted successfully" });
     } catch (err) {
