@@ -66,7 +66,19 @@ const router = createBrowserRouter([
       },
       {
         path :"Group",
-        element: <GroupWall/>
+
+        element: <GroupWall/>,
+        children: [
+          {
+            path: "GroupFeeds",
+            element: <Feed/>,
+          },
+          {
+            path: "GroupMemebers",
+            element: <FriendList/>
+          }
+        ]
+
       },
       {
         path: "Friends",
@@ -86,9 +98,7 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <React.StrictMode>
-  <Provider store={store}>
+  <React.StrictMode>
     <RouterProvider router={router} />
-  </Provider>
-  // </React.StrictMode>
+  </React.StrictMode>
 );
