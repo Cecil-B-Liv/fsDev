@@ -12,16 +12,14 @@ export default function HomePage() {
       <Row style={{ backgroundColor: "lightblue" }}>
         <HeaderComponent />
       </Row>
+
       <Row>
         <Col xs={3} style={{ backgroundColor: "lightgreen" }}>
           <SideNavComponent />
         </Col>
+
         <Col xs={9} style={{ backgroundColor: "lightyellow" }}>
-          <Row>
-            <Col style={{ backgroundColor: "lightcoral" }}>
-              <Outlet />
-            </Col>
-          </Row>
+          <Outlet />
         </Col>
       </Row>
     </>

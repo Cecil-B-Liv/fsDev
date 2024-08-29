@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import "../styles/commentComponent.css";
 
-const CommentComponent = ({ username, content, likes, replies, avatar }) => {
+const CommentComponent = ({ username, content, likes, avatar }) => {
   return (
     <Container className="comment-container p-3 rounded">
       <Row className="align-items-start">
@@ -28,9 +28,6 @@ const CommentComponent = ({ username, content, likes, replies, avatar }) => {
           <div className="d-flex justify-content-start align-items-center">
             <div>
               <i className="bi bi-heart"></i> {likes}
-            </div>
-            <div className="ms-4">
-              <i className="bi bi-chat"></i> {replies}
             </div>
           </div>
         </Col>
