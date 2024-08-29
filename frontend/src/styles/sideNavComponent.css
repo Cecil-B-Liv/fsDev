@@ -1,18 +1,35 @@
-.sideNav {
-    /* border: .5px solid black; */
-    /* For development */
-    position: fixed;
-    top: 100px;
-    left: 12px;
-    margin-top: 6px;
-    font-size: 24px;
-    
-}
-.sideNav Button {
-    margin-bottom: 10px;
-}
-.bg {
-    border-width: 5px;
+.flex-row {
+    display: flex;
+    flex-wrap: nowrap;
+    min-height: 100vh;
 }
 
-  
+.sideNav-container {
+    background-color: #EFF3FB;
+    border-right: 10px solid blue;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    z-index: 0;
+    padding-top: 56px;
+    box-sizing: border-box;
+}
+
+.button-container {
+    position: absolute;
+    top: 150px;
+    left: 70px;
+    width: 70%;
+}
+
+.button-container Button {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    text-align: left; 
+    padding-left: 20px; 
+}

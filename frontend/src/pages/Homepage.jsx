@@ -1,10 +1,10 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 import { Outlet } from "react-router-dom";
-
 import HeaderComponent from "../components/headerComponent";
 import SideNavComponent from "../components/sideNavComponent";
+import "../styles/sideNavComponent.css"; 
+import "../styles/HomePage.css"
 
 export default function HomePage() {
   return (
@@ -13,12 +13,12 @@ export default function HomePage() {
         <HeaderComponent />
       </Row>
 
-      <Row>
-        <Col xs={3} style={{ backgroundColor: "lightgreen" }}>
+      <Row className="flex-row">
+        <Col xs={3} className="sideNav-container">
           <SideNavComponent />
         </Col>
 
-        <Col xs={9} style={{ backgroundColor: "lightyellow" }}>
+        <Col xs={9} className="main-content">
           <Outlet />
         </Col>
       </Row>

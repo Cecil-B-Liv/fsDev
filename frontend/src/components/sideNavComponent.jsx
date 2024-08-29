@@ -6,10 +6,10 @@ import { Button } from "react-bootstrap";
 
 export default function SideNav() {
   return (
-    <>
-      <Container>
-        <Navbar expand="lg" className="my-3 ">
-          <Nav className="sideNav flex-column ">
+    <Container>
+      <Navbar expand="lg" className="my-3">
+        <Nav className="sideNav flex-column">
+          <div className="button-container">
             <Button>
               <Nav.Link href="/HomePage/">📰 Feed</Nav.Link>
             </Button>
@@ -17,9 +17,7 @@ export default function SideNav() {
               <Nav.Link href="/HomePage/Friends">🙂 Friend</Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/FriendRequests">
-                🙂 Friend Requests
-              </Nav.Link>
+              <Nav.Link href="/HomePage/FriendRequests">🙂 Friend Requests</Nav.Link>
             </Button>
             <Button>
               <Nav.Link href="/HomePage/Groups">🫂 Group</Nav.Link>
@@ -28,13 +26,14 @@ export default function SideNav() {
               <Nav.Link href="#discovery">🔍 Discovery</Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/CreateGroup">
-                ➕ Create new group
-              </Nav.Link>
+              <Nav.Link href="/HomePage/CreateGroup">➕ Create new group</Nav.Link>
             </Button>
-          </Nav>
-        </Navbar>
-      </Container>
-    </>
+            <Button>
+              <Nav.Link href="Login">➕ Sign Out</Nav.Link>
+            </Button>
+          </div>
+        </Nav>
+      </Navbar>
+    </Container>
   );
 }

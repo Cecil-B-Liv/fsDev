@@ -11,6 +11,7 @@ import UserGroupsComponent from "./components/userGroupsComponent";
 import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
 import GroupWall from "./components/groupWallComponent";
+import FriendRequest from "./components/friendRequestCardComponent";
 
 // Data test add by NA
 const groups = [
@@ -65,20 +66,19 @@ const router = createBrowserRouter([
         element: <UserGroupsComponent groups={groups} />,
       },
       {
-        path :"Group",
+        path: "Group",
 
-        element: <GroupWall/>,
+        element: <GroupWall />,
         children: [
           {
             path: "GroupFeeds",
-            element: <Feed/>,
+            element: <Feed />,
           },
           {
             path: "GroupMemebers",
-            element: <FriendList/>
-          }
-        ]
-
+            element: <FriendList />,
+          },
+        ],
       },
       {
         path: "Friends",
@@ -93,6 +93,10 @@ const router = createBrowserRouter([
         element: <FriendRequest />,
       },
     ],
+  },
+  {
+    path: "Login",
+    element: <LoginSignupPage />,
   },
 ]);
 

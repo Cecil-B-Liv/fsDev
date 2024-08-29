@@ -1,0 +1,7 @@
+.main-content {
+    margin-left: 25%; 
+    background-color: lightyellow;
+    flex-grow: 1;
+    padding: 20px;
+    min-width: 0; 
+}
