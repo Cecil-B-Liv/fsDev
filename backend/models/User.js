@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
+
+    /* 
+    add id adminOfGrp[] (the groupAdmin id will be stored in the group model so if the user is the admin of that group, that group will store that user id in its property call groupAdminId)
+    */
     {
         username:
         {
@@ -29,6 +33,11 @@ const UserSchema = new mongoose.Schema(
             required: true,
             min: 5,
         },
+        userBio:
+        {
+            type: String,
+            max: 200,
+        },
         friendList:
             [{
                 type: mongoose.Schema.Types.ObjectId,
@@ -42,7 +51,7 @@ const UserSchema = new mongoose.Schema(
         picturePath:
         {
             type: String,
-            default: ""
+            default: "/assets/default_avatar.jpg"
         },
         userRole:
         {

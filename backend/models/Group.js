@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const groupSchema = mongoose.Schema(
+const GroupSchema = new mongoose.Schema(
     {
         name:
         {
@@ -39,6 +39,6 @@ const groupSchema = mongoose.Schema(
     { timestamps: true }
 );
 
-const Group = mongoose.model("Group", groupSchema);
+const Group = mongoose.model("Group", GroupSchema);
 
 export default Group;

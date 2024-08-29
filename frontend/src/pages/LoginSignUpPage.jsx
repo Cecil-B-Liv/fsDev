@@ -1,13 +1,13 @@
 import React from "react";
-import LoginComponent from "../components/LoginComponent";
+import LoginComponent from "../components/loginComponent";
 import NotificationComponent from "../components/notificationComponent";
 
 function LoginSignupPage() {
   return (
     <>
       <div>
-        <LoginComponent/>
-        <NotificationComponent/>
+        <LoginComponent />
+        {/* <NotificationComponent/> */}
       </div>
     </>
   );

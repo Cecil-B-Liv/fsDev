@@ -1,21 +1,23 @@
 import mongoose from "mongoose";
 
-const reactionSchema = new mongoose.Schema({
-    userId:
+const ReactionSchema = new mongoose.Schema(
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    type:
-    {
-        type: String,
-        enum: ["like", "love", "haha", "angry"],
-        required: true
+        userId:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        type:
+        {
+            type: String,
+            enum: ["like", "love", "haha", "angry"],
+            required: true
+        }
     }
-});
+);
 
-const postSchema = mongoose.Schema(
+const PostSchema = new mongoose.Schema(
     {
         userId:
         {
@@ -23,7 +25,7 @@ const postSchema = mongoose.Schema(
             ref: 'User',
             required: true,
         },
-        groudId:
+        groupId:
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Group',
@@ -37,16 +39,26 @@ const postSchema = mongoose.Schema(
         },
         postDescription: String,
         postPicturePath: String,
-        postReaction: [reactionSchema],
+        postReaction: [ReactionSchema],
         postComments:
             [{
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Comment'
             }],
+        postHistory:
+            [{
+                postDescription: String,
+                postPicturePath: String,
+                timestamp:
+                {
+                    type: Date,
+                    default: Date.now
+                },
+            }],
     },
     { timestamps: true }
 );
 
-const Post = mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", PostSchema);
 
 export default Post;

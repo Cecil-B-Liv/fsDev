@@ -3,25 +3,21 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import multer from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import http from "http";
-import cookieparser from 'cookie-parser';   // Dont know if will use
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
-// Import routes and controllers
+/* IMPORT ROUTES, MIDDLEWARES, CONTROLLERS */
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
 import groupRoutes from "./routes/groups.js";
+import { isAuthenticated } from './middlewares/auth.js';
 import notificationRoutes from "./routes/notifications.js";
-
-import { register } from './controllers/auth.js';
-import { createPost } from './controllers/posts.js';
-import { verifyToken } from './controllers/auth.js';
-
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url);
@@ -37,29 +33,28 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-app.use(cookieparser());
-
-/* FILE STORAGE */
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "public/assets");
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
-const upload = multer({ storage });
-
-/* ROUTES WITH FILE UPLOAD*/
-app.post("/auth/register", upload.single("picture"), register);
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
+/* SESSIONS */
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+            collectionName: "sessions",
+        }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, // Cookie expire in 1 day
+        },
+    })
+);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
-app.use("/users", userRoutes);
-app.use("/posts", postRoutes);
+app.use("/users", isAuthenticated, userRoutes);
+app.use("/posts", isAuthenticated, postRoutes);
 app.use("/groups", groupRoutes);
-app.use("/notifications", notificationRoutes);
+app.use("/notifications", isAuthenticated, notificationRoutes);
 
 /* MONGODB CONNECTION */
 const port = process.env.PORT || 6001;
@@ -70,36 +65,50 @@ mongoose.connect(URL, {
 })
     .then(() => {
         console.log(`Connected to MongoDB`);
-        app.listen(port, () => {
-            console.log(`Server is running at http://localhost:${port}`);   // Start server
-        })
+
+        /* CREATE SERVER */
+        const server = http.createServer(app);
+        // If use Socket.IO for live notification service
+        // const io = new Server(server, {
+        //     cors: {
+        //         origin: "http://localhost:3000", // Adjust origin as needed
+        //         methods: ["GET", "POST"],
+        //     },
+        // });
+        // If use Socket.IO for live notification service
+        // io.on("connection", (socket) => {
+        //     console.log(`User connected: ${socket.id}`);
+        //     // Handle socket events for real-time notifications
+        //     socket.on("sendNotification", (data) => {
+        //         // ... logic to send notification to specific user or group
+        //     });
+        //     // ... other socket event handlers
+        // });
+
+        /* START SERVER */
+        server.listen(port, () => {
+            console.log(`Server is running at http://localhost:${port}`);
+        });
     })
     .catch((error) => {
         console.log(`Error connecting to MongoDB: ${error.message}`);
     });
 
 /* NOTIFICATION SYSTEM (Example with Socket.IO) */
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: "http://localhost:3000", // Adjust origin as needed
-        methods: ["GET", "POST"],
-    },
-});
-
-io.on("connection", (socket) => {
-    console.log(`User connected: ${socket.id}`);
-
-    // Handle socket events for real-time notifications
-    socket.on("sendNotification", (data) => {
-        // ... logic to send notification to specific user or group
-    });
-
-    // ... other socket event handlers
-});
+// Implement your chosen notification mechanism
+// (Socket.IO, polling, SSE) and its logic here
 
 /* ERROR HANDLING MIDDLEWARE */
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: "Something went wrong!" });
 });
+
+/* OFFLINE FUNCTIONALITY */
+// Explore and implement strategies for handling offline scenarios (service workers, local storage, etc.)
+
+/* FILE STORAGE AND RETRIEVAL */
+// Implement logic in your controllers to handle file storage (local and/or cloud) and retrieval
+
+/* INPUT VALIDATION AND SANITIZATION */
+// Implement input validation and sanitization in your controllers to ensure data integrity and security

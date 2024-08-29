@@ -1,7 +1,7 @@
 // Comment.js
 import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema(
+const CommentSchema = new mongoose.Schema(
     {
         postId:
         {
@@ -20,10 +20,19 @@ const commentSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        commentHistory:
+            [{
+                commentMessage: String,
+                timestamp:
+                {
+                    type: Date,
+                    default: Date.now
+                },
+            }],
     },
     { timestamps: true }
 );
 
-const Comment = mongoose.model("Comment", commentSchema);
+const Comment = mongoose.model("Comment", CommentSchema);
 
 export default Comment;

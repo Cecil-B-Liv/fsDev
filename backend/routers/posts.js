@@ -1,37 +1,40 @@
 import express from "express";
 import {
-    // getFeedPosts,
-    getPublicFeed,  // Added by Tung
-    getFriendsFeed, // Added by Tung
+    createPost,
+    getFeedPosts,
+    getPublicFeed,
+    getFriendsFeed,
     getUserPosts,
-    deleteUserPost, // Added by Tung
-    editUserPost,   // Added by Tung
-    getUserComments,    // Added by Tung
-    editUserComment,    // Added by Tung
-    deleteUserComment,  // Added by Tung
+    getGroupPosts,
     reactPost,
-    commentPost,    // Added by Tung
+    updatePost,
+    createComment,
+    updateComment,
+    deletePost,
+    deleteComment,
 } from "../controllers/posts.js";
-import { verifyToken } from "../middleware/auth.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 const router = express.Router();
 
+/* CREATE */
+router.post("/", isAuthenticated, createPost);
+router.post("/:postId/comments", isAuthenticated, createComment);
+
 /* READ */
-// router.get("/", verifyToken, getFeedPosts);
-router.get("/", verifyToken, getPublicFeed);
-router.get("/friends", verifyToken, getFriendsFeed);
-router.get("/:userId/posts", verifyToken, getUserPosts);
-router.get("/:userId/comments", verifyToken, getUserComments);    // Added by Tung
+router.get("/feed", isAuthenticated, getFeedPosts);
+router.get("/public", isAuthenticated, getPublicFeed);
+router.get("/friends/:userId", isAuthenticated, getFriendsFeed);
+router.get("/user/:userId", isAuthenticated, getUserPosts);
+router.get("/group/:groupId", isAuthenticated, getGroupPosts);
 
 /* UPDATE */
-router.patch("/:userId/postID", verifyToken, editUserPost);    // Added by Tung
-router.patch("/:id/reaction", verifyToken, reactPost);
-router.patch("/:id/comment", verifyToken, commentPost); // Added by Tung
-router.patch("/:userId/comment/:commentId", verifyToken, editUserComment);  // Added by Tung
-
+router.put("/:postId/react", isAuthenticated, reactPost);
+router.put("/:postId", isAuthenticated, updatePost);
+router.put("/comments/:commentId", isAuthenticated, updateComment);
 
 /* DELETE */
-router.delete("/:userId/postID", verifyToken, deleteUserPost);  // Added by Tung
-router.delete("/:userId/comment/:commentId", verifyToken, deleteUserComment);   // Added by Tung
+router.delete("/:postId", isAuthenticated, deletePost);
+router.delete("comments/:commentId", isAuthenticated, deleteComment);
 
 export default router;
