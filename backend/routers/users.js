@@ -29,12 +29,12 @@ router.get("/:userId/groups", isAuthenticated, getUserGroups);  // Get user's gr
 router.get('/search', isAuthenticated, searchUsers);  // Search user
 
 /* UPDATE */
-router.patch("/:userId",
+router.put("/:userId",
     isAuthenticated,
     upload.single("picture"),   // add upload middleware
     updateUserProfile);
-router.patch('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
-router.patch('/friendRequests/:requestId/decline', isAuthenticated, declineFriendRequest);    // Decline a friend request
+router.put('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
+router.put('/friendRequests/:requestId/decline', isAuthenticated, declineFriendRequest);    // Decline a friend request
 
 /* DELETE */
 router.delete("/:userId/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
