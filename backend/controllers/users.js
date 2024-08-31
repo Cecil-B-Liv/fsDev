@@ -217,6 +217,14 @@ export const removeFriend = async (req, res) => {
                 }
             );
 
+            // Create a notification for the removed friend
+            await createNotification(
+                friendId,
+                id,
+                "friendRemoved",
+                `${user.username} (${user.displayName}) has unfriend you!`
+            );
+
             res.status(200).json(formattedFriends);
         } else {
             // Can't remove if they are not user;s friend
