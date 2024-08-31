@@ -7,7 +7,7 @@ import {
     sendFriendRequest,
     sendGroupJoinRequest,
     acceptFriendRequest,
-    declineFriendRequest,
+    denyFriendRequest,
     searchUsers,
     suspendUser,
     resumeUser,
@@ -34,7 +34,7 @@ router.put("/:userId",
     upload.single("picture"),   // add upload middleware
     updateUserProfile);
 router.put('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
-router.put('/friendRequests/:requestId/decline', isAuthenticated, declineFriendRequest);    // Decline a friend request
+router.put('/friendRequests/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
 
 /* DELETE */
 router.delete("/:userId/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
