@@ -32,6 +32,15 @@ export const sendFriendRequest = async (req, res) => {
         recipient.friendRequests.push(userId);
         await recipient.save();
 
+        // Create a notification for the recipient
+        const sender = await User.findById(userId);
+        await createNotification(
+            recipientId,
+            userId,
+            "friendRequest",
+            `${sender.username} (${sender.displayName}) sent you a friend request!`
+        );
+
         res.status(200).json({ msg: "Friend request sent successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -62,6 +71,15 @@ export const sendGroupJoinRequest = async (req, res) => {
         // Add the user's ID to the group's pendingRequests array
         group.pendingRequests.push(userId);
         await group.save();
+
+        // Create a notification for the group admin
+        const user = await User.findById(userId);
+        await createNotification(
+            group.groupAdminId,
+            userId,
+            "groupMemberRequest",
+            `${user.username} (${user.displayName}) requested to join your group ${group.name}`
+        );
 
         res.status(200).json({ msg: "Group join request sent successfully" });
     } catch (err) {
@@ -212,8 +230,6 @@ export const removeFriend = async (req, res) => {
 export const acceptFriendRequest = async (req, res) => {
     try {
         const { userId, senderId } = req.body;
-
-        // Find the user and the sender
         const user = await User.findById(userId);
         const sender = await User.findById(senderId);
 
@@ -238,18 +254,24 @@ export const acceptFriendRequest = async (req, res) => {
         await user.save();
         await sender.save();
 
+        // Create a notification for the sender
+        await createNotification(
+            senderId,
+            userId,
+            "friendRequestAccepted",
+            `${user.username} (${user.displayName}) accepted your friend request!`
+        );
+
         res.status(200).json({ msg: "Friend request accepted successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
-// Decline a friend request
-export const declineFriendRequest = async (req, res) => {
+// Deny a friend request
+export const denyFriendRequest = async (req, res) => {
     try {
         const { userId, senderId } = req.body;
-
-        // Find the user
         const user = await User.findById(userId);
 
         if (!user) {
@@ -266,7 +288,15 @@ export const declineFriendRequest = async (req, res) => {
 
         await user.save();
 
-        res.status(200).json({ msg: "Friend request declined successfully" });
+        // Create a notification for the sender
+        await createNotification(
+            senderId,
+            userId,
+            "friendRequestDenied",
+            `${user.username} (${user.displayName}) denied your friend request.`
+        );
+
+        res.status(200).json({ msg: "Friend request denied successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
