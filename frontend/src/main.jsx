@@ -73,6 +73,10 @@ const router = createBrowserRouter([
         element: <GroupWall />,
         children: [
           {
+            index: true,
+            element: <Feed/>
+          },
+          {
             path: "GroupFeeds",
             element: <Feed />,
           },
@@ -92,7 +96,7 @@ const router = createBrowserRouter([
       },
       {
         path: "FriendRequests",
-        element: <FriendRequest />,
+        element: <FriendRequest/>,
       },
     ],
   },
@@ -100,6 +104,10 @@ const router = createBrowserRouter([
     path: "SiteAdmin",
     element: <SiteAdmin/>,
     children:[
+      {
+        index: true,
+        element: <GroupCreateRequestList/>
+      },
       {
         path: "Requests",
         element: <GroupCreateRequestList/>

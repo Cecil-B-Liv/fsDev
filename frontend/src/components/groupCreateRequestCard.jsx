@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
-import Container from "react-bootstrap";
-
-export default function GroupCreateRequestCard({username, imageSrc, }){
+import {Container} from "react-bootstrap";
+import {Button} from "react-bootstrap";
+export default function GroupCreateRequestCard({username, imageSrc, groupName }){
     return (
         <Container>
           <div className="card-container">
