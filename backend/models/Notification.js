@@ -21,6 +21,7 @@ const NotificationSchema = new mongoose.Schema(
                 "friendRequest",
                 "friendRequestAccepted",
                 "friendRequestDenied",
+                "friendRemoved",
                 "comment",
                 "reaction",
                 "groupCreationApproval",
@@ -28,7 +29,8 @@ const NotificationSchema = new mongoose.Schema(
                 "groupCreationDenied",
                 "groupMemberRequest",
                 "groupMemberAccepted",
-                "groupMemberDenied"
+                "groupMemberDenied",
+                "groupMemberRemoved"
             ],
             required: true
         },
