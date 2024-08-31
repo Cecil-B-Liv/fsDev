@@ -7,17 +7,16 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import http from "http";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 
 /* IMPORT ROUTES, MIDDLEWARES, CONTROLLERS */
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import postRoutes from './routes/posts.js';
-import groupRoutes from "./routes/groups.js";
-import { isAuthenticated } from './middlewares/auth.js';
-import notificationRoutes from "./routes/notifications.js";
+import authRoutes from "./routers/auth.js";
+import userRoutes from "./routers/users.js";
+import postRoutes from "./routers/posts.js";
+import groupRoutes from "./routers/groups.js";
+import notificationRoutes from "./routers/notifications.js";
+import { isAuthenticated } from "./middlewares/auth.js";
 
 /* CONFIGURATION */
 const __filename = fileURLToPath(import.meta.url);
@@ -65,38 +64,13 @@ mongoose.connect(URL, {
 })
     .then(() => {
         console.log(`Connected to MongoDB`);
-
-        /* CREATE SERVER */
-        const server = http.createServer(app);
-        // If use Socket.IO for live notification service
-        // const io = new Server(server, {
-        //     cors: {
-        //         origin: "http://localhost:3000", // Adjust origin as needed
-        //         methods: ["GET", "POST"],
-        //     },
-        // });
-        // If use Socket.IO for live notification service
-        // io.on("connection", (socket) => {
-        //     console.log(`User connected: ${socket.id}`);
-        //     // Handle socket events for real-time notifications
-        //     socket.on("sendNotification", (data) => {
-        //         // ... logic to send notification to specific user or group
-        //     });
-        //     // ... other socket event handlers
-        // });
-
-        /* START SERVER */
-        server.listen(port, () => {
+        app.listen(port, () => {
             console.log(`Server is running at http://localhost:${port}`);
-        });
+        })
     })
     .catch((error) => {
         console.log(`Error connecting to MongoDB: ${error.message}`);
     });
-
-/* NOTIFICATION SYSTEM (Example with Socket.IO) */
-// Implement your chosen notification mechanism
-// (Socket.IO, polling, SSE) and its logic here
 
 /* ERROR HANDLING MIDDLEWARE */
 app.use((err, req, res, next) => {
@@ -106,9 +80,6 @@ app.use((err, req, res, next) => {
 
 /* OFFLINE FUNCTIONALITY */
 // Explore and implement strategies for handling offline scenarios (service workers, local storage, etc.)
-
-/* FILE STORAGE AND RETRIEVAL */
-// Implement logic in your controllers to handle file storage (local and/or cloud) and retrieval
 
 /* INPUT VALIDATION AND SANITIZATION */
 // Implement input validation and sanitization in your controllers to ensure data integrity and security
