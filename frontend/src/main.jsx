@@ -12,6 +12,8 @@ import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
 import GroupWall from "./components/groupWallComponent";
 import FriendRequest from "./components/friendRequestCardComponent";
+import SiteAdmin from "./pages/SiteAdminpage";
+import GroupCreateRequestList from "./components/groupCreateRequestList";
 
 // Data test add by NA
 const groups = [
@@ -95,9 +97,16 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "Login",
-    element: <LoginSignupPage />,
-  },
+    path: "SiteAdmin",
+    element: <SiteAdmin/>,
+    children:[
+      {
+        path: "Requests",
+        element: <GroupCreateRequestList/>
+      }
+    ]
+  }
+ 
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
