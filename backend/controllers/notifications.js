@@ -12,10 +12,15 @@ export const createNotification = async (
         const allowedTypes = [
             "friendRequest",
             "friendRequestAccepted",
+            "friendRequestDenied",
             "comment",
             "reaction",
             "groupCreationApproval",
+            "groupCreationApproved",
+            "groupCreationDenied",
             "groupMemberRequest",
+            "groupMemberAccepted",
+            "groupMemberDenied"
         ];
 
         if (!allowedTypes.includes(notiType)) {

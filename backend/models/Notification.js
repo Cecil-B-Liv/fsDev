@@ -20,10 +20,15 @@ const NotificationSchema = new mongoose.Schema(
             enum: [
                 "friendRequest",
                 "friendRequestAccepted",
+                "friendRequestDenied",
                 "comment",
                 "reaction",
                 "groupCreationApproval",
-                "groupMemberRequest"
+                "groupCreationApproved",
+                "groupCreationDenied",
+                "groupMemberRequest",
+                "groupMemberAccepted",
+                "groupMemberDenied"
             ],
             required: true
         },
