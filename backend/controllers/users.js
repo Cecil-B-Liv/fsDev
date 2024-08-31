@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 import Group from "../models/Group.js";
+import { createNotification } from "../controllers/notifications.js";
 
 /* CREATE */
 // Send a friend request
