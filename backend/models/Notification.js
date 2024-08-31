@@ -17,20 +17,17 @@ const NotificationSchema = new mongoose.Schema(
         notiType:
         {
             type: String,
-            enum: ["friendRequest",
+            enum: [
+                "friendRequest",
                 "friendRequestAccepted",
                 "comment",
                 "reaction",
                 "groupCreationApproval",
-                "groupMemberRequest"],
+                "groupMemberRequest"
+            ],
             required: true
         },
         notiDescription: String,
-        isRead:
-        {
-            type: Boolean,
-            default: false
-        }
     },
     { timestamps: true }
 );
