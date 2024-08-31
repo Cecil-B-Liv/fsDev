@@ -3,13 +3,13 @@ import Col from "react-bootstrap/Col";
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "../components/headerComponent";
 import SideNavComponent from "../components/sideNavComponent";
-import "../styles/sideNavComponent.css"; 
-import "../styles/HomePage.css"
+import "../styles/sideNavComponent.css";
+import "../styles/HomePage.css";
 
 export default function HomePage() {
   return (
     <>
-      <Row style={{ backgroundColor: "lightblue" }}>
+      <Row>
         <HeaderComponent />
       </Row>
 

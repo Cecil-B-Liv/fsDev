@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,15 +7,16 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import NotificationComponent from './NotificationComponent'; 
 
 import '../styles/headerComponent.css';
 
 export default function Header() {
     const [prevScrollpos, setPrecScrollpos] = useState(window.scrollY);
     const [top, setTop] = useState(0);
+    const [showNotifications, setShowNotifications] = useState(false); 
 
     useEffect(() => {
-        // Function to handle the header navbar scroll event
         const handleScroll = () => {
             const currentScrollPos = window.scrollY;
             if (prevScrollpos > currentScrollPos) {
@@ -32,7 +32,6 @@ export default function Header() {
         };
     }, [prevScrollpos]);
 
-    // Styles for the header navbar
     const headerNavStyle = {
         position: 'fixed',
         top: `${top}px`,
@@ -71,7 +70,25 @@ export default function Header() {
                         </Row>
                     </Form>
                     <Nav className='gap-3'>
-                        <Nav.Link href="#notification">🔔</Nav.Link>
+                        <Nav.Link
+                            href="#notification"
+                            onClick={() => setShowNotifications(!showNotifications)} 
+                        >
+                            🔔
+                        </Nav.Link>
+                        {showNotifications && (
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    right: '20px',
+                                    top: '60px',
+                                    zIndex: 1000,
+                                    width: '300px', 
+                                }}
+                            >
+                                <NotificationComponent />
+                            </div>
+                        )}
                         <NavDropdown
                             title="John Doe"
                             id="basic-nav-dropdown"

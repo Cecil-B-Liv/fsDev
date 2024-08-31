@@ -12,7 +12,7 @@ export default function CreatePostHeader() {
     return (
         <>
             <Container className='d-flex justify-content-center mb-4'>
-                <Card className='createPostCard'>
+                <Card className='createPostCard' style={{ backgroundColor: '#EFF3F4' }}>
                     <Card.Body>
                         <Form>
                             <Form.Control as="textarea" rows={2} className='my-2' placeholder="What's on your mind?" />

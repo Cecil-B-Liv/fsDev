@@ -6,7 +6,7 @@
 
 .sideNav-container {
     background-color: #EFF3FB;
-    border-right: 10px solid blue;
+    
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -32,4 +32,5 @@
     margin-bottom: 10px;
     text-align: left; 
     padding-left: 20px; 
+    background-color: #91A2DE;
 }
