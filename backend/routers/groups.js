@@ -3,13 +3,15 @@ import {
     createGroup,
     getGroups,
     getGroup,
+    approveGroupCreation,
+    denyGroupCreation,
     approveGroupRequest,
-    declineGroupRequest,
+    denyGroupRequest,
     removeGroupMember,
     deleteGroupPost,
     deleteGroupComment,
 } from "../controllers/groups.js";
-import { isAuthenticated, isGroupAdmin } from "../middlewares/auth.js";
+import { isAuthenticated, isGroupAdmin, isSiteAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 
@@ -21,16 +23,26 @@ router.get("/", isAuthenticated, getGroups); // Get all groups (public)
 router.get("/:groupId", isAuthenticated, getGroup);  // Get a specific group (depends on public or private)
 
 /* UPDATE */
+router.put("/:groupId/approve",
+    isAuthenticated,
+    isSiteAdmin,
+    approveGroupCreation
+);  // Approve a group creation from siteAdmin
+router.put("/:groupId/decline",
+    isAuthenticated,
+    isSiteAdmin,
+    denyGroupCreation
+);  // Deny a group creation from siteAdmin
 router.put("/:groupId/requests/:requestId/approve",
     isAuthenticated,
     isGroupAdmin,
     approveGroupRequest
 ); // Approve a group join request from groupAdmin
-router.put("/:groupId/requests/:requestId/decline",
+router.put("/:groupId/requests/:requestId/deny",
     isAuthenticated,
     isGroupAdmin,
-    declineGroupRequest
-); // Decline a group join request from groupAdmin
+    denyGroupRequest
+); // Deny a group join request from groupAdmin
 
 /* DELETE */
 router.delete("/:groupId/members/:memberId",
