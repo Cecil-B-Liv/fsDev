@@ -49,14 +49,7 @@ const groups = [
     groupDescription: "Description 2",
   },
 ];
-const groupRequestTest = 
-  {
-    username: "JohnDoe",
-    groupName: "Photography Enthusiasts",
-    groupDescription: "A group for those who love to capture moments.",
-    avatarSrc: "https://placehold.co/100x100",
-    creationReason: "To share and discuss photography tips and tricks.",
-  }
+
 
 const router = createBrowserRouter([
   {
