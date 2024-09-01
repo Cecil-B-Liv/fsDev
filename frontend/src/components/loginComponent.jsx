@@ -10,38 +10,40 @@ export default function LoginComponent() {
   function LoginPage() {
     return (
       <>
+      <form>
         <input
-          className="login-input"
-          placeholder="Email address or phone number"
-        ></input>
-        <input className="password-input" placeholder="Password"></input>
-        <button className="login-btn">
-          <Link to="/HomePage" style={{ color: 'inherit', textDecoration: 'none', display: 'block', width: '100%', height: '100%' }}>
-            Log in
-          </Link>
-        </button>
-        <a href="" className="forget-password">
-          Forgotten password?
-        </a>
+            className="login-input"
+            placeholder="Email address or phone number"
+          ></input>
+          <input className="password-input" placeholder="Password"></input>
+          <button className="login-btn">
+            <Link to="/HomePage" style={{ color: 'inherit', textDecoration: 'none', display: 'block', width: '100%', height: '100%' }}>
+              Log in
+            </Link>
+          </button>
+          {/* <a href="" className="forget-password">
+            Forgotten password?
+          </a>        */}
+      </form>
       </>
     );
   }
 
   function SignupPage() {
     return (
-      <>
+      <form>
         <input
-          className="login-input"
-          placeholder="Email address or phone number"
-        ></input>
-        <input className="password-input" placeholder="Password"></input>
-        <input className="displayname-input" placeholder="Display name"></input>
-        <input
-          className="telephone-input"
-          placeholder="Telephone number"
-        ></input>
-        <button className="login-btn">Create Account</button>
-      </>
+            className="login-input"
+            placeholder="Email address or phone number"
+          ></input>
+          <input className="password-input" placeholder="Password"></input>
+          <input className="displayname-input" placeholder="Display name"></input>
+          <input
+            className="telephone-input"
+            placeholder="Telephone number"
+          ></input>
+          <button className="login-btn">Create Account</button>
+      </form>
     );
   }
 

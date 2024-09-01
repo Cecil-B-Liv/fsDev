@@ -45,7 +45,7 @@ export default function Header() {
         <>
             <Container fluid>
                 <Navbar className="headerNav d-flex justify-content-between p-3" style={headerNavStyle}>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/HomePage">
                         <img
                             src="/vite.svg"
                             width="30"
