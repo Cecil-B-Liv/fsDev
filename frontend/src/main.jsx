@@ -14,6 +14,7 @@ import GroupWall from "./components/groupWallComponent";
 import FriendRequest from "./components/friendRequestCardComponent";
 import SiteAdmin from "./pages/SiteAdminpage";
 import GroupCreateRequestList from "./components/groupCreateRequestList";
+import GroupCreateRequestDetails from "./components/groupCreateRequestDetails";
 
 // Data test add by NA
 const groups = [
@@ -48,6 +49,14 @@ const groups = [
     groupDescription: "Description 2",
   },
 ];
+const groupRequestTest = 
+  {
+    username: "JohnDoe",
+    groupName: "Photography Enthusiasts",
+    groupDescription: "A group for those who love to capture moments.",
+    avatarSrc: "https://placehold.co/100x100",
+    creationReason: "To share and discuss photography tips and tricks.",
+  }
 
 const router = createBrowserRouter([
   {
@@ -111,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "Requests",
         element: <GroupCreateRequestList/>
+      },
+      {
+        path: ":RequestID",
+        element: <GroupCreateRequestDetails/>
       }
     ]
   }
