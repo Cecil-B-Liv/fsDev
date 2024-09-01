@@ -2,6 +2,7 @@ import Group from "../models/Group.js";
 import User from "../models/User.js";
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
+import { createNotification } from "../controllers/notifications.js";
 
 /* CREATE */
 // Create a new group
@@ -30,6 +31,19 @@ export const createGroup = async (req, res) => {
         const groupAdmin = await User.findById(groupAdminId);
         groupAdmin.groupList.push(newGroup._id);
         await groupAdmin.save();
+
+        // Find siteAdmin
+        const siteAdmins = await User.find({ userRole: "siteAdmin" });
+
+        // Send notification to siteAdmin
+        for (const siteAdmin of siteAdmins) {
+            await createNotification(
+                siteAdmin._id,
+                groupAdminId,
+                "groupCreationApproval",
+                `New group '${newGroup.name}' created by ${groupAdmin.username} (${groupAdmin.displayName}) is awaiting your approval.`
+            );
+        }
 
         res.status(201).json(newGroup);
     } catch (err) {
@@ -88,6 +102,73 @@ export const getGroup = async (req, res) => {
 };
 
 /* UPDATE */
+// Approve a group creation
+export const approveGroupCreation = async (req, res) => {
+    try {
+        const { groupId } = req.params;
+        const group = await Group.findById(groupId);
+
+        // Find the group
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        // Check if the group is already approved
+        if (group.isApproved) {
+            return res.status(400).json({ message: "Group is already approved" });
+        }
+
+        // Update the group's approval status
+        group.isApproved = true;
+        await group.save();
+
+        // Create a notification for the group admin
+        await createNotification(
+            group.groupAdminId,
+            req.session.userId,
+            "groupCreationApproved",
+            `Your group '${group.name}' has been approved!`
+        );
+
+        res.status(200).json({ message: "Group creation approved successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// Deny a group creation
+export const denyGroupCreation = async (req, res) => {
+    try {
+        const { groupId } = req.params;
+        const group = await Group.findById(groupId);
+
+        // Find the group
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        // Check if the group is already approved
+        if (group.isApproved) {
+            return res.status(400).json({ message: "Group is already approved" });
+        }
+
+        // Delete the group
+        await Group.findByIdAndDelete(groupId);
+
+        // Create a notification for the group admin
+        await createNotification(
+            group.groupAdminId,
+            req.session.userId,
+            "groupCreationDenied",
+            `Your group '${group.name}' has been denied.`
+        );
+
+        res.status(200).json({ message: "Group creation denied and group deleted" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 // Approve a group join request
 export const approveGroupRequest = async (req, res) => {
     try {
@@ -118,14 +199,23 @@ export const approveGroupRequest = async (req, res) => {
         await group.save();
         await user.save();
 
+        // Create a notification to the approved user
+        const groupAdmin = await User.findById(req.session.userId);
+        await createNotification(
+            requestId,
+            groupAdmin._id,
+            "groupMemberAccepted",
+            `Your request to join group '${group.name}' has been approved by ${groupAdmin.username} (${groupAdmin.displayName})!`
+        );
+
         res.status(200).json({ message: "Join request approved successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
 };
 
-// Decline a group join request
-export const declineGroupRequest = async (req, res) => {
+// Deny a group join request
+export const denyGroupRequest = async (req, res) => {
     try {
         const { groupId, requestId } = req.params;
 
@@ -145,6 +235,16 @@ export const declineGroupRequest = async (req, res) => {
         );
 
         await group.save();
+
+
+        // Create a notification to the denied user
+        const groupAdmin = await User.findById(req.session.userId);
+        await createNotification(
+            requestId,
+            groupAdmin._id,
+            "groupMemberDenied",
+            `Your request to join group '${group.name}' has been declined by ${groupAdmin.username} (${groupAdmin.displayName}).`
+        );
 
         res.status(200).json({ message: "Join request declined successfully" });
     } catch (err) {
@@ -179,6 +279,15 @@ export const removeGroupMember = async (req, res) => {
 
         await group.save();
         await user.save();
+
+        // Create a notification to the removed member
+        const groupAdmin = await User.findById(req.session.userId);
+        await createNotification(
+            requestId,
+            groupAdmin._id,
+            "groupMemberRemoved",
+            `You have been removed from group '${group.name}' by ${groupAdmin.username} (${groupAdmin.displayName}).`
+        );
 
         res.status(200).json({ message: "Member removed successfully" });
     } catch (err) {
