@@ -19,8 +19,6 @@ import notificationRoutes from "./routers/notifications.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 
 /* CONFIGURATION */
-const port = process.env.PORT || 6001;
-const URL = process.env.MONGODB_URI;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -34,10 +32,14 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
+const port = process.env.PORT;
+const URL = process.env.MONGODB_URI;
+const secret = process.env.SESSION_SECRET;
+
 /* SESSIONS */
 app.use(
     session({
-        secret: process.env.SESSION_SECRET,
+        secret: secret,
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
@@ -58,10 +60,7 @@ app.use("/groups", isAuthenticated, groupRoutes);
 app.use("/notifications", isAuthenticated, notificationRoutes);
 
 /* MONGODB CONNECTION */
-mongoose.connect(URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+mongoose.connect(URL)
     .then(() => {
         console.log(`Connected to MongoDB`);
         app.listen(port, () => {
