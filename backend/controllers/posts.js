@@ -55,6 +55,11 @@ export const createPost = async (req, res) => {
 export const createComment = async (req, res) => {
     try {
         const { postId, userId, commentMessage } = req.body;
+        // Fetch the post owner's ID
+        const post = await Post.findById(postId);
+        const postOwnerId = post.userId;
+        // Fetch the commenter's details
+        const commenter = await User.findById(userId);
 
         const newComment = new Comment({
             postId,
@@ -71,6 +76,16 @@ export const createComment = async (req, res) => {
         )
             .populate("postComments") // Populate the comments array to include comment details
             .populate("postComments.userId", "username displayName picturePath") // Populate user details for each comment
+
+        // Create a notification for the post owner (if it's not their own comment)
+        if (userId.toString() !== postOwnerId.toString()) {
+            await createNotification(
+                postOwnerId,
+                userId,
+                "addedComment",
+                `${commenter.username} (${commenter.displayName}) commented on your post!`
+            );
+        }
 
         res.status(201).json(updatedPost);
     } catch (error) {
@@ -186,6 +201,10 @@ export const reactPost = async (req, res) => {
         const { id } = req.params;
         const { userId, reactionType } = req.body;
         const post = await Post.findById(id);
+        // Fetch the post owner's ID
+        const postOwnerId = post.userId;
+        // Fetch the reactor's details
+        const reactor = await User.findById(userId);
 
         // Check if the user has already reacted the post
         const existingReactionIndex = post.postReaction.findIndex(
@@ -198,6 +217,16 @@ export const reactPost = async (req, res) => {
         } else {
             // React the post if hasn't reacted
             post.postReaction.push({ userId, type: reactionType });
+        }
+
+        // Create a notification for the post owner
+        if (userId.toString() !== postOwnerId.toString()) {
+            await createNotification(
+                postOwnerId,
+                userId,
+                "addedReaction",
+                `${reactor.username} (${reactor.displayName}) reacted to your post!`
+            );
         }
 
         const updatedPost = await post.save();
