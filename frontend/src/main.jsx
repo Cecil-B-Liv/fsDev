@@ -15,6 +15,7 @@ import FriendRequest from "./components/friendRequestCardComponent";
 import SiteAdmin from "./pages/SiteAdminpage";
 import GroupCreateRequestList from "./components/groupCreateRequestList";
 import GroupCreateRequestDetails from "./components/groupCreateRequestDetails";
+import GroupAdminPage from "./pages/GroupAdminPage";
 
 // Data test add by NA
 const groups = [
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
         element: <UserGroupsComponent groups={groups} />,
       },
       {
-        path: "Group",
+        path: "Groups/:GroupID",
 
         element: <GroupWall />,
         children: [
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
         element: <GroupCreateRequestDetails/>
       }
     ]
+  },
+  {
+    path: "/HomePage/Groups/:GroupID/ManageGroup",
+    element: <GroupAdminPage/>
   }
  
 ]);

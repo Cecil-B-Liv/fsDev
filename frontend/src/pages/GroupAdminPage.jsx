@@ -2,12 +2,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "../components/headerComponent";
-import SideNavComponent from "../components/sideNavComponent";
+import GroupAdminSideNaV from "../components/groupAdminSideNav";
 import "../styles/sideNavComponent.css";
 import "../styles/HomePage.css";
 
-export default function HomePage() {
-  const isGroupOwner = true; // for testing purpose only 
+export default function GroupAdminPage() {
   return (
     <>
       <Row>
@@ -16,11 +15,11 @@ export default function HomePage() {
 
       <Row className="flex-row">
         <Col xs={3} className="sideNav-container">
-          <SideNavComponent isGroupOwner={isGroupOwner}/>
+            <GroupAdminSideNaV/>
         </Col>
 
         <Col xs={9} className="main-content">
-          <Outlet />
+          {/* <Outlet /> */}
         </Col>
       </Row>
     </>
