@@ -19,7 +19,7 @@ export default function GroupAdminPage() {
         </Col>
 
         <Col xs={9} className="main-content">
-          {/* <Outlet /> */}
+          <Outlet />
         </Col>
       </Row>
     </>
