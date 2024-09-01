@@ -16,6 +16,8 @@ import SiteAdmin from "./pages/SiteAdminpage";
 import GroupCreateRequestList from "./components/groupCreateRequestList";
 import GroupCreateRequestDetails from "./components/groupCreateRequestDetails";
 import GroupAdminPage from "./pages/GroupAdminPage";
+import JoinRequestList from "./components/joinRequestList";
+import MemberManageList from "./components/memberManageList";
 
 // Data test add by NA
 const groups = [
@@ -123,7 +125,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/HomePage/Groups/:GroupID/ManageGroup",
-    element: <GroupAdminPage/>
+    element: <GroupAdminPage/>,
+    children: [
+      {
+        index:true,
+        element: <JoinRequestList/>
+      },
+      {
+        path: "JoinRequests",
+        element: <JoinRequestList/>
+      },
+      {
+        path:"Members",
+        element: <MemberManageList/>
+      }
+    ]
   }
  
 ]);
