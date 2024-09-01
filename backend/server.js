@@ -19,6 +19,8 @@ import notificationRoutes from "./routers/notifications.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 
 /* CONFIGURATION */
+const port = process.env.PORT || 6001;
+const URL = process.env.MONGODB_URI;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
@@ -39,7 +41,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URI,
+            mongoUrl: URL,
             collectionName: "sessions",
         }),
         cookie: {
@@ -52,12 +54,10 @@ app.use(
 app.use("/auth", authRoutes);
 app.use("/users", isAuthenticated, userRoutes);
 app.use("/posts", isAuthenticated, postRoutes);
-app.use("/groups", groupRoutes);
+app.use("/groups", isAuthenticated, groupRoutes);
 app.use("/notifications", isAuthenticated, notificationRoutes);
 
 /* MONGODB CONNECTION */
-const port = process.env.PORT || 6001;
-const URL = process.env.MONGODB_URI;
 mongoose.connect(URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
