@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema(
         picturePath:
         {
             type: String,
-            default: "/assets/default_avatar.jpg"
+            default: "default_avatar.jpg"
         },
         userRole:
         {
