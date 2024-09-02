@@ -23,18 +23,18 @@ router.post('/:userId/friendRequests', isAuthenticated, sendFriendRequest); // S
 router.post('/:userId/groupRequests', isAuthenticated, sendGroupJoinRequest);   // Send a group request
 
 /* READ */
+router.get('/search', isAuthenticated, searchUsers);  // Search user
 router.get("/:userId", isAuthenticated, getUser);   // Get user profile
 router.get("/:userId/friends", isAuthenticated, getUserFriends);    // Get user's friends
 router.get("/:userId/groups", isAuthenticated, getUserGroups);  // Get user's groups
-router.get('/search', isAuthenticated, searchUsers);  // Search user
 
 /* UPDATE */
 router.put("/:userId",
     isAuthenticated,
     upload.single("picture"),   // add upload middleware
     updateUserProfile);
-router.put('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
-router.put('/friendRequests/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
+router.patch('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
+router.patch('/friendRequests/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
 
 /* DELETE */
 router.delete("/:userId/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
