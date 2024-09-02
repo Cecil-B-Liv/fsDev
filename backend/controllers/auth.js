@@ -33,8 +33,8 @@ export const register = async (req, res) => {
             email,
             telephone,
             password: passwordHash, // Save encrypted password
-            picturePath,
             userBio,
+            picturePath,
         });
         const savedUser = await newUser.save();
         // Respond with a success message and the saved user data
@@ -50,7 +50,10 @@ export const login = async (req, res) => {
         const { email, password } = req.body;
         // Find user by email
         const user = await User.findOne({ email: email });
-        if (!user) return res.status(400).json({ msg: "User does not exist." });
+
+        if (!user) {
+            return res.status(400).json({ msg: "User does not exist." });
+        }
 
         // Compare password
         const isMatch = await bcrypt.compare(password, user.password);
@@ -64,7 +67,7 @@ export const login = async (req, res) => {
         // Remove password from user object before sending to client
         delete user.password;
 
-        res.status(200).json({ token, user });
+        res.status(200).json({ msg: "Login successful", user });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
