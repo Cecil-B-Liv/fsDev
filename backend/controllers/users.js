@@ -92,8 +92,15 @@ export const sendGroupJoinRequest = async (req, res) => {
 // Get user profile
 export const getUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findById(id);
+        const { userId } = req.params;
+        console.log(userId);
+        const user = await User.findById(userId);
+
+        // Check if user is found
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
         // Exclude sensitive information like password
         const { password, ...otherDetails } = user._doc;
         res.status(200).json(otherDetails);
@@ -105,11 +112,11 @@ export const getUser = async (req, res) => {
 // Get user's friends
 export const getUserFriends = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findById(id);
+        const { userId } = req.params;
+        const user = await User.findById(userId);
 
         const friends = await Promise.all(
-            user.friendList.map((id) => User.findById(id))
+            user.friendList.map((id) => User.findById(friendId))
         );
 
         // Populate the friendList
@@ -127,11 +134,11 @@ export const getUserFriends = async (req, res) => {
 // Get user's groups
 export const getUserGroups = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await User.findById(id);
+        const { userId } = req.params;
+        const user = await User.findById(userId);
 
         const groups = await Promise.all(
-            user.groupList.map((id) => Group.findById(id))
+            user.groupList.map((id) => Group.findById(groupId))
         );
 
         // Populate the groupList
@@ -152,11 +159,17 @@ export const searchUsers = async (req, res) => {
         // Get the search query from the request
         const { q } = req.query;
 
+        // Set a minimum query length
+        const minQueryLength = 3;
+        if (q.length < minQueryLength) {
+            return res.status(200).json([]); // Return an empty array
+        }
+
         // Perform a search on username or displayName
         const users = await User.find({
             $or: [
-                { username: { $regex: new RegExp(qs, "i") } },   // Case-insensitive search on username
-                { displayName: { $regex: new RegExp(q, "i") } },    // Case-insensitive search on displayName
+                { username: { $regex: new RegExp(`\\b${q}\\b`, "i") } },   // Case-insensitive search on username
+                { displayName: { $regex: new RegExp(`\\b${q}\\b`, "i") } },    // Case-insensitive search on displayName
             ],
         }).limit(10); // Limit the results to 10
 
@@ -170,12 +183,12 @@ export const searchUsers = async (req, res) => {
 // Update user profile
 export const updateUserProfile = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { userId } = req.params;
         const { ...updatedFields } = req.body; // Get updated fields from request body
 
         // Find and update the user
         const updatedUser = await User.findByIdAndUpdate(
-            id,
+            userId,
             { $set: updatedFields },
             { new: true } // Return the updated user document
         );
@@ -189,8 +202,8 @@ export const updateUserProfile = async (req, res) => {
 // Remove a friend
 export const removeFriend = async (req, res) => {
     try {
-        const { id, friendId } = req.params;
-        const user = await User.findById(id);
+        const { userId, friendId } = req.params;
+        const user = await User.findById(userId);
         const friend = await User.findById(friendId);
 
         // Check if user or friend exits
@@ -204,7 +217,7 @@ export const removeFriend = async (req, res) => {
             // Remove friend from user's friendList
             user.friendList = user.friendList.filter((id) => id !== friendId);
             // Remove user from friend's friendlist
-            friend.friendList = friend.friendList.filter((id) => id !== id);
+            friend.friendList = friend.friendList.filter((friendId) => friendId !== id);
 
             await user.save();
             await friend.save();
@@ -220,7 +233,7 @@ export const removeFriend = async (req, res) => {
             // Create a notification for the removed friend
             await createNotification(
                 friendId,
-                id,
+                userId,
                 "friendRemoved",
                 `${user.username} (${user.displayName}) has unfriend you!`
             );
