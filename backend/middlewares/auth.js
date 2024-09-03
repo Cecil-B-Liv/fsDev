@@ -35,7 +35,7 @@ export const isGroupAdmin = async (req, res, next) => {
             try {
                 const group = await Group.findById(req.params.groupId);
 
-                if (!group || group.groupAdminId.toString() !== req.session.userId) {
+                if (!group || group.groupAdminId !== req.session.userId) {
                     return res.status(403).json({ msg: "Forbidden - Not the group admin" });
                 }
             } catch (error) {
