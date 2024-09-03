@@ -7,38 +7,28 @@ import Comment from "../models/Comment.js";
 // Create a user post
 export const createPost = async (req, res) => {
     try {
+        const currentUserId = req.session.userId;
         const {
-            userId,
-            groupId,
             postVisibility,
             postDescription,
             postPicturePath,
         } = req.body;
+        const user = await User.findById(currentUserId);
 
         // Find the user who is creating the post
-        const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // If it's a group post, check if the user is a member
-        if (groupId) {
-            const group = await Group.findById(groupId);
-            if (!group || !group.groupMemberList.includes(userId)) {
-                return res.status(403).json({ message: "Not authorized to post in this group" });
-            }
-            // Set visibility to 'group' if posting in a group
-            postVisibility = "group";
-        }
-
         const newPost = new Post({
-            userId,
-            groupId,
+            currentUserId,
+            groupId: null,
             postVisibility,
             postDescription,
             postPicturePath,
-            postReaction: [],
-            postComments: [],
+            // postReaction: [],
+            // postComments: [],
+            // postHistory: [],
         });
         await newPost.save();
 
@@ -54,16 +44,15 @@ export const createPost = async (req, res) => {
 // Create a user comment to a post
 export const createComment = async (req, res) => {
     try {
-        const { postId, userId, commentMessage } = req.body;
-        // Fetch the post owner's ID
+        const currentUserId = req.session.userId;
+        const { postId, commentMessage } = req.body;
         const post = await Post.findById(postId);
         const postOwnerId = post.userId;
-        // Fetch the commenter's details
-        const commenter = await User.findById(userId);
+        const commenter = await User.findById(currentUserId);
 
         const newComment = new Comment({
             postId,
-            userId,
+            currentUserId,
             commentMessage,
         });
         await newComment.save();
@@ -78,10 +67,10 @@ export const createComment = async (req, res) => {
             .populate("postComments.userId", "username displayName picturePath") // Populate user details for each comment
 
         // Create a notification for the post owner (if it's not their own comment)
-        if (userId.toString() !== postOwnerId.toString()) {
+        if (currentUserId !== postOwnerId) {
             await createNotification(
                 postOwnerId,
-                userId,
+                currentUserId,
                 "addedComment",
                 `${commenter.username} (${commenter.displayName}) commented on your post!`
             );
@@ -97,10 +86,10 @@ export const createComment = async (req, res) => {
 // Get all posts to the feed
 export const getFeedPosts = async (req, res) => {
     try {
-        const userId = req.session.userId;
+        const currentUserId = req.session.userId;
 
         // Fetch the user's data to get their friend list and group list
-        const user = await User.findById(userId);
+        const user = await User.findById(currentUserId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
@@ -120,11 +109,13 @@ export const getFeedPosts = async (req, res) => {
                 },
                 // Posts from any visibility
                 {
-                    userId,
+                    currentUserId,
                 },
             ],
         })
             .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
         res.status(200).json(posts);
@@ -134,7 +125,7 @@ export const getFeedPosts = async (req, res) => {
     }
 };
 
-// Get all posts to the public feed
+// Only get all public posts to the feed
 export const getPublicFeed = async (req, res) => {
     try {
         const posts = await Post.find({ postVisibility: "public" })
@@ -147,17 +138,19 @@ export const getPublicFeed = async (req, res) => {
     }
 };
 
-// Get all posts to the friends feed
+// Only get all friend posts to the feed
 export const getFriendsFeed = async (req, res) => {
     try {
-        const { userId } = req.params;
-        const user = await User.findById(userId);
+        const currentUserId = req.session.userId;
+        const user = await User.findById(currentUserId);
 
         const posts = await Post.find({
-            userId: { $in: [...user.friendList, userId] },
-            postVisibility: { $in: ["public", "friends"] },
+            userId: { $in: [...user.friendList, currentUserId] },
+            postVisibility: "friends",
         })
             .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
         res.status(200).json(posts);
@@ -166,29 +159,88 @@ export const getFriendsFeed = async (req, res) => {
     }
 };
 
-// Get all posts from a user
+// Only get all posts from a user
 export const getUserPosts = async (req, res) => {
     try {
         const { userId } = req.params;
-        const post = await Post.find({ userId })
+        const currentUserId = req.session.userId;
+        const user = await User.findById(userId);
+
+        // Fetch the user's posts
+        const posts = await Post.find({ userId })
             .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
-        res.status(200).json(post);
+        // Filter posts based on visibility and relationships
+        const filteredPosts = await Promise.all(posts.map(async (post) => {
+            if (post.postVisibility === 'public') {
+                return post; // Public posts are always visible
+            } else if (post.postVisibility === 'friends') {
+                // Check if the current user is a friend of the post's owner
+                if (user.friendList.includes(currentUserId)) {
+                    return post;
+                }
+            } else if (post.postVisibility === 'group') {
+                // Check if the group is public OR the current user is in the same group
+                const group = await Group.findById(post.groupId);
+                if (group.groupVisibility === 'public' || group.groupMemberList.includes(currentUserId)) {
+                    return post;
+                }
+            }
+            return null; // Post is not visible to the current user
+        }));
+
+        // Remove posts that are not visible
+        const visiblePosts = filteredPosts.filter(post => post !== null);
+
+        res.status(200).json(visiblePosts);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
 };
 
-// Get all posts from a group
+// Only get all posts from a group
 export const getGroupPosts = async (req, res) => {
     try {
+        const currentUserId = req.session.userId;
         const { groupId } = req.params;
-        const post = await Post.find({ groupId })
+        const group = await Group.findById(groupId);
+
+        // Check if the group exists
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        // Check the group visibility
+        if (group.groupVisibility !== "public" &&
+            !group.groupMemberList.includes(currentUserId)) {
+            return res.status(403).json({ message: "This group is not public" });
+        }
+
+        // Fetch posts from the public group
+        const posts = await Post.find({ groupId })
             .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
-        res.status(200).json(post);
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
+
+// Get all posts for siteAdmin
+export const adminGetPosts = async (req, res) => {
+    try {
+        const posts = await Post.find()
+            .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
+            .sort({ createdAt: -1 });
+        res.status(200).json(posts);
     } catch (err) {
         res.status(404).json({ message: err.message });
     }
@@ -198,17 +250,16 @@ export const getGroupPosts = async (req, res) => {
 // Add/Update post reactions
 export const reactPost = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { userId, reactionType } = req.body;
-        const post = await Post.findById(id);
-        // Fetch the post owner's ID
+        const currentUserId = req.session.userId;
+        const { postId } = req.params;
+        const { reactionType } = req.body;
+        const post = await Post.findById(postId);
         const postOwnerId = post.userId;
-        // Fetch the reactor's details
-        const reactor = await User.findById(userId);
+        const reactor = await User.findById(currentUserId);
 
         // Check if the user has already reacted the post
         const existingReactionIndex = post.postReaction.findIndex(
-            (reaction) => reaction.userId.toString() === userId
+            (reaction) => reaction.userId === currentUserId
         );
 
         if (existingReactionIndex !== -1) {
@@ -216,14 +267,14 @@ export const reactPost = async (req, res) => {
             post.postReaction[existingReactionIndex].type = reactionType;
         } else {
             // React the post if hasn't reacted
-            post.postReaction.push({ userId, type: reactionType });
+            post.postReaction.push({ currentUserId, type: reactionType });
         }
 
         // Create a notification for the post owner
-        if (userId.toString() !== postOwnerId.toString()) {
+        if (currentUserId !== postOwnerId) {
             await createNotification(
                 postOwnerId,
-                userId,
+                currentUserId,
                 "addedReaction",
                 `${reactor.username} (${reactor.displayName}) reacted to your post!`
             );
@@ -239,17 +290,18 @@ export const reactPost = async (req, res) => {
 // Update user post
 export const updatePost = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { userId, newPostDescription, newPostPicturePath } = req.body;
+        const currentUserId = req.session.userId;
+        const { postId } = req.params;
+        const { newPostDescription, newPostPicturePath } = req.body;
+        const post = await Post.findById(postId);
 
         // Find the post
-        const post = await Post.findById(id);
         if (!post) {
             return res.status(404).json({ msg: "Post not found" });
         }
 
         // Check if the current user is the owner of the post
-        if (post.userId.toString() !== userId) {
+        if (post.userId !== currentUserId) {
             return res.status(403).json({ msg: "Unauthorized to edit this post" });
         }
 
@@ -276,17 +328,18 @@ export const updatePost = async (req, res) => {
 // Update user comment from a post
 export const updateComment = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { userId, NewCommentMessage } = req.body;
+        const currentUserId = req.session.userId;
+        const { commentId } = req.params;
+        const { NewCommentMessage } = req.body;
+        const comment = await Comment.findById(commentId);
 
         // Find the comment
-        const comment = await Comment.findById(id);
         if (!comment) {
             return res.status(404).json({ msg: "Comment not found" });
         }
 
         // Check if the current user is the owner of the comment
-        if (comment.userId.toString() !== userId) {
+        if (comment.userId !== currentUserId) {
             return res.status(403).json({ msg: "Unauthorized to edit this post" });
         }
 
@@ -314,24 +367,30 @@ export const updateComment = async (req, res) => {
 // Delete a post
 export const deletePost = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { userId, userRole } = req.body;
+        const currentUserId = req.session.userId;
+        const { postId } = req.params;
+        const user = await User.findById(currentUserId);
+        const post = await Post.findById(postId);
+        const group = await Group.findById(post.groupId);
 
         // Find the post
-        const post = await Post.findById(id);
         if (!post) {
             return res.status(404).json({ msg: "Post not found" });
         }
 
-        // Check if the current user is the owner of the post or a site admin
-        if (post.userId.toString() !== userId && userRole !== "siteAdmin") {
+        // Check if the current user is the owner of the post,
+        // the group admin if the post belong to the group, or a site admin
+        if (post.userId !== currentUserId ||
+            user.userRole !== "siteAdmin" ||
+            group.groupAdminId !== currentUserId
+        ) {
             return res.status(403).json({ msg: "Unauthorized to delete this post" });
         }
 
         // Delete the post and associated comments
         await Promise.all([
-            Post.findByIdAndDelete(id),
-            Comment.deleteMany({ postId: id }),
+            Post.findByIdAndDelete(postId),
+            Comment.deleteMany({ postId: postId }),
         ]);
 
         res.status(200).json({ msg: "Post and associated comments deleted successfully" });
@@ -343,30 +402,32 @@ export const deletePost = async (req, res) => {
 // Deleta a comment
 export const deleteComment = async (req, res) => {
     try {
-        const { id } = req.params;
-        const { userId, userRole } = req.body;
+        const currentUserId = req.session.userId;
+        const { commentId } = req.params;
+        const user = await User.findById(currentUserId);
+        const comment = await Comment.findById(commentId);
+        const post = await Post.findById(comment.postId);
 
         // Find the comment
-        const comment = await Comment.findById(id);
         if (!comment) {
             return res.status(404).json({ msg: "Comment not found" });
         }
 
         // Find the post associated with the comment
-        const post = await Post.findById(comment.postId);
         if (!post) {
             return res.status(404).json({ message: "Post not found" });
         }
 
         // Check if the current user is the owner of the comment or a site admin
-        if (comment.userId.toString() !== userId && userRole !== "siteAdmin") {
+        if (comment.userId !== currentUserId ||
+            user.userRole !== "siteAdmin") {
             return res.status(403).json({ msg: "Unauthorized to delete this comment" });
         }
 
         // Delete the comment and update the post
         await Promise.all([
-            Comment.findByIdAndDelete(id),
-            Post.findByIdAndUpdate(post._id, { $pull: { postComments: id } }),
+            Comment.findByIdAndDelete(commentId),
+            Post.findByIdAndUpdate(post._id, { $pull: { postComments: commentId } }),
         ]);
 
         res.status(200).json({ msg: "Comment deleted successfully" });
