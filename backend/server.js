@@ -53,11 +53,13 @@ app.use(
 );
 
 /* ROUTES */
-app.use("/auth", authRoutes);
-app.use("/users", isAuthenticated, userRoutes);
-app.use("/posts", isAuthenticated, postRoutes);
-app.use("/groups", isAuthenticated, groupRoutes);
-app.use("/notifications", isAuthenticated, notificationRoutes);
+// http://localhost:3001/auth/register (example)
+// http://localhost:3001/posts/feed (example)
+app.use("/auth", authRoutes);   // For Register, Login, Logout
+app.use("/users", isAuthenticated, userRoutes); // For user related
+app.use("/posts", isAuthenticated, postRoutes); // For post related
+app.use("/groups", isAuthenticated, groupRoutes);   // For group related
+app.use("/notifications", isAuthenticated, notificationRoutes); // For notification related
 
 /* MONGODB CONNECTION */
 mongoose.connect(URL)
