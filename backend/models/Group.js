@@ -25,7 +25,7 @@ const GroupSchema = new mongoose.Schema(
             enum: ["public", "private"],
             default: "public"
         },
-        pendingRequests:
+        pendingJoinRequests:
             [{
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User",
