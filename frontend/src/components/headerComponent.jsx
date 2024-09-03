@@ -94,7 +94,7 @@ export default function Header() {
                             id="basic-nav-dropdown"
                             align='end'
                         >
-                            <NavDropdown.Item href="#account/3.1">📰 Your Page</NavDropdown.Item>
+                            <NavDropdown.Item href="HomePage/Profile">📰 Your Page</NavDropdown.Item>
                             <NavDropdown.Item href="#account/3.2">⚙️ Preference</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item href="#account/3.4">❎ Logout</NavDropdown.Item>

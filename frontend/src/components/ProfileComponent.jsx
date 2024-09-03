@@ -1,76 +1,128 @@
+import React, { useState } from "react";
+import UserPostComponent from "../components/userPostComponent"; 
+import "bootstrap/dist/css/bootstrap.min.css"; 
+
 const ProfileComponent = () => {
-    return (
-        <div className="container mt-4">
-            <div className="card bg-dark text-white">
-                <div className="card-body">
-                    <div className="d-flex align-items-center">
-                        <img
-                            src="https://via.placeholder.com/80" // Placeholder image URL
-                            alt="Profile"
-                            className="rounded-circle"
-                            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                        />
-                        <div className="ms-3">
-                            <h4 className="mb-0">Hotaru</h4>
-                            <p className="mb-1">I love to chill and have fun</p>
-                            <p className="mb-0"><i className="bi bi-geo-alt"></i> Somewhere in Penacony</p>
-                        </div>
-                        <button className="btn btn-primary ms-auto">Edit Profile</button>
-                    </div>
-                </div>
+  const [isEditing, setIsEditing] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "Hotaru",
+    username: "hotaru123",
+    location: "Somewhere in Penacony",
+    email: "hotaru@example.com",
+    phoneNumber: "123-456-7890",
+  });
+  const [tempProfile, setTempProfile] = useState(profile);
+
+  const handleEditProfile = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveProfile = () => {
+    setProfile(tempProfile);
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setTempProfile(profile);
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempProfile({ ...tempProfile, [name]: value });
+  };
+
+  return (
+    <div className="container mt-4">
+      <div className="card bg-dark text-white">
+        <div className="card-body">
+          <div className="d-flex align-items-center">
+            <img
+              src="https://via.placeholder.com/80"
+              alt="Profile"
+              className="rounded-circle"
+              style={{ width: "80px", height: "80px", objectFit: "cover" }}
+            />
+            <div className="ms-3 flex-grow-1">
+              {isEditing ? (
+                <form onSubmit={handleSaveProfile}>
+                  <input
+                    type="text"
+                    name="name"
+                    value={tempProfile.name}
+                    onChange={handleInputChange}
+                    className="form-control mb-1"
+                  />
+                  <input
+                    type="text"
+                    name="username"
+                    value={tempProfile.username}
+                    onChange={handleInputChange}
+                    className="form-control mb-1"
+                  />
+                  <input
+                    type="text"
+                    name="location"
+                    value={tempProfile.location}
+                    onChange={handleInputChange}
+                    className="form-control mb-1"
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={tempProfile.email}
+                    onChange={handleInputChange}
+                    className="form-control mb-1"
+                  />
+                  <input
+                    type="text"
+                    name="phoneNumber"
+                    value={tempProfile.phoneNumber}
+                    onChange={handleInputChange}
+                    className="form-control mb-1"
+                  />
+                  <div className="d-flex justify-content-end mt-3">
+                    <button
+                      type="submit"
+                      className="btn btn-success me-2"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={handleCancelEdit}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  <h4 className="mb-0">{profile.name}</h4>
+                  <p className="mb-1">@{profile.username}</p>
+                  <p className="mb-1">Lives in {profile.location}</p>
+                  <p className="mb-1">Email: {profile.email}</p>
+                  <p className="mb-0">Phone: {profile.phoneNumber}</p>
+                </>
+              )}
             </div>
-
-            <div className="mt-4">
-                <div className="card">
-                    <div className="card-body">
-                        <div className="d-flex justify-content-between">
-                            <div>
-                                <strong>Sam Guy</strong>
-                                <p className="text-muted mb-1">15 mins ago</p>
-                            </div>
-                            <div className="dropdown">
-                                <button
-                                    className="btn btn-link text-muted"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    <i className="bi bi-three-dots"></i>
-                                </button>
-                                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a className="dropdown-item" href="#">Action</a></li>
-                                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <p>Bangboos are cure as shit<br />Cats are no match fr fr...</p>
-                        <img
-                            src="image-url"
-                            alt="Post"
-                            className="img-fluid rounded"
-                        />
-
-                        <div className="d-flex mt-3">
-                            <div className="me-3">
-                                <i className="bi bi-heart"></i> 110
-                            </div>
-                            <div>
-                                <i className="bi bi-chat"></i> 32
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="mt-3 text-muted">
-                Change the color of both, these shits look dumb af
-            </div>
+            {!isEditing && (
+              <button
+                className="btn btn-primary"
+                onClick={handleEditProfile}
+              >
+                Edit Profile
+              </button>
+            )}
+          </div>
         </div>
-    );
-
+      </div>
+      <div className="mt-4">
+        <UserPostComponent />
+      </div>
+    </div>
+  );
 };
 
 export default ProfileComponent;
