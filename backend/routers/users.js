@@ -1,17 +1,18 @@
 import express from "express";
 import {
     getUser,
+    getUsers,
+    searchUsers,
     updateUserProfile,
     getUserFriends,
-    removeFriend,
+    getUserGroups,
     sendFriendRequest,
     sendGroupJoinRequest,
     acceptFriendRequest,
     denyFriendRequest,
-    searchUsers,
+    removeFriend,
     suspendUser,
     resumeUser,
-    getUserGroups,
 } from "../controllers/users.js";
 import { isAuthenticated, isSiteAdmin } from "../middlewares/auth.js";
 import upload from "../middlewares/upload.js";
@@ -19,17 +20,18 @@ import upload from "../middlewares/upload.js";
 const router = express.Router();
 
 /* CREATE */
-router.post('/:userId/friendRequests', isAuthenticated, sendFriendRequest); // Send a friend request
-router.post('/:userId/groupRequests', isAuthenticated, sendGroupJoinRequest);   // Send a group request
+router.post('/friendRequests', isAuthenticated, sendFriendRequest); // Send a friend request
+router.post('/groupRequests', isAuthenticated, sendGroupJoinRequest);   // Send a group request
 
 /* READ */
 router.get('/search', isAuthenticated, searchUsers);  // Search user
 router.get("/:userId", isAuthenticated, getUser);   // Get user profile
 router.get("/:userId/friends", isAuthenticated, getUserFriends);    // Get user's friends
 router.get("/:userId/groups", isAuthenticated, getUserGroups);  // Get user's groups
+router.get("/", isAuthenticated, getUsers);    // Get a list of users
 
 /* UPDATE */
-router.put("/:userId",
+router.put("/",
     isAuthenticated,
     upload.single("picture"),   // add upload middleware
     updateUserProfile);
@@ -37,7 +39,7 @@ router.patch('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendR
 router.patch('/friendRequests/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
 
 /* DELETE */
-router.delete("/:userId/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
+router.delete("/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
 
 /* Suspend or Resume user (admin only) */
 router.put("/:userId/suspend", isAuthenticated, isSiteAdmin, suspendUser);
