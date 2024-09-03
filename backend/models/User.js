@@ -64,11 +64,6 @@ const UserSchema = new mongoose.Schema(
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User",
             }],
-        groupRequests:
-            [{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Group",
-            }],
         isSuspended:
         {
             type: Boolean,
