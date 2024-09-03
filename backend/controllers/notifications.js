@@ -50,9 +50,9 @@ export const createNotification = async (
 // Get all notifications for a user
 export const getNotifications = async (req, res) => {
     try {
-        const userId = req.session.userId;  // Get the authenticated user's ID
+        const currentUserId = req.session.userId;  // Get the authenticated user's ID
 
-        const notifications = await Notification.find({ recipientId: userId })
+        const notifications = await Notification.find({ recipientId: currentUserId })
             .populate("senderId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
