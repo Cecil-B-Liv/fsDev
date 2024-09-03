@@ -59,10 +59,13 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ msg: "Invalid credentials." });
 
-        // Set userId, username and userRole in the session
+        // Check if the user is suspended
+        if (user.isSuspended) {
+            return res.status(403).json({ msg: "Your account is currently suspended. Please contact the site admin." });
+        }
+
+        // Set userId in the session
         req.session.userId = user._id;
-        req.session.username = user.username;   // Optional
-        req.session.userRole = user.userRole;   // Optional
 
         // Remove password from user object before sending to client
         delete user.password;
