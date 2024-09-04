@@ -189,7 +189,7 @@ export const searchUsers = async (req, res) => {
     }
 };
 
-// Get a list of user
+// Get a list of users
 export const getUsers = async (req, res) => {
     try {
         const users = await User.find().sort({ createdAt: -1 });
