@@ -31,10 +31,10 @@ router.get("/:userId/groups", isAuthenticated, getUserGroups);  // Get user's gr
 router.get("/", isAuthenticated, getUsers);    // Get a list of users
 
 /* UPDATE */
-router.put("/",
+router.put("/update",
     isAuthenticated,
     upload.single("picture"),   // add upload middleware
-    updateUserProfile);
+    updateUserProfile);     // Update user profile
 router.patch('/friend-request/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
 router.patch('/friend-request/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
 
@@ -42,7 +42,7 @@ router.patch('/friend-request/:requestId/deny', isAuthenticated, denyFriendReque
 router.delete("/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
 
 /* Suspend or Resume user (admin only) */
-router.put("/:userId/suspend", isAuthenticated, isSiteAdmin, suspendUser);
-router.put("/:userId/resume", isAuthenticated, isSiteAdmin, resumeUser);
+router.patch("/:userId/suspend", isAuthenticated, isSiteAdmin, suspendUser);
+router.patch("/:userId/resume", isAuthenticated, isSiteAdmin, resumeUser);
 
 export default router;
