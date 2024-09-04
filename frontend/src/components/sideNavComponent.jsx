@@ -46,9 +46,6 @@ export default function SideNav({ isGroupOwner }) {
               <Nav.Link href="#discovery">🔍 Discovery</Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/CreateGroup">➕ Create new group</Nav.Link>
-            </Button>
-            <Button>
               <Nav.Link href="/">➕ Sign Out</Nav.Link>
             </Button>
           </div>
