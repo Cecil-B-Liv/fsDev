@@ -8,6 +8,7 @@ import {
     getUnapprovedGroups,
     approveGroupCreation,
     denyGroupCreation,
+    updateGroup,
     approveGroupRequest,
     denyGroupRequest,
     removeGroupMember,
@@ -15,12 +16,16 @@ import {
     deleteGroupComment,
 } from "../controllers/groups.js";
 import { isAuthenticated, isGroupAdmin, isSiteAdmin } from "../middlewares/auth.js";
+import upload from "../middlewares/upload.js";
 
 const router = express.Router();
 
 /* CREATE */
-router.post("/create", isAuthenticated, createGroup);
-router.post("/:groupId/posts/create", isAuthenticated, createGroupPost);
+router.post("/create", isAuthenticated, createGroup);   // Create a new group
+router.post("/:groupId/posts/create",
+    isAuthenticated,
+    upload.single("picture"),   // add upload middleware
+    createGroupPost);   // Create a group post
 
 /* READ */
 router.get("/search", isAuthenticated, searchGroups);   // Search all approved groups
@@ -29,22 +34,27 @@ router.get("/:groupId", isAuthenticated, getGroup);  // Get a specific approved 
 router.get("/unapproved", isAuthenticated, isSiteAdmin, getUnapprovedGroups);   // Get all unapproved groups for siteAdmin
 
 /* UPDATE */
-router.put("/:groupId/approve",
+router.patch("/:groupId/approve",
     isAuthenticated,
     isSiteAdmin,
     approveGroupCreation
 );  // Approve a group creation by siteAdmin
-router.put("/:groupId/deny",
+router.patch("/:groupId/deny",
     isAuthenticated,
     isSiteAdmin,
     denyGroupCreation
 );  // Deny a group creation by siteAdmin
-router.put("/:groupId/requests/:requestId/approve",
+router.put("/:groupId/update",
+    isAuthenticated,
+    isGroupAdmin,
+    updateGroup
+);  // Update a group detail
+router.patch("/:groupId/requests/:requestId/approve",
     isAuthenticated,
     isGroupAdmin,
     approveGroupRequest
 ); // Approve a group join request by groupAdmin
-router.put("/:groupId/requests/:requestId/deny",
+router.patch("/:groupId/requests/:requestId/deny",
     isAuthenticated,
     isGroupAdmin,
     denyGroupRequest
