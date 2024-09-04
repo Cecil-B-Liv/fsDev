@@ -24,10 +24,10 @@ router.post("/:postId/comments/create", isAuthenticated, createComment);   // Fo
 
 /* READ */
 router.get("/", isAuthenticated, getFeedPosts);     // Get all user unfilter posts (depend on user relationship and post visibility)
-router.get("/public", isAuthenticated, getPublicFeed);      // Get all user public posts
-router.get("/friends", isAuthenticated, getFriendsFeed);    // Get all user friend posts
+router.get("/public", isAuthenticated, getPublicFeed);      // Get all user public posts (filter)
+router.get("/friends", isAuthenticated, getFriendsFeed);    // Get all user friend posts (filter)
 router.get("/:userId", isAuthenticated, getUserPosts);      // Get all posts from a user
-router.get("/:groupId", isAuthenticated, getGroupPosts);    // Get all posts from a group
+// router.get("/:groupId", isAuthenticated, getGroupPosts);    // *Get all posts from a group (maybe use getGroup from groups.js router)*
 router.get("/admin", isAuthenticated, isSiteAdmin, adminGetPosts);    // Get all posts without obstruction for siteAdmin
 
 /* UPDATE */
