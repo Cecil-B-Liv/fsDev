@@ -237,7 +237,7 @@ export const approveGroupCreation = async (req, res) => {
             group.groupAdminId,
             req.session.userId,
             "groupCreationApproved",
-            `Your group '${group.name}' has been approved!`
+            `Your group '${group.name}' creation has been approved!`
         );
 
         res.status(200).json({ message: "Group creation approved successfully" });
@@ -270,7 +270,7 @@ export const denyGroupCreation = async (req, res) => {
             group.groupAdminId,
             req.session.userId,
             "groupCreationDenied",
-            `Your group '${group.name}' has been denied.`
+            `Your group '${group.name}' creation has been denied.`
         );
 
         res.status(200).json({ message: "Group creation denied and group deleted" });
@@ -282,10 +282,10 @@ export const denyGroupCreation = async (req, res) => {
 // Approve a group join request (groupAdmin)
 export const approveGroupRequest = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const groupAdminId = req.session.userId;
         const { groupId, requestId } = req.params;
         const group = await Group.findById(groupId);
-        const groupAdmin = await User.findById(currentUserId);
+        const groupAdmin = await User.findById(groupAdminId);
 
         // Check if the request exists
         if (!group.pendingRequests.includes(requestId)) {
@@ -310,7 +310,7 @@ export const approveGroupRequest = async (req, res) => {
         // Create a notification to the approved user
         await createNotification(
             requestId,
-            currentUserId,
+            groupAdminId,
             "groupMemberAccepted",
             `Your request to join group '${group.name}' has been approved by ${groupAdmin.username} (${groupAdmin.displayName})!`
         );
@@ -324,9 +324,9 @@ export const approveGroupRequest = async (req, res) => {
 // Deny a group join request (groupAdmin)
 export const denyGroupRequest = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const groupAdminId = req.session.userId;
         const { groupId, requestId } = req.params;
-        const groupAdmin = await User.findById(currentUserId);
+        const groupAdmin = await User.findById(groupAdminId);
 
         const group = await Group.findById(groupId);
         if (!group) {
@@ -349,7 +349,7 @@ export const denyGroupRequest = async (req, res) => {
         // Create a notification to the denied user
         await createNotification(
             requestId,
-            currentUserId,
+            groupAdminId,
             "groupMemberDenied",
             `Your request to join group '${group.name}' has been declined by ${groupAdmin.username} (${groupAdmin.displayName}).`
         );
@@ -364,11 +364,11 @@ export const denyGroupRequest = async (req, res) => {
 // Remove a group member (groupAdmin)
 export const removeGroupMember = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const groupAdminId = req.session.userId;
         const { groupId, memberId } = req.params;
         const group = await Group.findById(groupId);
         const member = await User.findById(memberId);
-        const groupAdmin = await User.findById(currentUserId);
+        const groupAdmin = await User.findById(groupAdminId);
 
         // Check if the group exists
         if (!group) {
@@ -376,7 +376,7 @@ export const removeGroupMember = async (req, res) => {
         }
 
         // Check if the current user is the group admin of the group
-        if (!group.groupAdminId.equals(currentUserId)) {
+        if (!group.groupAdminId.equals(groupAdminId)) {
             return res.status(403).json({ message: "Only the group admin can remove members" });
         }
 
@@ -401,7 +401,7 @@ export const removeGroupMember = async (req, res) => {
         // Create a notification to the removed member
         await createNotification(
             requestId,
-            currentUserId,
+            groupAdminId,
             "groupMemberRemoved",
             `You have been removed from group '${group.name}' by ${groupAdmin.username} (${groupAdmin.displayName}).`
         );
