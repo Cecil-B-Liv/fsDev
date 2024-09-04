@@ -279,6 +279,35 @@ export const denyGroupCreation = async (req, res) => {
     }
 };
 
+// Update a group detail (groupAdmin)
+export const updateGroup = async (req, res) => {
+    try {
+        const { groupId } = req.params;
+        const { name, description, groupVisibility } = req.body;
+        const group = await Group.findById(groupId);
+
+        // Find the group
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
+        // Check if the user is the group admin
+        if (group.groupAdminId.toString() !== req.session.userId) {
+            return res.status(403).json({ message: "Not authorized to update this group" });
+        }
+
+        // Update the group's information
+        group.name = name;
+        group.description = description;
+        group.groupVisibility = groupVisibility;
+        await group.save();
+
+        res.status(200).json({ message: "Group updated successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
 // Approve a group join request (groupAdmin)
 export const approveGroupRequest = async (req, res) => {
     try {
