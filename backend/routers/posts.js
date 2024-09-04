@@ -15,14 +15,14 @@ import {
     deleteComment,
 } from "../controllers/posts.js";
 import { isAuthenticated, isSiteAdmin } from "../middlewares/auth.js";
-import upload from "../middlewares/upload.js";
+import { uploadPostPicture } from "../middlewares/upload.js";
 
 const router = express.Router();
 
 /* CREATE */
 router.post("/create",
     isAuthenticated,
-    upload.single("picture"),   // add upload middleware
+    uploadPostPicture,   // Add upload middleware
     createPost);    // For create a user post
 router.post("/:postId/comments/create", isAuthenticated, createComment);   // For create a user comment to a post
 
@@ -38,7 +38,7 @@ router.get("/admin", isAuthenticated, isSiteAdmin, adminGetPosts);    // Get all
 router.put("/:postId/react", isAuthenticated, reactPost);   // Add/Update reaction to a post
 router.put("/:postId/update",
     isAuthenticated,
-    upload.single("picture"),   // add upload middleware
+    uploadPostPicture,   // Add upload middleware
     updatePost);    // Update user post
 router.put("/comments/:commentId/update", isAuthenticated, updateComment);  // Update user comment to a post
 

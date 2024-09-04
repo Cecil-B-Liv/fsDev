@@ -11,9 +11,13 @@ export const createPost = async (req, res) => {
         const {
             postVisibility,
             postDescription,
-            postPicturePath,
         } = req.body;
         const user = await User.findById(currentUserId);
+
+        // Extract filename from uploaded file to the postPicturePath (if available)
+        const postPicturePath = req.files && req.files['postPicturePath']
+            ? req.files['postPicturePath'][0].filename
+            : null;
 
         // Find the user who is creating the post
         if (!user) {
@@ -26,9 +30,6 @@ export const createPost = async (req, res) => {
             postVisibility,
             postDescription,
             postPicturePath,
-            // postReaction: [],
-            // postComments: [],
-            // postHistory: [],
         });
         await newPost.save();
 
@@ -292,7 +293,7 @@ export const updatePost = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
         const { postId } = req.params;
-        const { newPostDescription, newPostPicturePath } = req.body;
+        const { newPostVisibility, newPostDescription } = req.body;
         const post = await Post.findById(postId);
 
         // Find the post
@@ -312,10 +313,17 @@ export const updatePost = async (req, res) => {
         });
 
         // Update the post
+        post.postVisibility = newPostVisibility;
         post.postDescription = newPostDescription;
-        if (newPostPicturePath) {
-            // Update picturePath only if a new one is provided
-            post.postPicturePath = newPostPicturePath;
+
+        // if (newPostPicturePath) {
+        //     // Update picturePath only if a new one is provided
+        //     post.postPicturePath = newPostPicturePath;
+        // }
+        
+        // Check if a new picture was uploaded and update the postPicturePath
+        if (req.files && req.files['postPicturePath']) {
+            post.postPicturePath = req.files['postPicturePath'][0].filename;
         }
         const updatedPost = await post.save();
 
