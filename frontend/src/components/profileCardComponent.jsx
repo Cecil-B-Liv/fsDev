@@ -16,6 +16,10 @@ const ProfileCard = ({ username, location, imageSrc, mode }) => {
     setStatus("denied");
   };
 
+  const handleUnfriend = () => {
+    alert(`${username} has been unfriended.`);
+  };
+
   return (
     <div className="card-container">
       <Card className="profile-card bg-light">
@@ -27,14 +31,21 @@ const ProfileCard = ({ username, location, imageSrc, mode }) => {
             </Card.Title>
             <Card.Text className="text-muted mb-0">{location}</Card.Text>
           </div>
-          <div className="profile-actions ms-auto">
+          <div className="profile-actions ms-auto d-flex">
             {mode === "view" || status === "accepted" ? (
-              <Button variant="primary">Check Profile</Button>
+              <>
+                <Button variant="primary" className="me-2">
+                  Check Profile
+                </Button>
+                <Button variant="danger" onClick={handleUnfriend}>
+                  Unfriend
+                </Button>
+              </>
             ) : status === "denied" ? (
               <p>Denied</p>
             ) : (
               <>
-                <Button variant="primary" onClick={handleAccept}>
+                <Button variant="primary" className="me-2" onClick={handleAccept}>
                   Accept
                 </Button>
                 <Button variant="secondary" onClick={handleDeny}>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import UserPostComponent from "../components/userPostComponent"; 
-import "bootstrap/dist/css/bootstrap.min.css"; 
+import UserPostComponent from "../components/userPostComponent";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProfileComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -17,7 +17,8 @@ const ProfileComponent = () => {
     setIsEditing(true);
   };
 
-  const handleSaveProfile = () => {
+  const handleSaveProfile = (e) => {
+    e.preventDefault(); // Prevent page refresh on form submit
     setProfile(tempProfile);
     setIsEditing(false);
   };
@@ -51,6 +52,7 @@ const ProfileComponent = () => {
                     name="name"
                     value={tempProfile.name}
                     onChange={handleInputChange}
+                    placeholder="Enter your name"
                     className="form-control mb-1"
                   />
                   <input
@@ -58,6 +60,7 @@ const ProfileComponent = () => {
                     name="username"
                     value={tempProfile.username}
                     onChange={handleInputChange}
+                    placeholder="Enter your username"
                     className="form-control mb-1"
                   />
                   <input
@@ -65,6 +68,7 @@ const ProfileComponent = () => {
                     name="location"
                     value={tempProfile.location}
                     onChange={handleInputChange}
+                    placeholder="Enter your location"
                     className="form-control mb-1"
                   />
                   <input
@@ -72,6 +76,7 @@ const ProfileComponent = () => {
                     name="email"
                     value={tempProfile.email}
                     onChange={handleInputChange}
+                    placeholder="Enter your email"
                     className="form-control mb-1"
                   />
                   <input
@@ -79,13 +84,11 @@ const ProfileComponent = () => {
                     name="phoneNumber"
                     value={tempProfile.phoneNumber}
                     onChange={handleInputChange}
+                    placeholder="Enter your phone number"
                     className="form-control mb-1"
                   />
                   <div className="d-flex justify-content-end mt-3">
-                    <button
-                      type="submit"
-                      className="btn btn-success me-2"
-                    >
+                    <button type="submit" className="btn btn-success me-2">
                       Save
                     </button>
                     <button
@@ -108,10 +111,7 @@ const ProfileComponent = () => {
               )}
             </div>
             {!isEditing && (
-              <button
-                className="btn btn-primary"
-                onClick={handleEditProfile}
-              >
+              <button className="btn btn-primary" onClick={handleEditProfile}>
                 Edit Profile
               </button>
             )}
