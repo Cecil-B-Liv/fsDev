@@ -18,6 +18,7 @@ import GroupCreateRequestDetails from "./components/groupCreateRequestDetails";
 import GroupAdminPage from "./pages/GroupAdminPage";
 import JoinRequestList from "./components/joinRequestList";
 import MemberManageList from "./components/memberManageList";
+import Profile from "./components/ProfileComponent"
 
 // Data test add by NA
 const groups = [
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path: "Groups",
         element: <UserGroupsComponent groups={groups} />,
+      },
+      {
+        path: "Profile",
+        element: <Profile/>,
       },
       {
         path: "Groups/:GroupID",
