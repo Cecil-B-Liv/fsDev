@@ -49,7 +49,7 @@ export default function SideNav({ isGroupOwner }) {
               <Nav.Link href="/HomePage/CreateGroup">➕ Create new group</Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="Login">➕ Sign Out</Nav.Link>
+              <Nav.Link href="/">➕ Sign Out</Nav.Link>
             </Button>
           </div>
         </Nav>

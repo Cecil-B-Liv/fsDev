@@ -14,11 +14,11 @@ import GroupWall from "./components/groupWallComponent";
 import FriendRequest from "./components/friendRequestCardComponent";
 import SiteAdmin from "./pages/SiteAdminpage";
 import GroupCreateRequestList from "./components/groupCreateRequestList";
-import GroupCreateRequestDetails from "./components/groupCreateRequestDetails";
 import GroupAdminPage from "./pages/GroupAdminPage";
 import JoinRequestList from "./components/joinRequestList";
 import MemberManageList from "./components/memberManageList";
 import Profile from "./components/ProfileComponent"
+import ManageUsersList from "./components/manageUserList";
 
 // Data test add by NA
 const groups = [
@@ -117,24 +117,6 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "SiteAdmin",
-    element: <SiteAdmin/>,
-    children:[
-      {
-        index: true,
-        element: <GroupCreateRequestList/>
-      },
-      {
-        path: "Requests",
-        element: <GroupCreateRequestList/>
-      },
-      {
-        path: ":RequestID",
-        element: <GroupCreateRequestDetails/>
-      }
-    ]
-  },
-  {
     path: "/HomePage/Groups/:GroupID/ManageGroup",
     element: <GroupAdminPage/>,
     children: [
@@ -151,7 +133,31 @@ const router = createBrowserRouter([
         element: <MemberManageList/>
       }
     ]
-  }
+  },
+
+  // Site Admin
+  {
+    path: "SiteAdmin",
+    element: <SiteAdmin/>,
+    children:[
+      {
+        index: true,
+        element: <GroupCreateRequestList/>
+      },
+      {
+        path: "Requests",
+        element: <GroupCreateRequestList/>
+      },
+      {
+        path: "Users",
+        element: <ManageUsersList/>
+      },
+      {
+        path: "Feed",
+        element: <Feed/>
+      }
+    ]
+  },
  
 ]);
 

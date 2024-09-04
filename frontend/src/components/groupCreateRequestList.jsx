@@ -1,44 +1,42 @@
 import GroupCreateRequestCard from "./groupCreateRequestCard";
 
 export default function GroupCreateRequestList(){
-    const testData = [
-        {
-          username: "John Doe",
-          imageSrc: "https://example.com/avatar1.jpg",
-          groupName: "React Developers",
-        },
-        {
-          username: "Jane Smith",
-          imageSrc: "https://example.com/avatar2.jpg",
-          groupName: "UI/UX Designers",
-        },
-        {
-          username: "Alex Johnson",
-          imageSrc: "https://example.com/avatar3.jpg",
-          groupName: "Full Stack Engineers",
-        },
-        {
-          username: "Emily Davis",
-          imageSrc: "https://example.com/avatar4.jpg",
-          groupName: "Backend Wizards",
-        },
-        {
-          username: "Michael Brown",
-          imageSrc: "https://example.com/avatar5.jpg",
-          groupName: "Frontend Masters",
-        }
-    ];
+  const groupRequests = [
+    {
+      username: "JohnDoe",
+      imageSrc: "https://example.com/johndoe.jpg",
+      groupName: "Nature Lovers",
+      groupDescription: "A group for people who love nature and outdoor activities.",
+      reasons: "We need a space to share our experiences and organize events."
+    },
+    {
+      username: "JaneSmith",
+      imageSrc: "https://example.com/janesmith.jpg",
+      groupName: "Tech Innovators",
+      groupDescription: "A group for discussing the latest trends in technology.",
+      reasons: "We want to share innovative ideas and tech solutions."
+    },
+    {
+      username: "MikeRoss",
+      imageSrc: "https://example.com/mikeross.jpg",
+      groupName: "Fitness Freaks",
+      groupDescription: "A group dedicated to fitness enthusiasts.",
+      reasons: "We aim to motivate each other to stay fit and healthy."
+    }
+  ];
 
     return(
-        <div>
-            {testData.map((data, index) => (
-                <GroupCreateRequestCard
-                key={index}
-                username={data.username}
-                imageSrc={data.imageSrc}
-                groupName={data.groupName}
-                />
-            ))}
-        </div>
+      <div>
+      {groupRequests.map((request, index) => (
+        <GroupCreateRequestCard
+          key={index}
+          username={request.username}
+          imageSrc={request.imageSrc}
+          groupName={request.groupName}
+          groupDescription={request.groupDescription}
+          reasons={request.reasons}
+        />
+      ))}
+    </div>
     )
 }
