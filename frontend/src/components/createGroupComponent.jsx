@@ -5,9 +5,17 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
+import { useState } from "react";
 import "../styles/createGroupComponent.css";
 
+
 const CreateGroupComponent = () => {
+  const [isPrivate, setIsPrivate] = useState(false); // false means public, true means private
+
+  const togglePrivacy = () => {
+    setIsPrivate((prevState) => !prevState); // Toggle between public and private
+  };
+
   return (
     <Container className="create-group-container">
       <h3 className="text-center my-4">CREATE A NEW GROUP</h3>
@@ -56,6 +64,20 @@ const CreateGroupComponent = () => {
             placeholder="Enter it here..."
             className="auto-resize"
           />
+        </Form.Group>
+
+         <Form.Group className="mb-4 text-center">
+          <Form.Label>
+            <strong>Group Privacy</strong>
+          </Form.Label>
+          <div className="d-flex justify-content-center align-items-center">
+            <Button variant={isPrivate ? "danger" : "success"} onClick={togglePrivacy} className="mx-2">
+              {isPrivate ? "Private" : "Public"}
+            </Button>
+            <span className="ms-2">
+              {isPrivate ? "This group is private" : "This group is public"}
+            </span>
+          </div>
         </Form.Group>
 
         <Row className="mt-4">

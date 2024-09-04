@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import HeaderComponent from "../components/headerComponent";
 import "../styles/sideNavComponent.css"; 
 import "../styles/HomePage.css"
+import SiteAdminSideNav from "../components/siteAdminSideNav";
 
 export default function SiteAdmin() {
   return (
@@ -14,6 +15,7 @@ export default function SiteAdmin() {
 
       <Row className="flex-row">
         <Col xs={3} className="sideNav-container">
+          <SiteAdminSideNav/>
         </Col>
         <Col xs={9} className="main-content">
           <Outlet />
