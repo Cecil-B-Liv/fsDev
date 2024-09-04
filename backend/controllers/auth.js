@@ -10,16 +10,18 @@ export const register = async (req, res) => {
             email,
             telephone,
             password,
-            picturePath,
             userBio,
         } = req.body;
 
-        // Check if user with the same email or username already exists
-        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+        // Extract filename from uploaded file to the picturePath (if available)
+        const picturePath = req.files && req.files['picturePath']
+            ? req.files['picturePath'][0].filename
+            : "/assets/default_avatar.jpg"; // Default picture if no upload
+
+        // Check if user with the same email, username, or displayName already exists
+        const existingUser = await User.findOne({ $or: [{ email }, { username }, { displayName }] });
         if (existingUser) {
-            return res.status(400).json({
-                msg: "User already exists."
-            });
+            return res.status(400).json({ msg: "User already exists." });
         }
 
         // Encrypt password
@@ -37,8 +39,8 @@ export const register = async (req, res) => {
             picturePath,
         });
         const savedUser = await newUser.save();
-        // Respond with a success message and the saved user data
-        res.status(201).json(savedUser);
+
+        res.status(201).json({ msg: 'User registered successfully', savedUser });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
