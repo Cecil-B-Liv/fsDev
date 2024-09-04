@@ -12,6 +12,7 @@ import MongoStore from "connect-mongo";
 
 /* IMPORT ROUTES, MIDDLEWARES, CONTROLLERS */
 import authRoutes from "./routers/auth.js";
+import searchRoutes from "./routers/search.js";
 import userRoutes from "./routers/users.js";
 import postRoutes from "./routers/posts.js";
 import groupRoutes from "./routers/groups.js";
@@ -56,6 +57,7 @@ app.use(
 // http://localhost:3001/auth/register (example)
 // http://localhost:3001/posts/feed (example)
 app.use("/auth", authRoutes);   // For Register, Login, Logout
+app.use("/", isAuthenticated, searchRoutes);  // For searching users and approved groups
 app.use("/users", isAuthenticated, userRoutes); // For user related
 app.use("/posts", isAuthenticated, postRoutes); // For post related
 app.use("/groups", isAuthenticated, groupRoutes);   // For group related
