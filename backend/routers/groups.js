@@ -25,7 +25,7 @@ router.post("/:groupId/posts/create", isAuthenticated, createGroupPost);
 /* READ */
 router.get("/search", isAuthenticated, searchGroups);   // Search all approved groups
 router.get("/", isAuthenticated, getGroups); // Get all approved groups
-router.get("/:groupId", isAuthenticated, getGroup);  // Get a specific approved group detail (depends on public or private)
+router.get("/:groupId", isAuthenticated, getGroup);  // Get a specific approved group detail and posts (depends on public or private)
 router.get("/unapproved", isAuthenticated, isSiteAdmin, getUnapprovedGroups);   // Get all unapproved groups for siteAdmin
 
 /* UPDATE */
@@ -34,7 +34,7 @@ router.put("/:groupId/approve",
     isSiteAdmin,
     approveGroupCreation
 );  // Approve a group creation by siteAdmin
-router.put("/:groupId/decline",
+router.put("/:groupId/deny",
     isAuthenticated,
     isSiteAdmin,
     denyGroupCreation

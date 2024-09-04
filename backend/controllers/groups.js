@@ -118,7 +118,7 @@ export const getGroups = async (req, res) => {
     }
 };
 
-// Get a specific group detail
+// Get a specific group detail and group posts
 export const getGroup = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
@@ -156,6 +156,15 @@ export const getGroup = async (req, res) => {
             user.userRole === "siteAdmin"
         ) {
             await group.populate("groupMemberList", "username displayName picturePath");
+
+            // Get all posts associated with the group
+            const groupPosts = await Post.find({ groupId: groupId })
+                .populate("userId", "username displayName picturePath")
+                .sort({ createdAt: -1 });
+
+            // Add the posts to the group object
+            group = group.toObject(); // Convert Mongoose document to plain object
+            group.posts = groupPosts;
         }
 
         res.status(200).json(group);
