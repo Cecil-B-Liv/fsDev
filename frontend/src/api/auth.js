@@ -14,10 +14,17 @@ export const registerUser = async (userData) => {
     }
 };
 
-// Function to log in a user
+// Function to log in a user and store userId in localStorage
 export const loginUser = async (credentials) => {
     try {
         const response = await API.post('/auth/login', credentials);
+        
+        // Assuming the response contains user data with the user ID
+        const userId = response.user._id;
+        
+        // Store the userId in localStorage
+        localStorage.setItem('userId', userId);
+        
         return response.data;
     } catch (error) {
         console.error('Error during login:', error.response?.data || error.message);
@@ -25,10 +32,15 @@ export const loginUser = async (credentials) => {
     }
 };
 
-// Function to log out a user
+
+// Function to log out a user and clear userId from localStorage
 export const logoutUser = async () => {
     try {
         const response = await API.post('/auth/logout');
+        
+        // Remove the userId from localStorage
+        localStorage.removeItem('userId');
+        
         return response.data;
     } catch (error) {
         console.error('Error during logout:', error.response?.data || error.message);
@@ -36,15 +48,28 @@ export const logoutUser = async () => {
     }
 };
 
-// Function to fetch the current user's data (if logged in)
-export const fetchCurrentUser = async () => {
+// Single function to fetch and handle current user's data based on stored userId
+export const loadCurrentUser = async () => {
     try {
-        const response = await API.get('/users/me');
-        return response.data;
+        const userId = localStorage.getItem('userId'); // Get userId from localStorage
+        if (!userId) {
+            throw new Error('User ID not found. User might not be logged in.');
+        }
+
+        // Fetch user data using userId
+        const response = await API.get(`/users/${userId}`);
+        const user = response.data;
+
+        // Handle the fetched user data (you can log it or update state, etc.)
+        console.log('Current user data:', user);
+        
+        return user; // Return user if you need it elsewhere
     } catch (error) {
         console.error('Error fetching current user:', error.response?.data || error.message);
         throw error;
     }
 };
+
+
 
 // Additional functions can be added here for interacting with posts, groups, notifications, etc.
