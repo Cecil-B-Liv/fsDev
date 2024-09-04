@@ -206,6 +206,11 @@ export const updateUserProfile = async (req, res) => {
         const currentUserId = req.session.userId;
         const { ...updatedFields } = req.body; // Get updated fields from request body
 
+        // Check if a new picture was uploaded
+        if (req.files && req.files['picturePath']) {
+            updatedFields.picturePath = req.files['picturePath'][0].filename;
+        }
+
         // Find and update the user
         const updatedUser = await User.findByIdAndUpdate(
             currentUserId,
@@ -268,7 +273,7 @@ export const denyFriendRequest = async (req, res) => {
     try {
         const recipientId = req.session.userId;
         const { requestId } = req.params;
-        const  senderId  = requestId;   // requestId is also the senderId
+        const senderId = requestId;   // requestId is also the senderId
         const recipient = await User.findById(recipientId);
         const sender = await User.findById(senderId);
 

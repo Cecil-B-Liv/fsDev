@@ -15,7 +15,7 @@ import {
     resumeUser,
 } from "../controllers/users.js";
 import { isAuthenticated, isSiteAdmin } from "../middlewares/auth.js";
-import upload from "../middlewares/upload.js";
+import { uploadUserPicture } from "../middlewares/upload.js";
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.get("/", isAuthenticated, getUsers);    // Get a list of users
 /* UPDATE */
 router.put("/update",
     isAuthenticated,
-    upload.single("picture"),   // add upload middleware
+    uploadUserPicture,      // Add upload middleware
     updateUserProfile);     // Update user profile
 router.patch('/friend-request/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
 router.patch('/friend-request/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
