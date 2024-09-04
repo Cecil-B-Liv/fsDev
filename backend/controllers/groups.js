@@ -62,36 +62,36 @@ export const createGroupPost = async (req, res) => {
         const currentUserId = req.session.userId;
         const { groupId } = req.params;
         const {
-            postVisibility,
             postDescription,
-            postPicturePath,
         } = req.body;
         const user = await User.findById(currentUserId);
         const group = await Group.findById(groupId);
+
+        // Extract filename from uploaded file to the postPicturePath (if available)
+        const postPicturePath = req.files && req.files['postPicturePath']
+            ? req.files['postPicturePath'][0].filename
+            : null;
 
         // Find the user who is creating the post
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // If it's a group post, check if the user is a member
+        // Check if the user is a member of the group
         if (groupId) {
             if (!group || !group.groupMemberList.includes(currentUserId)) {
                 return res.status(403).json({ message: "Not authorized to post in this group" });
             }
             // Set visibility to 'group' if posting in a group
-            postVisibility = "group";
+            // postVisibility = "group";
         }
 
         const newPost = new Post({
             currentUserId,
             groupId,
-            postVisibility,
+            postVisibility: "group",
             postDescription,
             postPicturePath,
-            // postReaction: [],
-            // postComments: [],
-            // postHistory: [],
         });
         await newPost.save();
 

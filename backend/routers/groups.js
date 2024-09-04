@@ -16,7 +16,7 @@ import {
     deleteGroupComment,
 } from "../controllers/groups.js";
 import { isAuthenticated, isGroupAdmin, isSiteAdmin } from "../middlewares/auth.js";
-import upload from "../middlewares/upload.js";
+import { uploadPostPicture } from "../middlewares/upload.js";
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ const router = express.Router();
 router.post("/create", isAuthenticated, createGroup);   // Create a new group
 router.post("/:groupId/posts/create",
     isAuthenticated,
-    upload.single("picture"),   // add upload middleware
+    uploadPostPicture,   // Add upload middleware
     createGroupPost);   // Create a group post
 
 /* READ */
