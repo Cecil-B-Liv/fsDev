@@ -224,7 +224,7 @@ export const acceptFriendRequest = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
         const { requestId } = req.params;
-        const { senderId } = requestId;
+        const senderId = requestId;
         const user = await User.findById(currentUserId);
         const sender = await User.findById(senderId);
 
