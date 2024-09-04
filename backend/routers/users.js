@@ -20,8 +20,8 @@ import upload from "../middlewares/upload.js";
 const router = express.Router();
 
 /* CREATE */
-router.post('/friendRequests', isAuthenticated, sendFriendRequest); // Send a friend request
-router.post('/groupRequests', isAuthenticated, sendGroupJoinRequest);   // Send a group request
+router.post('/friend-request', isAuthenticated, sendFriendRequest); // Send a friend request
+router.post('/group-request', isAuthenticated, sendGroupJoinRequest);   // Send a group request
 
 /* READ */
 router.get('/search', isAuthenticated, searchUsers);  // Search user
@@ -35,8 +35,8 @@ router.put("/",
     isAuthenticated,
     upload.single("picture"),   // add upload middleware
     updateUserProfile);
-router.patch('/friendRequests/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
-router.patch('/friendRequests/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
+router.patch('/friend-request/:requestId/accept', isAuthenticated, acceptFriendRequest);  // Accept a friend request
+router.patch('/friend-request/:requestId/deny', isAuthenticated, denyFriendRequest);    // Deny a friend request
 
 /* DELETE */
 router.delete("/friends/:friendId", isAuthenticated, removeFriend); // Remove a friend
