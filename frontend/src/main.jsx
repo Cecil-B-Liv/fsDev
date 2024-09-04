@@ -64,6 +64,12 @@ const router = createBrowserRouter([
   {
     path: "/HomePage",
     element: <HomePage />,
+    // used to protect the homepage when isnt logged in
+    // element: (
+    //   <ProtectedRoute>  {/* Wrap the protected HomePage route */}
+    //     <HomePage />
+    //   </ProtectedRoute>
+    // ),
     children: [
       {
         index: true,

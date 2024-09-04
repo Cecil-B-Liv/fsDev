@@ -23,7 +23,7 @@ export const loginUser = async (credentials) => {
         const userId = response.user._id;
         
         // Store the userId in localStorage
-        localStorage.setItem('userId', userId);
+        localStorage.setItem('currentUserId', userId);
         
         return response.data;
     } catch (error) {
@@ -39,7 +39,7 @@ export const logoutUser = async () => {
         const response = await API.post('/auth/logout');
         
         // Remove the userId from localStorage
-        localStorage.removeItem('userId');
+        localStorage.removeItem('currentUserId');
         
         return response.data;
     } catch (error) {
@@ -51,7 +51,7 @@ export const logoutUser = async () => {
 // Single function to fetch and handle current user's data based on stored userId
 export const loadCurrentUser = async () => {
     try {
-        const userId = localStorage.getItem('userId'); // Get userId from localStorage
+        const userId = localStorage.getItem('currentUserId'); // Get userId from local Storage
         if (!userId) {
             throw new Error('User ID not found. User might not be logged in.');
         }
@@ -69,7 +69,5 @@ export const loadCurrentUser = async () => {
         throw error;
     }
 };
-
-
 
 // Additional functions can be added here for interacting with posts, groups, notifications, etc.

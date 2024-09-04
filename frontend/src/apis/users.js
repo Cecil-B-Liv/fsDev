@@ -6,7 +6,7 @@ const API = axios.create({ baseURL: 'http://localhost:3001' });
 // Send a friend request
 export const sendFriendRequest = async (recipientId) => {
     try {
-        const response = await API.post('/users/friend-request', { recipientId });
+        const response = await API.post('/friendRequests', { recipientId });
         return response.data;
     } catch (error) {
         console.error('Error sending friend request:', error.response?.data || error.message);
@@ -15,9 +15,9 @@ export const sendFriendRequest = async (recipientId) => {
 };
 
 // Send a group join request
-export const sendGroupJoinRequest = async (groupId) => {
+export const sendGroupJoinRequest = async (groupInfo) => {
     try {
-        const response = await API.post('/users/group-request', { groupId });
+        const response = await API.post('/groupRequests', { groupInfo });
         return response.data;
     } catch (error) {
         console.error('Error sending group join request:', error.response?.data || error.message);
@@ -83,7 +83,7 @@ export const getUsers = async () => {
 // Update user profile
 export const updateUserProfile = async (updatedFields) => {
     try {
-        const response = await API.put('/users/profile', updatedFields);
+        const response = await API.put('/users', updatedFields);
         return response.data;
     } catch (error) {
         console.error('Error updating profile:', error.response?.data || error.message);
@@ -92,9 +92,9 @@ export const updateUserProfile = async (updatedFields) => {
 };
 
 // Accept a friend request
-export const acceptFriendRequest = async (requestId, senderId) => {
+export const acceptFriendRequest = async (requestId) => {
     try {
-        const response = await API.put(`/users/friend-request/${requestId}/accept`, { senderId });
+        const response = await API.patch(`/friendRequests/${requestId}/accept`);
         return response.data;
     } catch (error) {
         console.error('Error accepting friend request:', error.response?.data || error.message);
@@ -103,9 +103,9 @@ export const acceptFriendRequest = async (requestId, senderId) => {
 };
 
 // Deny a friend request
-export const denyFriendRequest = async (requestId, senderId) => {
+export const denyFriendRequest = async (requestId) => {
     try {
-        const response = await API.put(`/users/friend-request/${requestId}/deny`, { senderId });
+        const response = await API.patch(`/friendRequests/${requestId}/deny`);
         return response.data;
     } catch (error) {
         console.error('Error denying friend request:', error.response?.data || error.message);
@@ -138,7 +138,7 @@ export const resumeUser = async (userId) => {
 // Remove a friend
 export const removeFriend = async (friendId) => {
     try {
-        const response = await API.delete(`/users/friends/${friendId}`);
+        const response = await API.delete(`/friends/${friendId}`);
         return response.data;
     } catch (error) {
         console.error('Error removing friend:', error.response?.data || error.message);
