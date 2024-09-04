@@ -3,7 +3,7 @@ import Group from "../models/Group.js";
 
 /* READ */
 // Search all users and approved groups
-export const search = async (req, res) => {
+export const searchUsersAndGroups = async (req, res) => {
     try {
         const { q } = req.query;
 

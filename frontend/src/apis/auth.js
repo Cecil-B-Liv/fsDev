@@ -48,26 +48,26 @@ export const logoutUser = async () => {
     }
 };
 
-// Single function to fetch and handle current user's data based on stored userId
-export const loadCurrentUser = async () => {
-    try {
-        const userId = localStorage.getItem('currentUserId'); // Get userId from local Storage
-        if (!userId) {
-            throw new Error('User ID not found. User might not be logged in.');
-        }
+// // Single function to fetch and handle current user's data based on stored userId
+// export const loadCurrentUser = async () => {
+//     try {
+//         const userId = localStorage.getItem('currentUserId'); // Get userId from local Storage
+//         if (!userId) {
+//             throw new Error('User ID not found. User might not be logged in.');
+//         }
 
-        // Fetch user data using userId
-        const response = await API.get(`/users/${userId}`);
-        const user = response.data;
+//         // Fetch user data using userId
+//         const response = await API.get(`/users/${userId}`);
+//         const user = response.data;
 
-        // Handle the fetched user data (you can log it or update state, etc.)
-        console.log('Current user data:', user);
+//         // Handle the fetched user data (you can log it or update state, etc.)
+//         console.log('Current user data:', user);
         
-        return user; // Return user if you need it elsewhere
-    } catch (error) {
-        console.error('Error fetching current user:', error.response?.data || error.message);
-        throw error;
-    }
-};
+//         return user; // Return user if you need it elsewhere
+//     } catch (error) {
+//         console.error('Error fetching current user:', error.response?.data || error.message);
+//         throw error;
+//     }
+// };
 
 // Additional functions can be added here for interacting with posts, groups, notifications, etc.
