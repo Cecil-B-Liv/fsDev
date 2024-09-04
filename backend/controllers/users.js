@@ -6,9 +6,9 @@ import { createNotification } from "../controllers/notifications.js";
 // Send a friend request
 export const sendFriendRequest = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const senderId = req.session.userId;
         const { recipientId } = req.body;
-        const sender = await User.findById(currentUserId);
+        const sender = await User.findById(senderId);
 
         // Find the recipient user
         const recipient = await User.findById(recipientId);
@@ -17,28 +17,28 @@ export const sendFriendRequest = async (req, res) => {
         }
 
         // Check if the sender is trying to send a request to themselves
-        if (currentUserId === recipientId) {
+        if (senderId === recipientId) {
             return res.status(400).json({ msg: "Cannot send friend request to yourself" });
         }
 
         // Check if they are already friends
-        if (recipient.friendList.includes(currentUserId)) {
+        if (recipient.friendList.includes(senderId)) {
             return res.status(400).json({ msg: "You are already friends" });
         }
 
         // Check if the request already exists
-        if (recipient.friendRequests.includes(currentUserId)) {
+        if (recipient.friendRequests.includes(senderId)) {
             return res.status(400).json({ msg: "Friend request already sent" });
         }
 
         // Add the sender's ID to the recipient's friendRequests array
-        recipient.friendRequests.push(currentUserId);
+        recipient.friendRequests.push(senderId);
         await recipient.save();
 
         // Create a notification for the recipient
         await createNotification(
             recipientId,
-            currentUserId,
+            senderId,
             "friendRequest",
             `${sender.username} (${sender.displayName}) sent you a friend request!`
         );
@@ -222,39 +222,39 @@ export const updateUserProfile = async (req, res) => {
 // Accept a friend request
 export const acceptFriendRequest = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const recipientId = req.session.userId;
         const { requestId } = req.params;
-        const senderId = requestId;
-        const user = await User.findById(currentUserId);
+        const senderId = requestId;     // requestId is also the senderId
+        const recipient = await User.findById(recipientId);
         const sender = await User.findById(senderId);
 
-        if (!user || !sender) {
-            return res.status(404).json({ msg: "User or sender not found" });
+        if (!recipient || !sender) {
+            return res.status(404).json({ msg: "Recipient or sender not found" });
         }
 
         // Check if the request exists
-        if (!user.friendRequests.includes(senderId)) {
+        if (!recipient.friendRequests.includes(senderId)) {
             return res.status(400).json({ msg: "Friend request not found" });
         }
 
         // Remove the request from the user's friendRequests array
-        user.friendRequests = user.friendRequests.filter((id) => !id.equals(requestId));
+        recipient.friendRequests = recipient.friendRequests.filter((id) => !id.equals(requestId));
 
         // Add the sender to the user's friendList
-        user.friendList.push(senderId);
+        recipient.friendList.push(senderId);
 
         // Add the user to the sender's friendList
-        sender.friendList.push(currentUserId);
+        sender.friendList.push(recipientId);
 
-        await user.save();
+        await recipient.save();
         await sender.save();
 
         // Create a notification for the sender
         await createNotification(
             senderId,
-            currentUserId,
+            recipientId,
             "friendRequestAccepted",
-            `${user.username} (${user.displayName}) accepted your friend request!`
+            `${recipient.username} (${recipient.displayName}) accepted your friend request!`
         );
 
         res.status(200).json({ msg: "Friend request accepted successfully" });
@@ -266,31 +266,32 @@ export const acceptFriendRequest = async (req, res) => {
 // Deny a friend request
 export const denyFriendRequest = async (req, res) => {
     try {
-        const currentUserId = req.session.userId;
+        const recipientId = req.session.userId;
         const { requestId } = req.params;
-        const { senderId } = req.body;
-        const user = await User.findById(currentUserId);
+        const  senderId  = requestId;   // requestId is also the senderId
+        const recipient = await User.findById(recipientId);
+        const sender = await User.findById(senderId);
 
-        if (!user) {
-            return res.status(404).json({ msg: "User not found" });
+        if (!recipient || !sender) {
+            return res.status(404).json({ msg: "Recipient or sender not found" });
         }
 
         // Check if the request exists
-        if (!user.friendRequests.includes(senderId)) {
+        if (!recipient.friendRequests.includes(senderId)) {
             return res.status(400).json({ msg: "Friend request not found" });
         }
 
         // Remove the request from the user's friendRequests array
-        user.friendRequests = user.friendRequests.filter((id) => !id.equals(requestId));
+        recipient.friendRequests = recipient.friendRequests.filter((id) => !id.equals(requestId));
 
-        await user.save();
+        await recipient.save();
 
         // Create a notification for the sender
         await createNotification(
             senderId,
-            currentUserId,
+            recipientId,
             "friendRequestDenied",
-            `${user.username} (${user.displayName}) denied your friend request.`
+            `${recipient.username} (${recipient.displayName}) denied your friend request.`
         );
 
         res.status(200).json({ msg: "Friend request denied successfully" });
