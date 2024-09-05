@@ -15,20 +15,41 @@ export const validateRegistration = [
         }),
 
     body("displayName")
-        .notEmpty().withMessage("Display name is required"),
+        .notEmpty().withMessage("Display name is required")
+        .isLength({ min: 3 }).withMessage("Display Name must be at least 3 characters long")
+        .trim()
+        .escape()
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ displayName: value });
+            if (existingUser) {
+                throw new Error("Display Name already in use");
+            }
+        }),
 
     body("email")
         .notEmpty().withMessage("Email is required")
         .isEmail().withMessage("Invalid email address")
-        .normalizeEmail(),
+        .normalizeEmail()
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ email: value });
+            if (existingUser) {
+                throw new Error("Email already in use");
+            }
+        }),
 
     body("telephone")
         .notEmpty().withMessage("Telephone number is required")
-        .isMobilePhone().withMessage("Invalid telephone number"),
+        .isMobilePhone().withMessage("Invalid telephone number")
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ telephone: value });
+            if (existingUser) {
+                throw new Error("Telephone already in use");
+            }
+        }),
 
     body("password")
         .notEmpty().withMessage("Password is required")
-        .isLength({ min: 6 }).withMessage("Password must be at least 6 characters long"),
+        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long"),
 
     body("userBio")
         .optional()
@@ -46,6 +67,39 @@ export const validateLogin = [
 
     body("password")
         .notEmpty().withMessage("Password is required"),
+];
+
+// Update Profile Validation
+export const validateUpdateProfile = [
+    body("username")
+        .optional()
+        .isLength({ min: 3 }).withMessage("Username must be at least 3 characters long")
+        .isAlphanumeric().withMessage("Username must contain only letters and numbers")
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ username: value });
+            if (existingUser) {
+                throw new Error("Username already in use");
+            }
+        }),
+
+    body("displayName")
+        .optional()
+        .trim()
+        .escape(),
+
+    body("email")
+        .optional()
+        .isEmail().withMessage("Invalid email address")
+        .normalizeEmail(),
+
+    body("telephone")
+        .optional()
+        .isMobilePhone().withMessage("Invalid telephone number"),
+
+    body("userBio")
+        .optional()
+        .trim()
+        .escape(),
 ];
 
 // Create Post Validation
