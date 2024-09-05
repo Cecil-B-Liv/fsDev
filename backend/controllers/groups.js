@@ -317,12 +317,12 @@ export const approveGroupRequest = async (req, res) => {
         const groupAdmin = await User.findById(groupAdminId);
 
         // Check if the request exists
-        if (!group.pendingRequests.includes(requestId)) {
+        if (!group.pendingJoinRequests.includes(requestId)) {
             return res.status(400).json({ message: "Request not found" });
         }
 
         // Remove the request from pendingRequests
-        group.pendingRequests = group.pendingRequests.filter(
+        group.pendingJoinRequests = group.pendingJoinRequests.filter(
             (id) => !id.equals(requestId)
         );
 
@@ -356,19 +356,19 @@ export const denyGroupRequest = async (req, res) => {
         const groupAdminId = req.session.userId;
         const { groupId, requestId } = req.params;
         const groupAdmin = await User.findById(groupAdminId);
-
         const group = await Group.findById(groupId);
+        
         if (!group) {
             return res.status(404).json({ message: "Group not found" });
         }
 
         // Check if the request exists
-        if (!group.pendingRequests.includes(requestId)) {
+        if (!group.pendingJoinRequests.includes(requestId)) {
             return res.status(400).json({ message: "Request not found" });
         }
 
         // Remove the request from pendingRequests
-        group.pendingRequests = group.pendingRequests.filter(
+        group.pendingJoinRequests = group.pendingJoinRequests.filter(
             (id) => !id.equals(requestId)
         );
 
