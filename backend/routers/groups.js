@@ -18,7 +18,7 @@ import {
 import { isAuthenticated, isGroupAdmin, isSiteAdmin } from "../middlewares/auth.js";
 import {
     validateCreateGroup,
-    validateCreateGroupPost,
+    validateCreatePost,
     validateUpdateGroup,
     validateSearchQuery
 } from "../middlewares/validate.js"
@@ -33,7 +33,7 @@ router.post("/create",
     createGroup);   // Create a new group
 router.post("/:groupId/posts/create",
     isAuthenticated,
-    validateCreateGroupPost,    // Add validation middleware
+    validateCreatePost,    // Add validation middleware
     uploadPostPicture,   // Add upload middleware
     createGroupPost);   // Create a group post
 
