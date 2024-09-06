@@ -18,10 +18,11 @@ export default function CreatePostHeader() {
                             <Form.Control as="textarea" rows={2} className='my-2' placeholder="What's on your mind?" />
                             <Row>
                                 <Col className='d-flex justify-content-start'>
-                                    <Button variant="none">📷</Button>
+                    
+                                    <Form.Control type='file' accept='image/png, image/jpeg'></Form.Control>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
-                                    <Button variant="primary">Post</Button>
+                                    <Button variant="primary" type="submit">Post</Button>
                                 </Col>
                             </Row>
                         </Form>

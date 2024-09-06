@@ -7,7 +7,7 @@ import "../styles/sideNavComponent.css";
 import "../styles/HomePage.css";
 
 export default function HomePage() {
-  const isGroupOwner = true; // for testing purpose only 
+  const isSiteAdmin = true; // for testing purpose only 
   return (
     <>
       <Row>
@@ -16,7 +16,7 @@ export default function HomePage() {
 
       <Row className="flex-row">
         <Col xs={3} className="sideNav-container">
-          <SideNavComponent isGroupOwner={isGroupOwner}/>
+          <SideNavComponent isSiteAdmin={isSiteAdmin}/>
         </Col>
 
         <Col xs={9} className="main-content">

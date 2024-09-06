@@ -10,10 +10,13 @@ import "../styles/createGroupComponent.css";
 
 
 const CreateGroupComponent = () => {
-  const [isPrivate, setIsPrivate] = useState(false); // false means public, true means private
+  const [selectedAvatar, setSelectedAvatar] = useState(null);
 
-  const togglePrivacy = () => {
-    setIsPrivate((prevState) => !prevState); // Toggle between public and private
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedAvatar(URL.createObjectURL(file)); // Preview the selected avatar image
+    }
   };
 
   return (
@@ -42,41 +45,46 @@ const CreateGroupComponent = () => {
 
         <div className="text-center my-4">
           <Form.Label>
-            <strong>Choose an avatar for your group</strong>
+            <strong>Choose a banner for your group</strong>
           </Form.Label>
           <div className="avatar-container my-3">
-            <Image
-              src="path_to_avatar_image"
-              roundedCircle
-              className="avatar-image"
-            />
+            {selectedAvatar ? (
+              <Image
+                src={selectedAvatar}
+                className="avatar-image"
+                alt="Group Avatar"
+              />
+            ) : (
+              <Image
+                src="default_avatar_image_path" // You can replace this with a default placeholder
+                roundedCircle
+                className="avatar-image"
+                alt="Default Avatar"
+              />
+            )}
           </div>
-          <Button variant="secondary">Choose from library</Button>
+          <Form.Group controlId="formFile" className="mb-3">
+            <Form.Control type="file" accept="image/*" onChange={handleAvatarChange} />
+          </Form.Group>
         </div>
-
-        <Form.Group className="mb-3">
-          <Form.Label>
-            <strong>Reason to create the group</strong>
-          </Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            placeholder="Enter it here..."
-            className="auto-resize"
-          />
-        </Form.Group>
 
          <Form.Group className="mb-4 text-center">
           <Form.Label>
             <strong>Group Privacy</strong>
           </Form.Label>
-          <div className="d-flex justify-content-center align-items-center">
-            <Button variant={isPrivate ? "danger" : "success"} onClick={togglePrivacy} className="mx-2">
-              {isPrivate ? "Private" : "Public"}
-            </Button>
-            <span className="ms-2">
-              {isPrivate ? "This group is private" : "This group is public"}
-            </span>
+          <div>
+            <Form.Check
+              inline
+              type="radio"
+              label="Public"
+              name="privacy"
+            />
+            <Form.Check
+              inline
+              type="radio"
+              label="Private"
+              name="privacy"
+            />
           </div>
         </Form.Group>
 

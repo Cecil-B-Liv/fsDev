@@ -1,5 +1,6 @@
 import React from "react";
 import ManageUserCard from "./manageUserCard";
+import { ListGroupItem } from "react-bootstrap";
 
 export default function ManageUsersList() {
   const users = [
@@ -26,13 +27,15 @@ export default function ManageUsersList() {
   return (
     <div>
       {users.map((user, index) => (
-        <ManageUserCard
+        <ListGroupItem>
+          <ManageUserCard
           key={index}
           username={user.username}
           location={user.location}
           imageSrc={user.imageSrc}
           initialStatus={user.initialStatus}
         />
+        </ListGroupItem>
       ))}
     </div>
   );
