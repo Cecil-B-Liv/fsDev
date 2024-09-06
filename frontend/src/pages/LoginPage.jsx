@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux"; // If using Redux
-import { setUser } from "../redux/features/authSlice"; // If using Redux
+import { setUser } from "../../redux/feature/authSlice.js"; // If using Redux
 
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -16,9 +16,7 @@ function LoginPage() {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const dispatch = useDispatch(); // If using Redux
-
-    // ... (handleChange function to update formData)
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,7 +40,6 @@ function LoginPage() {
     return (
         <Container>
             <Form onSubmit={handleSubmit}>
-                {/* ... your form fields for email and password */}
                 <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
                     <Form.Label column sm="2">
                         Email
