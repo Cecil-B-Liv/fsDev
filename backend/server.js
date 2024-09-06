@@ -83,6 +83,3 @@ app.use((err, req, res, next) => {
 
 /* OFFLINE FUNCTIONALITY */
 // Explore and implement strategies for handling offline scenarios (service workers, local storage, etc.)
-
-/* INPUT VALIDATION AND SANITIZATION */
-// Implement input validation and sanitization in your controllers to ensure data integrity and security
