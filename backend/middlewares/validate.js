@@ -209,8 +209,8 @@ export const validateCreateGroup = [
         .isIn(["public", "private"]).withMessage("Invalid group visibility option"),
 ];
 
-// Edit Group Validation
-export const validateEditGroup = [
+// Update Group Validation
+export const validateUpdateGroup = [
     body("name")
         .optional()
         .trim()
