@@ -85,21 +85,57 @@ export const validateUpdateProfile = [
     body("displayName")
         .optional()
         .trim()
-        .escape(),
+        .escape()
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ displayName: value });
+            if (existingUser) {
+                throw new Error("Display Name already in use");
+            }
+        }),
 
     body("email")
         .optional()
         .isEmail().withMessage("Invalid email address")
-        .normalizeEmail(),
+        .normalizeEmail()
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ email: value });
+            if (existingUser) {
+                throw new Error("Email already in use");
+            }
+        }),
 
     body("telephone")
         .optional()
-        .isMobilePhone().withMessage("Invalid telephone number"),
+        .isMobilePhone().withMessage("Invalid telephone number")
+        .custom(async (value) => {
+            const existingUser = await User.findOne({ telephone: value });
+            if (existingUser) {
+                throw new Error("Telephone already in use");
+            }
+        }),
+
+    body("password")
+        .optional()
+        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long"),
 
     body("userBio")
         .optional()
         .trim()
         .escape(),
+];
+
+// Send Friend Request Validation
+export const validateSendFriendRequest = [
+    body("recipientId")
+        .notEmpty().withMessage("Friend ID is required")
+        .isMongoId().withMessage("Invalid Friend ID"),
+];
+
+// Join Group Request Validation
+export const validateJoinGroupRequest = [
+    body("groupId")
+        .notEmpty().withMessage("Group ID is required")
+        .isMongoId().withMessage("Invalid Group ID"),
 ];
 
 // Create Post Validation
