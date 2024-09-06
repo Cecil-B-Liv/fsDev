@@ -42,12 +42,6 @@ export default function SideNav({ isSiteAdmin }) {
                 <Nav.Link href={`/HomePage/SiteAdminDashboard`}>🛠️ Admin Dashboard</Nav.Link>
               </Button>
             )}
-            <Button>
-              <Nav.Link href="#discovery">🔍 Discovery</Nav.Link>
-            </Button>
-            <Button>
-              <Nav.Link href="/">➕ Sign Out</Nav.Link>
-            </Button>
           </div>
         </Nav>
       </Navbar>
