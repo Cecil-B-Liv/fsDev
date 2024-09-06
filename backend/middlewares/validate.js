@@ -49,7 +49,8 @@ export const validateRegistration = [
 
     body("password")
         .notEmpty().withMessage("Password is required")
-        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long"),
+        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long")
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/).withMessage("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"),
 
     body("userBio")
         .optional()
@@ -116,7 +117,8 @@ export const validateUpdateProfile = [
 
     body("password")
         .optional()
-        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long"),
+        .isLength({ min: 5 }).withMessage("Password must be at least 5 characters long")
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{5,}$/).withMessage("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"),
 
     body("userBio")
         .optional()
