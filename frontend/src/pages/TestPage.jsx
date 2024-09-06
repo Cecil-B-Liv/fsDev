@@ -13,36 +13,37 @@ import { useEffect, useState } from 'react';  //test
 
 
 export default function HomePage() {
-    const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState(""); // test
-    // const isGroupOwner = true; // for testing purpose only
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState(""); // test
+  // const isGroupOwner = true; // for testing purpose only
 
-    useEffect(() => {
-        const user = async () => {
-            const response = await checkAuth();
-            setCurrentUser(response);
-            console.log(response);
-        };
-
-        user();
-    }, []);
-
-    const handleLogout = async () => {
-        await logout();
-        navigate("/login");
+  useEffect(() => {
+    const user = async () => {
+      const response = await checkAuth();
+      setCurrentUser(response);
+      console.log(response);
     };
 
-    return (
-        <>
-            <div>
-                <h1>Protected Page</h1>
-                <h2>Hello {currentUser.username} @{currentUser.displayName}</h2>
-                <h4>Role: {currentUser.userRole}</h4>
-                <img src={`http://localhost:3001/assets/${currentUser.picturePath}`} alt={currentUser.displayName} style={{ width: "25%" }} />
-                <hr />
-                <button onClick={handleLogout}>Logout</button>
-            </div>
-            {/* <Row>
+    user();
+  }, []);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
+  return (
+    <>
+      <div>
+        <h1>Protected Page</h1>
+        <h2>Hello {currentUser.username} @{currentUser.displayName}</h2>
+        <p>userId: {currentUser.userId}</p>
+        <h4>Role: {currentUser.userRole}</h4>
+        <img src={`http://localhost:3001/assets/${currentUser.picturePath}`} alt={currentUser.displayName} style={{ width: "25%" }} />
+        <hr />
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+      {/* <Row>
         <HeaderComponent />
       </Row>
 
@@ -56,6 +57,6 @@ export default function HomePage() {
         </Col>
       </Row> */}
 
-        </>
-    );
+    </>
+  );
 }
