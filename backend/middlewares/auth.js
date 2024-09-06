@@ -3,7 +3,7 @@ import Group from "../models/Group.js";
 
 /* User Authentication */
 export const isAuthenticated = (req, res, next) => {
-    if (req.session.userId) {
+    if (req.session.isAuth) {
         // User is authenticated, proceed to the next handler
         next();
     } else {
@@ -15,7 +15,7 @@ export const isAuthenticated = (req, res, next) => {
 /* Group Admin Authorization */
 export const isGroupAdmin = async (req, res, next) => {
     try {
-        if (!req.session.userId) {
+        if (!req.session.isAuth) {
             return res.status(401).json({ msg: "Unauthorized" });
         }
 
@@ -54,7 +54,7 @@ export const isGroupAdmin = async (req, res, next) => {
 /* Site Admin Authentication */
 export const isSiteAdmin = async (req, res, next) => {
     try {
-        if (!req.session.userId) {
+        if (!req.session.isAuth) {
             return res.status(401).json({ msg: "Unauthorized" });
         }
 
