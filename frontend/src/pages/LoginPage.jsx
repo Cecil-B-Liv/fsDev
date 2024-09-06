@@ -1,11 +1,81 @@
-import LoginComponent from "../components/loginComponent";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux"; // If using Redux
+import { setUser } from "../redux/features/authSlice"; // If using Redux
 
-function LoginSignupPage() {
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
+
+import { login } from "../apis/auth.js";
+
+function LoginPage() {
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+    const dispatch = useDispatch(); // If using Redux
+
+    // ... (handleChange function to update formData)
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setError(null);
+
+        try {
+            const response = await login(formData);
+            console.log("Login successful:", response);
+
+            dispatch(setUser(response.user));
+
+            // Navigate to the homepage (main feed)
+            navigate("/");
+        } catch (error) {
+            console.error("Login error:", error);
+            setError(error.message);
+        }
+    };
+
+
     return (
-        <>
-            <LoginComponent />
-        </>
+        <Container>
+            <Form onSubmit={handleSubmit}>
+                {/* ... your form fields for email and password */}
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextEmail">
+                    <Form.Label column sm="2">
+                        Email
+                    </Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            type="email"
+                            placeholder="name@example.com"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        />
+                    </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                    <Form.Label column sm="2">
+                        Password
+                    </Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        />
+                    </Col>
+                </Form.Group>
+
+                {error && <div className="error">{error}</div>}
+                <Button className="mt-3" variant="primary" type="submit">Login</Button>
+            </Form>
+        </Container>
     );
 }
 
-export default LoginSignupPage;
+export default LoginPage;
