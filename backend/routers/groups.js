@@ -16,22 +16,40 @@ import {
     deleteGroupComment,
 } from "../controllers/groups.js";
 import { isAuthenticated, isGroupAdmin, isSiteAdmin } from "../middlewares/auth.js";
+import {
+    validateCreateGroup,
+    validateCreateGroupPost,
+    validateUpdateGroup,
+    validateSearchQuery
+} from "../middlewares/validate.js"
 import { uploadPostPicture } from "../middlewares/upload.js";
 
 const router = express.Router();
 
 /* CREATE */
-router.post("/create", isAuthenticated, createGroup);   // Create a new group
+router.post("/create",
+    isAuthenticated,
+    validateCreateGroup,    // Add validation middleware
+    createGroup);   // Create a new group
 router.post("/:groupId/posts/create",
     isAuthenticated,
+    validateCreateGroupPost,    // Add validation middleware
     uploadPostPicture,   // Add upload middleware
     createGroupPost);   // Create a group post
 
 /* READ */
-router.get("/search", isAuthenticated, searchGroups);   // Search all approved groups
+router.get("/search",
+    isAuthenticated,
+    validateSearchQuery,    // Add validation middleware
+    searchGroups);   // Search all approved groups
 router.get("/", isAuthenticated, getGroups); // Get all approved groups
-router.get("/:groupId", isAuthenticated, getGroup);  // Get a specific approved group detail and posts (depends on public or private)
-router.get("/unapproved", isAuthenticated, isSiteAdmin, getUnapprovedGroups);   // Get all unapproved groups for siteAdmin
+router.get("/:groupId",
+    isAuthenticated,
+    getGroup);  // Get a specific approved group detail and posts (depends on public or private)
+router.get("/unapproved",
+    isAuthenticated,
+    isSiteAdmin,
+    getUnapprovedGroups);   // Get all unapproved groups for siteAdmin
 
 /* UPDATE */
 router.patch("/:groupId/approve",
@@ -47,6 +65,7 @@ router.patch("/:groupId/deny",
 router.put("/:groupId/update",
     isAuthenticated,
     isGroupAdmin,
+    validateUpdateGroup,    // Add validation middleware
     updateGroup
 );  // Update a group detail
 router.patch("/:groupId/requests/:requestId/approve",
