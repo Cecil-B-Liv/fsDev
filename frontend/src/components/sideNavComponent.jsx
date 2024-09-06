@@ -6,19 +6,19 @@ import "../styles/sideNavComponent.css";
 import { Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
-export default function SideNav({ isGroupOwner }) {
+export default function SideNav({ isSiteAdmin }) {
   const groupID = "123" // for testing only
   const location = useLocation();
-  const [showManageButton, setShowManageButton] = useState(false);
+  const [showSiteAdminDashboardButton, setShowSiteAdminDashboardButton] = useState(false);
 
   // Path Checking
   useEffect(() => {
-    if (isGroupOwner && location.pathname.startsWith("/HomePage/Groups/G")) {
-      setShowManageButton(true);
+    if (isSiteAdmin) {
+      setShowSiteAdminDashboardButton(true);
     } else {
-      setShowManageButton(false);
+      setShowSiteAdminDashboardButton(false);
     }
-  }, [location, isGroupOwner]);
+  }, [location, isSiteAdmin]);
 
   return (
     <Container>
@@ -37,9 +37,9 @@ export default function SideNav({ isGroupOwner }) {
             <Button>
               <Nav.Link href="/HomePage/Groups">🫂 Group</Nav.Link>
             </Button>
-            {showManageButton && (
+            {showSiteAdminDashboardButton && (
               <Button>
-                <Nav.Link href={`/HomePage/Groups/${groupID}/ManageGroup`}>🛠️ Manage Your Group</Nav.Link>
+                <Nav.Link href={`/HomePage/SiteAdminDashboard`}>🛠️ Admin Dashboard</Nav.Link>
               </Button>
             )}
             <Button>

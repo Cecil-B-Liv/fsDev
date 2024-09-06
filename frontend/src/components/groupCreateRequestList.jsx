@@ -1,4 +1,5 @@
 import GroupCreateRequestCard from "./groupCreateRequestCard";
+import { ListGroupItem } from "react-bootstrap";
 
 export default function GroupCreateRequestList(){
   const groupRequests = [
@@ -28,14 +29,16 @@ export default function GroupCreateRequestList(){
     return(
       <div>
       {groupRequests.map((request, index) => (
-        <GroupCreateRequestCard
+        <ListGroupItem>
+          <GroupCreateRequestCard
           key={index}
           username={request.username}
           imageSrc={request.imageSrc}
           groupName={request.groupName}
           groupDescription={request.groupDescription}
           reasons={request.reasons}
-        />
+          />
+        </ListGroupItem>
       ))}
     </div>
     )
