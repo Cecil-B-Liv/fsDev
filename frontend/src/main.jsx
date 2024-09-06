@@ -2,9 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from 'react-redux';
-import { store } from './store';
+import { store } from '../redux/store';
 
 import "./index.css";
+import ProtectedRoute from "./Utils/ProtectedRoutes";
 
 // import LoginSignupPage from "./pages/LoginSignupPage";
 // import HomePage from "./pages/Homepage";
@@ -22,14 +23,27 @@ import "./index.css";
 // import MemberManageList from "./components/memberManageList";
 // import Profile from "./components/ProfileComponent"
 // import ManageUsersList from "./components/manageUserList";
+import LoginPage from "./pages/LoginPage";
+import TestPage from "./pages/TestPage";
 
 // REMOVED BY TUNG
 // ALREADY SAVED THE OLD CODE. ASK IF NEED
 
 /* ROUTER */
 const router = createBrowserRouter([
-
-
+  {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
+    path: "/",
+    element: <ProtectedRoute />,
+    children: [
+      {
+        index: true,
+        element: <TestPage />,
+      }]
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
