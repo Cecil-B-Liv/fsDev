@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import NotificationComponent from './notificationComponent'; 
-import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 import '../styles/headerComponent.css';
 

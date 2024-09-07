@@ -2,7 +2,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import "../styles/ProfileCardComponent.css";
+import "../styles/profileCardComponent.css";
 
 export default function JoinRequestCard({ username, location, imageSrc }) {
   const [status, setStatus] = useState(null);

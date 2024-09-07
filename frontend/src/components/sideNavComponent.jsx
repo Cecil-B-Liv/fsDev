@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import "bootstrap-icons/font/bootstrap-icons.css"; 
 import "../styles/sideNavComponent.css";
 
 export default function SideNav({ isSiteAdmin }) {
-  const groupID = "123"; 
+  const groupID = "123";
   const location = useLocation();
   const [showSiteAdminDashboardButton, setShowSiteAdminDashboardButton] = useState(false);
 

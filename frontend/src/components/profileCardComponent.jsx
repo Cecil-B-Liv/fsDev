@@ -2,8 +2,7 @@ import { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import "../styles/ProfileCardComponent.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/profileCardComponent.css";
 
 const ProfileCard = ({ username, location, imageSrc, mode }) => {
   const [status, setStatus] = useState(null);

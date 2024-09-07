@@ -1,10 +1,8 @@
-import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Button } from "react-bootstrap";
 import "../styles/sideNavComponent.css";
-import "bootstrap-icons/font/bootstrap-icons.css"; 
 
 export default function SiteAdminSideNav({ isGroupOwner }) {
   return (

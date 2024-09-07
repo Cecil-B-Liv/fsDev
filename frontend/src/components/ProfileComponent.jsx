@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import UserPostComponent from "../components/userPostComponent";
 import "bootstrap/dist/css/bootstrap.min.css";
 

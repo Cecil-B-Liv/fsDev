@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LoginSignupPage from "./pages/LoginSignupPage";
+import LoginSignupPage from "./pages/LoginSignUpPage";
 import HomePage from "./pages/Homepage";
 import Feed from "./components/feedComponent";
 import NotFound from "./pages/NotFound";

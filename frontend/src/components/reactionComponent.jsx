@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "../styles/reactionComponent.css"; // Ensure the styles are in this file
-import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ReactionComponent = () => {
   const [selectedReaction, setSelectedReaction] = useState("bi-hand-thumbs-up");
