@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
 const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {
+
+  const groupIDTest = 123;
+  
   return (
     <Card className="mb-3 text-center" style={{ width: '18rem', height: '20rem', display: 'flex', flexDirection: 'column' }}>
       <Card.Img 
@@ -20,7 +23,7 @@ const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {
           </Card.Text>
       </Card.Body>
       <Card.Footer className="text-center">
-        <Link to={`/groups/groupID`} className="btn btn-primary">Go to Group</Link> { /* ${groupId} */}
+        <Link to={`/groups/${groupIDTest}`} className="btn btn-primary">Go to Group</Link> { /* ${groupId} */}
       </Card.Footer>
     </Card>
   );

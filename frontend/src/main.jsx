@@ -94,11 +94,11 @@ const router = createBrowserRouter([
                 element: <Feed/>
               },
               {
-                path: "GroupFeeds",
+                path: "groupfeeds",
                 element: <Feed />,
               },
               {
-                path: "GroupMembers",
+                path: "groupmembers",
                 element: <FriendList />,
               }
             ],
