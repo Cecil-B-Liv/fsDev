@@ -11,15 +11,13 @@ import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
 
-export default function UserPost(post) {
+export default function UserPost({ post }) {
   const assets = import.meta.env.VITE_SERVER_ASSETS;
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [postText, setPostText] = useState(
-    `${post.postDescription}`
-  );
+  const [postText, setPostText] = useState(post.postDescription);
   const [tempPostText, setTempPostText] = useState(postText);
 
   const shortenedText = postText.slice(0, 100);
@@ -56,10 +54,10 @@ export default function UserPost(post) {
         <Card.Header>
           <Row>
             <Col className="userPostHeader d-flex justify-content-start align-items-center gap-2">
-              <Image src={`${assets}${post.picturePath}`} roundedCircle />
-              <h5>{post.username}</h5>
+              <Image src={`${assets}${post.userId.picturePath}`} roundedCircle style={{ width: "25%", height: "auto" }} />
+              <h5>{post.userId.username}</h5>
               <a href="#johndoe" className="pb-2">
-                {post.displayName}
+                {post.userId.displayName}
               </a>
             </Col>
             <Col className="d-flex row-column justify-content-end align-items-baseline gap-2 mt-2">
@@ -111,7 +109,7 @@ export default function UserPost(post) {
             </>
           )}
           {!isEditing && (
-            <Card.Img variant="top" src={`http://localhost:3001/assets/${post.postPicturePath}`} />
+            <Card.Img variant="top" src={`${assets}${post.postPicturePath}`} />
           )}
           <Row className="gap-2 mt-3">
             <Col xs="auto">

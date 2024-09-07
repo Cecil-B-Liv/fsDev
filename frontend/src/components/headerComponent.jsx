@@ -7,18 +7,20 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import NotificationComponent from './notificationComponent'; 
-import { logout } from "../apis/auth";
+import NotificationComponent from './notificationComponent';
 import { useNavigate } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 
 import '../styles/headerComponent.css';
 
+import { checkAuth, logout } from "../apis/auth";
+
 export default function Header() {
     const navigate = useNavigate();
     const [prevScrollpos, setPrecScrollpos] = useState(window.scrollY);
     const [top, setTop] = useState(0);
-    const [showNotifications, setShowNotifications] = useState(false); 
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [currentUser, setCurrentUser] = useState("");
 
     useEffect(() => {
         const handleScroll = () => {
@@ -40,6 +42,17 @@ export default function Header() {
         await logout();
         navigate("/login");
     };
+
+    useEffect(() => {
+        const user = async () => {
+            const response = await checkAuth();
+            setCurrentUser(response);
+            console.log(response);
+        };
+
+        user();
+    }, []);
+
 
     const headerNavStyle = {
         position: 'fixed',
@@ -80,10 +93,9 @@ export default function Header() {
                     </Form>
                     <Nav className='gap-3'>
                         <Nav.Link
-                            href="#notification"
-                            onClick={() => setShowNotifications(!showNotifications)} 
+                            onClick={() => setShowNotifications(!showNotifications)}
                         >
-                            <i className="bi bi-bell-fill"></i> 
+                            <i className="bi bi-bell-fill"></i>
                         </Nav.Link>
                         {showNotifications && (
                             <div
@@ -92,25 +104,25 @@ export default function Header() {
                                     right: '20px',
                                     top: '60px',
                                     zIndex: 1000,
-                                    width: '300px', 
+                                    width: '300px',
                                 }}
                             >
                                 <NotificationComponent />
                             </div>
                         )}
                         <NavDropdown
-                            title="John Doe"
+                            title={`${currentUser.username}`}
                             id="basic-nav-dropdown"
                             align='end'
                         >
                             <NavDropdown.Item href="profile">
-                                <i className="bi bi-person-circle"></i> Your Page 
+                                <i className="bi bi-person-circle"></i> Your Page
                             </NavDropdown.Item>
 
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={handleLogout}>
-                                <i className="bi bi-box-arrow-right"></i> 
-                                Logout 
+                                <i className="bi bi-box-arrow-right"></i>
+                                Logout
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

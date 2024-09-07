@@ -35,17 +35,12 @@ export default function Feed() {
     return (
         <>
             <CreatePostHeaderComponent />
-            
+
             <div>
                 {posts.map((post) => (
                     <UserPostComponent key={post._id} post={post} />
                 ))}
             </div>
-            {/* <div>
-                {posts.map((post) => (
-                    <UserPostComponent key={post._id} post={post} />
-                ))}
-            </div> */}
         </>
     );
 }
