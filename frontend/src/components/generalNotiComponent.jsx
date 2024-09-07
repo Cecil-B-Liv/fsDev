@@ -1,77 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
-import { getNotifications } from "../apis/notifications";
 
-function GeneralNotiComponent() {
-  const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const data = await getNotifications();
-        setNotifications(data);
-      } catch (error) {
-        console.error(
-          "Error fetching notifications:",
-          error.response?.data || error.message
-        );
-      }
-    };
-
-    fetchNotifications();
-  }, []);
+function GeneralNotiComponent({ notification }) {
+  const sender = notification.senderId;
 
   return (
-    <div>
-      {notifications.length > 0 ? (
-        notifications.map((notification) => (
-          <Card
-            className="my-3"
-            key={notification._id}
-            style={{
-              width: "100%",
-              minHeight: "150px",
-              backgroundColor: "#f8f9fa",
-            }}
+    <Card
+      className="d-flex"
+      style={{
+        minHeight: "100px",
+        backgroundColor: "#FFFFFF",
+        position: "relative",
+      }}
+    >
+      <Card.Body className="d-flex align-items-start">
+        <Image
+          src={sender.picturePath || "https://via.placeholder.com/50"}
+          alt={sender.displayName}
+          roundedCircle
+          style={{
+            width: "50px",
+            height: "50px",
+            marginRight: "15px",
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+          }}
+        />
+        <div
+          style={{
+            marginLeft: "80px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Card.Text style={{ marginBottom: "0" }}>
+            {notification.notiDescription}
+          </Card.Text>
+          <Card.Text
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem" }}
           >
-            {" "}
-            {/* Ensure same size */}
-            <Card.Body className="d-flex align-items-center">
-              <Image
-                src={
-                  notification.senderId.picturePath ||
-                  "https://via.placeholder.com/50"
-                }
-                alt={notification.senderId.displayName}
-                roundedCircle
-                style={{ width: "50px", height: "50px", marginRight: "15px" }}
-              />
-              <div className="flex-grow-1">
-                <Card.Title className="mb-1">
-                  {notification.senderId.displayName}
-                </Card.Title>
-                <Card.Text className="text-muted mb-2">
-                  {notification.time} ago
-                </Card.Text>
-                <Card.Text>
-                  <strong>{getNotiTitle(notification.notiType)}:</strong>{" "}
-                  {notification.notiDescription}
-                </Card.Text>
-              </div>
-              {notification.isNew && (
-                <Badge bg="primary" pill>
-                  &nbsp;
-                </Badge>
-              )}
-            </Card.Body>
-          </Card>
-        ))
-      ) : (
-        <p>No notifications available.</p>
-      )}
-    </div>
+            {notification.time} ago
+          </Card.Text>
+        </div>
+        {notification.isNew && (
+          <Badge
+            bg="primary"
+            pill
+            className="position-absolute"
+            style={{ top: "10px", right: "10px" }}
+          >
+            &nbsp;
+          </Badge>
+        )}
+      </Card.Body>
+    </Card>
   );
 }
 

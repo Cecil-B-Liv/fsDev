@@ -30,49 +30,73 @@ function FriendRequestNotification({ notification }) {
     }
   };
 
-  const sender = notification.senderId;
-  const displayName = sender.displayName;
-  const picturePath = sender.picturePath;
+  const picturePath = notification.senderId.picturePath;
 
   return (
     <Card
-      className="d-flex align-items-center"
-      style={{ minHeight: "150px", backgroundColor: "#FFFFFF" }} // Consistent height
+      className="d-flex"
+      style={{
+        minHeight: "150px",
+        backgroundColor: "#FFFFFF",
+        position: "relative",
+      }}
     >
-      <Card.Body className="d-flex align-items-center">
+      <Card.Body className="d-flex align-items-start">
         <Image
-          src={picturePath}
-          alt={displayName}
+          src={picturePath || "https://via.placeholder.com/50"}
           roundedCircle
-          style={{ width: "50px", height: "50px", marginRight: "15px" }} // Consistent image size
+          style={{
+            width: "50px",
+            height: "50px",
+            marginRight: "15px",
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+          }}
         />
-        <div className="flex-grow-1">
-          <Card.Title className="mb-1">{displayName}</Card.Title>
-          <Card.Text className="text-muted mb-2">
-            {notification.time} ago
-          </Card.Text>
-          {status === null ? (
-            <div>
-              <Button
-                variant="success"
-                size="sm"
-                onClick={handleAccept}
-                className="me-2"
-              >
-                Accept
-              </Button>
-              <Button variant="danger" size="sm" onClick={handleDecline}>
-                Decline
-              </Button>
-            </div>
-          ) : (
-            <p className="text-muted">
-              {status === "accepted" ? "Request accepted" : "Request declined"}
-            </p>
-          )}
+        <div
+          style={{ marginLeft: "80px", display: "flex", alignItems: "center" }}
+        >
+          <div>
+            <Card.Text style={{ marginBottom: "0" }}>
+              {notification.notiDescription}
+            </Card.Text>
+            <Card.Text
+              className="text-muted mb-2"
+              style={{ fontSize: "0.85rem" }}
+            >
+              {notification.time} ago
+            </Card.Text>
+            {status === null ? (
+              <div>
+                <Button
+                  variant="success"
+                  size="sm"
+                  onClick={handleAccept}
+                  className="me-2"
+                >
+                  Accept
+                </Button>
+                <Button variant="danger" size="sm" onClick={handleDecline}>
+                  Decline
+                </Button>
+              </div>
+            ) : (
+              <p className="text-muted">
+                {status === "accepted"
+                  ? "Request accepted"
+                  : "Request declined"}
+              </p>
+            )}
+          </div>
         </div>
         {notification.isNew && (
-          <Badge bg="primary" pill>
+          <Badge
+            bg="primary"
+            pill
+            className="position-absolute"
+            style={{ top: "10px", right: "10px" }}
+          >
             &nbsp;
           </Badge>
         )}

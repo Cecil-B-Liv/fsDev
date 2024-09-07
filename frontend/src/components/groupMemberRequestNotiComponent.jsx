@@ -3,7 +3,7 @@ import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import { approveGroupRequest, denyGroupRequest } from "../apis/group.js"; 
+import { approveGroupRequest, denyGroupRequest } from "../apis/group.js";
 
 function GroupMemberRequest({ notification }) {
   const [status, setStatus] = useState(null);
@@ -38,10 +38,14 @@ function GroupMemberRequest({ notification }) {
 
   return (
     <Card
-      className="d-flex align-items-center"
-      style={{ minHeight: "150px", backgroundColor: "#FFFFFF" }} // Consistent height
+      className="d-flex"
+      style={{
+        minHeight: "150px",
+        backgroundColor: "#FFFFFF",
+        position: "relative",
+      }}
     >
-      <Card.Body className="d-flex align-items-center">
+      <Card.Body className="d-flex align-items-start">
         <Image
           src={
             notification.senderId.picturePath ||
@@ -49,17 +53,30 @@ function GroupMemberRequest({ notification }) {
           }
           alt={notification.senderId.displayName}
           roundedCircle
-          style={{ width: "50px", height: "50px", marginRight: "15px" }} // Consistent image size
+          style={{
+            width: "50px",
+            height: "50px",
+            marginRight: "15px",
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+          }}
         />
-        <div className="flex-grow-1">
-          <Card.Title className="mb-1">
-            {notification.senderId.displayName}
-          </Card.Title>
-          <Card.Text className="text-muted mb-2">
-            {notification.time} ago
+        <div
+          style={{
+            marginLeft: "80px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Card.Text style={{ marginBottom: "0" }}>
+            {notification.notiDescription}
           </Card.Text>
-          <Card.Text>
-            <strong>Group Member Request:</strong> {notification.notiDescription}
+          <Card.Text
+            className="text-muted mb-2"
+            style={{ fontSize: "0.85rem" }}
+          >
+            {notification.time} ago
           </Card.Text>
           {status === null ? (
             <div>
@@ -84,7 +101,12 @@ function GroupMemberRequest({ notification }) {
           )}
         </div>
         {notification.isNew && (
-          <Badge bg="primary" pill>
+          <Badge
+            bg="primary"
+            pill
+            className="position-absolute"
+            style={{ top: "10px", right: "10px" }}
+          >
             &nbsp;
           </Badge>
         )}
