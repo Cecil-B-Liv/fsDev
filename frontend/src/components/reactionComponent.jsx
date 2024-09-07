@@ -14,12 +14,16 @@ const ReactionComponent = () => {
     { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
-  const handleReactionClick = (icon) => {
-    if (selectedReaction === icon) {
+  const handleMainButtonClick = () => {
+    if (reactions.some((reaction) => selectedReaction === reaction.icon)) {
       setSelectedReaction("bi-hand-thumbs-up");
     } else {
-      setSelectedReaction(icon);
+      setSelectedReaction("bi-hand-thumbs-up-fill");
     }
+  };
+
+  const handleReactionClick = (icon) => {
+    setSelectedReaction(icon);
     setIsHovered(false);
   };
 
@@ -29,9 +33,14 @@ const ReactionComponent = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Button variant="link" className="reaction-button">
+      <Button
+        variant="link"
+        className="reaction-button"
+        onClick={handleMainButtonClick}
+      >
         <i className={`bi ${selectedReaction}`} />
       </Button>
+
       {isHovered && (
         <div className="reactions-popup position-absolute bg-white p-2 border rounded shadow-sm">
           {reactions.map((reaction, index) => (
