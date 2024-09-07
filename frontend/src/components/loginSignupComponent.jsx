@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
 import { login } from "../apis/auth.js";
+import "../styles/loginSignupComponent.css";
+
 export default function LoginSignupComponent() {
   const [focusedButton, setFocusedButton] = useState(0);
 
@@ -12,6 +15,7 @@ export default function LoginSignupComponent() {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
       event.preventDefault();
       setError(null);
@@ -25,103 +29,119 @@ export default function LoginSignupComponent() {
         setError(error.message);
       }
     };
+
     return (
       <>
-        <form onSubmit={handleSubmit}>
-          <input
-            className="login-input"
-            placeholder="Email address"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
-            type="email"
-            required
-          ></input>
-          <input
-            className="password-input"
-            placeholder="Password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            type="password"
-            required
-          ></input>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="email">
+            <Form.Control
+              type="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              required
+              className="mb-3 custom-input"
+            />
+          </Form.Group>
+
+          <Form.Group controlId="password">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              required
+              className="mb-3 custom-input"
+            />
+          </Form.Group>
+
           {error && <div className="error">{error}</div>}
-          <button className="login-btn" type="submit">
+          <Button className="login-btn" type="submit" variant="primary">
             Log in
-          </button>
-          {/* <a href="" className="forget-password">
-            Forgotten password?
-          </a>        */}
-        </form>
+          </Button>
+        </Form>
       </>
     );
   }
 
   function SignupPage() {
     return (
-      <form>
-        <input
-          className="login-input"
-          placeholder="Email address or phone number"
-        ></input>
-        <input className="password-input" placeholder="Password"></input>
-        <input className="displayname-input" placeholder="Display name"></input>
-        <input
-          className="telephone-input"
-          placeholder="Telephone number"
-        ></input>
-        <button className="login-btn">Create Account</button>
-      </form>
+      <Form>
+        <Form.Group controlId="signup-email">
+          <Form.Control
+            type="email"
+            placeholder="Email address or phone number"
+            className="mb-3 custom-input"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="signup-password">
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            className="mb-3 custom-input"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="signup-displayname">
+          <Form.Control
+            type="text"
+            placeholder="Display name"
+            className="mb-3 custom-input"
+          />
+        </Form.Group>
+
+        <Form.Group controlId="signup-telephone">
+          <Form.Control
+            type="tel"
+            placeholder="Telephone number"
+            className="mb-3 custom-input"
+          />
+        </Form.Group>
+
+        <Button className="login-btn" variant="primary">
+          Create Account
+        </Button>
+      </Form>
     );
   }
-
-  // Style variables
-  const containerStyle = {
-    border: "2px solid #454BCF",
-    borderRadius: "10px",
-    padding: "20px",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-  };
 
   return (
     <>
       <div className="center-container">
-        <div className="login-container" style={containerStyle}>
+        <div className="login-container">
           {focusedButton === 0 ? (
-            <h1 style={{ fontFamily: "arial" }}>Welcome Back</h1>
+            <h1>Welcome Back</h1>
           ) : (
-            <h1 style={{ fontFamily: "arial" }}>Create an Account</h1>
+            <h1>Create an Account</h1>
           )}
           <div className="login-signup-options-btn">
-            <button
+            <Button
               className="option"
+              onFocus={() => handleFocus(0)}
               style={{
                 backgroundColor: focusedButton === 0 ? "#454BCF" : "#91A2DE",
                 color: focusedButton === 0 ? "white" : "black",
-                borderTopLeftRadius: "5px",
-                borderBottomLeftRadius: "5px",
               }}
-              onFocus={() => handleFocus(0)}
             >
               Login
-            </button>
-            <button
+            </Button>
+            <Button
               className="option"
+              onFocus={() => handleFocus(1)}
               style={{
                 backgroundColor: focusedButton === 1 ? "#454BCF" : "#91A2DE",
                 color: focusedButton === 1 ? "white" : "black",
-                borderTopRightRadius: "5px",
-                borderBottomRightRadius: "5px",
               }}
-              onFocus={() => handleFocus(1)}
             >
               Sign up
-            </button>
+            </Button>
           </div>
-          {focusedButton === 0 ? LoginPage() : SignupPage()}
+          {focusedButton === 0 ? <LoginPage /> : <SignupPage />}
         </div>
       </div>
     </>
