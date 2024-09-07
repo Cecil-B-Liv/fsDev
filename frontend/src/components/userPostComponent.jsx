@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
@@ -10,6 +10,8 @@ import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
+import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
+
 export default function UserPost() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -115,8 +117,12 @@ export default function UserPost() {
               <ReactionComponent />
             </Col>
             <Col>
-              <Button variant="link" onClick={toggleComments}>
-                💬 32
+              <Button
+                variant="link"
+                onClick={toggleComments}
+                className="no-underline" // Apply custom CSS class
+              >
+                <i className="bi bi-chat"></i> 32
               </Button>
             </Col>
           </Row>
