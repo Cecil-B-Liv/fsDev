@@ -12,15 +12,13 @@ import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
 import GroupWall from "./components/groupWallComponent";
 import NotificationList from "./components/notificationList";
-import SiteAdmin from "./pages/SiteAdminpage";
-import GroupCreateRequestList from "./components/groupCreateRequestList";
 import GroupAdminPage from "./pages/GroupAdminPage";
 import JoinRequestList from "./components/joinRequestList";
 import MemberManageList from "./components/memberManageList";
 import Profile from "./components/ProfileComponent"
-import ManageUsersList from "./components/manageUserList";
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
+import GroupMange from "./components/groupManage";
 
 // Data test add by NA
 const groups = [
@@ -100,6 +98,10 @@ const router = createBrowserRouter([
               {
                 path: "groupmembers",
                 element: <FriendList />,
+              },
+              {
+                path: "groupmanage",
+                element: <GroupMange/>
               }
             ],
           },

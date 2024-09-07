@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
 export default function GroupWall() {
-  const groupIDTest = 123;
+
+  // TESTING DATA
+  const isGroupAdmin = true;
+
   const [activeTab, setActiveTab] = useState('posts');
 
   const handleTabClick = (tab) => {
@@ -40,6 +43,8 @@ export default function GroupWall() {
       <Row className="bg-light py-3">
         <Col className="d-flex justify-content-center">
           <Nav variant="pills">
+
+            {/*GROUP FEEDS*/}
             <Nav.Item>
               <Nav.Link
                 as={Link}
@@ -56,6 +61,8 @@ export default function GroupWall() {
                 Posts
               </Nav.Link>
             </Nav.Item>
+
+            {/*GROUP MEMBERS*/}
             <Nav.Item>
               <Nav.Link
                 as={Link}
@@ -71,6 +78,24 @@ export default function GroupWall() {
                 Members
               </Nav.Link>
             </Nav.Item>
+
+             {/*GROUP MANAGE*/}
+             {isGroupAdmin && <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to={`groupmanage`}
+                onClick={() => handleTabClick('manage')}
+                className={activeTab === 'manage' ? 'active text-white' : 'text-dark'}
+                style={{ 
+                  backgroundColor: activeTab === 'manage' ? '#f44336' : 'transparent',
+                  borderRadius: '50px',
+                  padding: '0.5rem 1.5rem'
+                }}
+              >
+                Manage Group
+              </Nav.Link>
+            </Nav.Item>}
+             
           </Nav>
         </Col>
       </Row>

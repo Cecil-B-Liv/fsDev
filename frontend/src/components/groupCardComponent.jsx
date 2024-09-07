@@ -3,6 +3,7 @@ import { Card } from 'react-bootstrap';
 
 const GroupCard = ({ groupId, groupName, groupDescription, groupAvatar }) => {
 
+  // TESTING DATA
   const groupIDTest = 123;
   
   return (
