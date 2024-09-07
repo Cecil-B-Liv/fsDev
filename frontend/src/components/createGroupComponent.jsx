@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import { useState } from "react";
 import "../styles/createGroupComponent.css";
+import { Link } from "react-router-dom";
 
 
 const CreateGroupComponent = () => {
@@ -89,9 +90,11 @@ const CreateGroupComponent = () => {
 
         <Row className="mt-4">
           <Col className="d-flex justify-content-center">
-            <Button variant="secondary" size="lg" className="mx-2">
-              Cancel
-            </Button>
+            <Link to={"/groups"}>
+              <Button variant="secondary" size="lg" className="mx-2">
+                Cancel
+              </Button>
+            </Link>
             <Button variant="primary" size="lg" className="mx-2">
               Submit
             </Button>

@@ -81,11 +81,11 @@ const router = createBrowserRouter([
             element: <UserGroupsComponent groups={groups} />,
           },
           {
-            path: "Profile",
+            path: "profile",
             element: <Profile/>,
           },
           {
-            path: "groups/:GroupID",
+            path: "groups/:groupID",
 
             element: <GroupWall />,
             children: [
