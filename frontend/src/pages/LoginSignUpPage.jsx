@@ -1,12 +1,12 @@
-import LoginComponent from "../components/loginComponent";
+import LoginComponent from "../components/loginSignupComponent";
 import NotificationComponent from "../components/notificationComponent";
 
 function LoginSignupPage() {
   return (
     <>
       <div>
-        <LoginComponent/>
-        <NotificationComponent/>
+        <LoginComponent />
+        <NotificationComponent />
       </div>
     </>
   );
