@@ -8,6 +8,7 @@ const GroupSchema = new mongoose.Schema(
             required: true
         },
         description: String,
+        groupBannerPath: String,
         groupAdminId:
         {
             type: mongoose.Schema.Types.ObjectId,

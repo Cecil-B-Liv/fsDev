@@ -22,7 +22,7 @@ import {
     validateUpdateGroup,
     validateSearchQuery
 } from "../middlewares/validate.js"
-import { uploadPostPicture } from "../middlewares/upload.js";
+import { uploadPostPicture, uploadGroupPicture } from "../middlewares/upload.js";
 
 const router = express.Router();
 

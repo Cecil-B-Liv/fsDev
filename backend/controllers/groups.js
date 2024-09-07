@@ -15,6 +15,11 @@ export const createGroup = async (req, res) => {
             groupVisibility
         } = req.body;
 
+        // Extract filename from uploaded file to the groupBannerPath (if available)
+        const groupBannerPath = req.files && req.files['groupBannerPath']
+            ? req.files['groupBannerPath'][0].filename
+            : null;
+
         // Check if a group with the same name already exists
         const existingGroup = await Group.findOne({ name });
         if (existingGroup) {
@@ -24,6 +29,7 @@ export const createGroup = async (req, res) => {
         const newGroup = new Group({
             name,
             description,
+            groupBannerPath,
             groupAdminId: currentUserId,
             groupMemberList: [currentUserId], // Add the admin to the member list initially
             groupVisibility,
@@ -300,6 +306,12 @@ export const updateGroup = async (req, res) => {
         group.name = name;
         group.description = description;
         group.groupVisibility = groupVisibility;
+
+        // Check if a new picture was uploaded and update the groupBannerPath
+        if (req.files && req.files['groupBannerPath']) {
+            group.groupBannerPath = req.files['groupBannerPath'][0].filename;
+        }
+
         await group.save();
 
         res.status(200).json({ message: "Group updated successfully" });
@@ -357,7 +369,7 @@ export const denyGroupRequest = async (req, res) => {
         const { groupId, requestId } = req.params;
         const groupAdmin = await User.findById(groupAdminId);
         const group = await Group.findById(groupId);
-        
+
         if (!group) {
             return res.status(404).json({ message: "Group not found" });
         }

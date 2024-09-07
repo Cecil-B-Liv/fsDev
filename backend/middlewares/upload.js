@@ -39,3 +39,10 @@ export const uploadPostPicture = upload.fields([
     { name: "postVisibility" },
     { name: "postDescription" },
 ]);
+
+export const uploadGroupPicture = upload.fields([
+    { name: "groupBannerPath", maxCount: 1 },
+    { name: "name" },
+    { name: "description" },
+    { name: "groupVisibility" },
+]);
