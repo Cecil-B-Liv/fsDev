@@ -11,7 +11,7 @@ import UserGroupsComponent from "./components/userGroupsComponent";
 import FriendList from "./components/friendListComponent";
 import CreateGroupComponent from "./components/createGroupComponent";
 import GroupWall from "./components/groupWallComponent";
-import FriendRequest from "./components/friendRequestCardComponent";
+import NotificationList from "./components/notificationList";
 import SiteAdmin from "./pages/SiteAdminpage";
 import GroupCreateRequestList from "./components/groupCreateRequestList";
 import GroupAdminPage from "./pages/GroupAdminPage";
@@ -112,8 +112,8 @@ const router = createBrowserRouter([
             element: <CreateGroupComponent />,
           },
           {
-            path: "friendrequests",
-            element: <FriendRequest/>,
+            path: "notifications",
+            element: <NotificationList/>,
           },
           {
             path: "siteadmindashboard",

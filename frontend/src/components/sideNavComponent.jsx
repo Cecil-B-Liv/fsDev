@@ -36,8 +36,8 @@ export default function SideNav({ isSiteAdmin }) {
               </Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="friendrequests">
-                <i className="bi bi-person-plus"></i> Friend Requests
+              <Nav.Link href="notifications">
+                <i className="bi bi-person-plus"></i> Notifications
               </Nav.Link>
             </Button>
             <Button>

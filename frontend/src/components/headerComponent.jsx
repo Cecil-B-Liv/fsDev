@@ -10,6 +10,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import NotificationComponent from './notificationComponent'; 
 import { logout } from "../apis/auth";
 import { useNavigate } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 
 import '../styles/headerComponent.css';
 
@@ -102,9 +103,10 @@ export default function Header() {
                             id="basic-nav-dropdown"
                             align='end'
                         >
-                            <NavDropdown.Item href="HomePage/Profile">
+                            <NavDropdown.Item href="profile">
                                 <i className="bi bi-person-circle"></i> Your Page 
                             </NavDropdown.Item>
+
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={handleLogout}>
                                 <i className="bi bi-box-arrow-right"></i> 
