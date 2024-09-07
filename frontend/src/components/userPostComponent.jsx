@@ -56,7 +56,7 @@ export default function UserPost(post) {
         <Card.Header>
           <Row>
             <Col className="userPostHeader d-flex justify-content-start align-items-center gap-2">
-              <Image src={`${assets}${post.postPicturePath}`} roundedCircle />
+              <Image src={`${assets}${post.picturePath}`} roundedCircle />
               <h5>{post.username}</h5>
               <a href="#johndoe" className="pb-2">
                 {post.displayName}
@@ -111,7 +111,7 @@ export default function UserPost(post) {
             </>
           )}
           {!isEditing && (
-            <Card.Img variant="top" src="https://placehold.co/600x400" />
+            <Card.Img variant="top" src={`http://localhost:3001/assets/${post.postPicturePath}`} />
           )}
           <Row className="gap-2 mt-3">
             <Col xs="auto">

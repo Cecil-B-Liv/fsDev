@@ -1,4 +1,4 @@
-import { getFeedPosts } from "../apis/posts"
+import { getPublicFeed } from "../apis/posts"
 import { useEffect, useState } from 'react';
 
 import CreatePostHeaderComponent from "./createPostHeaderComponent";
@@ -12,9 +12,11 @@ export default function Feed() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await getFeedPosts();
+                const response = await getPublicFeed();
+                console.log(response);
 
                 setPosts(response);
+                console.log("There is a post")
             } catch (error) {
                 console.error("Error fetching posts:", error);
                 setError(error); // Set error state
@@ -30,17 +32,13 @@ export default function Feed() {
         return <div>Loading...</div>; // Display loading indicator
     }
 
-    if (error) {
-        return <div>Error: {error.message}</div>; // Display error message
-    }
-
     return (
         <>
             <CreatePostHeaderComponent />
-
+            
             <div>
                 {posts.map((post) => (
-                    <UserPostComponent key={post._id.toString()} post={post.toString()} />
+                    <UserPostComponent key={post._id} post={post} />
                 ))}
             </div>
             {/* <div>
