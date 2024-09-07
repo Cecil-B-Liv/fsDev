@@ -1,7 +1,6 @@
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import ProfileCard from "./profileCardComponent";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/friendRequestCardComponent.css"
 
 const FriendRequestCard = () => {
