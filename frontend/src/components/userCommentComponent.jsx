@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -8,10 +8,24 @@ import "../styles/userCommentComponent.css";
 
 const UserCommentComponent = ({ avatar }) => {
   const [comment, setComment] = useState("");
+  const textareaRef = useRef(null);
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
+    autoExpandTextarea();
   };
+
+  const autoExpandTextarea = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto"; 
+      textarea.style.height = `${textarea.scrollHeight}px`; 
+    }
+  };
+
+  useEffect(() => {
+    autoExpandTextarea();
+  }, [comment]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +40,6 @@ const UserCommentComponent = ({ avatar }) => {
           <img
             src={avatar || "https://via.placeholder.com/50"}
             alt="Avatar"
-            roundedCircle
             className="comment-avatar"
           />
         </Col>
@@ -35,6 +48,7 @@ const UserCommentComponent = ({ avatar }) => {
             <Form.Group controlId="userComment">
               <Form.Control
                 as="textarea"
+                ref={textareaRef}
                 rows={1}
                 value={comment}
                 onChange={handleCommentChange}
