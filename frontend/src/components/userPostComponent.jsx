@@ -56,14 +56,14 @@ export default function UserPost(post) {
         <Card.Header>
           <Row>
             <Col className="userPostHeader d-flex justify-content-start align-items-center gap-2">
-              <Image src= {`${assets}${post.postPicturePath}`} roundedCircle />
-              <h5>${post.username}</h5>
+              <Image src={`${assets}${post.postPicturePath}`} roundedCircle />
+              <h5>{post.username}</h5>
               <a href="#johndoe" className="pb-2">
-                ${post.displayName}
+                {post.displayName}
               </a>
             </Col>
             <Col className="d-flex row-column justify-content-end align-items-baseline gap-2 mt-2">
-              <p>${post.createdAt}</p>
+              <p>{post.createdAt}</p>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="none" id="dropdown-basic">
                   📤

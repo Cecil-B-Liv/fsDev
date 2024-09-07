@@ -1,32 +1,40 @@
+import { getFeedPosts } from "../apis/posts"
+import { useEffect, useState } from 'react';
+
 import CreatePostHeaderComponent from "./createPostHeaderComponent";
 import UserPostComponent from "./userPostComponent"
 
-import {getFeedPosts} from "../apis/posts"
-import { useEffect, useState } from 'react';  //test
-
-export default function Feed(){
+export default function Feed() {
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const getPosts = async () => {
+        const fetchPosts = async () => {
             try {
                 const response = await getFeedPosts();
-                
-                // Ensure the response is an array
-                if (Array.isArray(response)) {
-                    setPosts(response);
-                } else {
-                    console.error("API did not return an array");
-                }
+
+                setPosts(response);
             } catch (error) {
                 console.error("Error fetching posts:", error);
+                setError(error); // Set error state
+            } finally {
+                setIsLoading(false); // Set loading to false regardless of success or failure
             }
         };
 
-        getPosts();
+        fetchPosts();
     }, []);
 
-    return(
+    if (isLoading) {
+        return <div>Loading...</div>; // Display loading indicator
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>; // Display error message
+    }
+
+    return (
         <>
             <CreatePostHeaderComponent />
 
@@ -35,6 +43,11 @@ export default function Feed(){
                     <UserPostComponent key={post._id} post={post} />
                 ))}
             </div>
+            {/* <div>
+                {posts.map((post) => (
+                    <UserPostComponent key={post._id} post={post} />
+                ))}
+            </div> */}
         </>
     );
 }
