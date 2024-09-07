@@ -44,8 +44,11 @@ const UserCommentComponent = ({ avatar }) => {
           />
         </Col>
         <Col className="position-relative">
-          <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-start  ">
-            <Form.Group controlId="userComment">
+          <Form
+            onSubmit={handleSubmit}
+            className="d-flex flex-column align-items-start"
+          >
+            <Form.Group controlId="userComment" style={{ width: "87%" }}>
               <Form.Control
                 as="textarea"
                 ref={textareaRef}
@@ -54,7 +57,7 @@ const UserCommentComponent = ({ avatar }) => {
                 onChange={handleCommentChange}
                 placeholder="Write a comment..."
                 className="auto-expand form-control mb-2"
-                style={{ resize: "none", overflow: "hidden", width: "320%" }}
+                style={{ resize: "none", overflow: "hidden" }}
               />
             </Form.Group>
             <Button

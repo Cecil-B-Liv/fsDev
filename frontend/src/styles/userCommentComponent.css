@@ -13,13 +13,14 @@
 
 .auto-expand {
   overflow: hidden;
-  width: 100%;
+  width: 100%; 
 }
 
 form textarea {
   line-height: 1.5;
   padding: 0.5rem;
   align-items: flex-start;
+  width: 100%; 
 }
 
 Button {
@@ -31,6 +32,7 @@ Button {
   bottom: 0;
   margin-right: 10px;
   margin-bottom: 10px;
+  white-space: nowrap; 
 }
 
 .no-underline {
