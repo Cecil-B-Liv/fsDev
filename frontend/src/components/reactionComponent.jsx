@@ -45,7 +45,7 @@ const ReactionComponent = () => {
         <i
           className={`bi ${selectedReaction} ${
             selectedReaction === "bi-hand-thumbs-up" ? "thumbs-up-black" : ""
-          }`}
+          } ${selectedReaction !== "bi-hand-thumbs-up" ? "selected-reaction-black" : ""}`}
         />
       </Button>
 
