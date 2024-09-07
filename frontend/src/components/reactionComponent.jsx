@@ -23,7 +23,11 @@ const ReactionComponent = () => {
   };
 
   const handleReactionClick = (icon) => {
-    setSelectedReaction(icon);
+    if (selectedReaction === icon) {
+      setSelectedReaction("bi-hand-thumbs-up");
+    } else {
+      setSelectedReaction(icon);
+    }
     setIsHovered(false);
   };
 
