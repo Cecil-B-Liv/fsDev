@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
-import ReactionComponent from "./reactionComponent"; 
+import ReactionComponent from "./reactionComponent";
 import "../styles/commentComponent.css";
-import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 const CommentComponent = ({ username, content, likes, avatar }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -92,7 +91,7 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
             </form>
           ) : (
             <div className="d-flex justify-content-start align-items-center ">
-              <ReactionComponent className="reaction-bg" /> 
+              <ReactionComponent className="reaction-bg" />
               <div className="ms-2">
                 {likes}
               </div>

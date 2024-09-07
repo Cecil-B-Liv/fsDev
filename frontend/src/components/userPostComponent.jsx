@@ -10,7 +10,6 @@ import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
-import "bootstrap-icons/font/bootstrap-icons.css"; 
 
 export default function UserPost() {
   const [isExpanded, setIsExpanded] = useState(false);

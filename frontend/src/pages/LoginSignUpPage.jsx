@@ -1,4 +1,3 @@
-import React from "react";
 import LoginComponent from "../components/loginComponent";
 import NotificationComponent from "../components/notificationComponent";
 

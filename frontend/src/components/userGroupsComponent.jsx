@@ -1,19 +1,18 @@
-import React from 'react';
 import GroupCard from './groupCardComponent';
-import { Container, Row, Col } from 'react-bootstrap'; 
-import {Button} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const UserGroupsComponent = ({ groups }) => {
   return (
     <Container className="mt-5">
-       <div className="d-flex justify-content-center mb-4">
-          <Button variant="primary" size="lg">
-            <Link to="/HomePage/CreateGroup" className="text-white text-decoration-none">
-              ➕ Create New Group
-            </Link>
-          </Button>
-        </div>
+      <div className="d-flex justify-content-center mb-4">
+        <Button variant="primary" size="lg">
+          <Link to="/HomePage/CreateGroup" className="text-white text-decoration-none">
+            ➕ Create New Group
+          </Link>
+        </Button>
+      </div>
       <h2 className="text-center">Created Groups</h2>
       <hr />
       <Row>
@@ -42,7 +41,7 @@ const UserGroupsComponent = ({ groups }) => {
           </Col>
         ))}
       </Row>
-      
+
     </Container>
   );
 };

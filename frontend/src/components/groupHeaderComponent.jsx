@@ -1,4 +1,4 @@
-import { Container, Image, Button, Row, Col, Nav } from 'react-bootstrap';
+import { Container, Image, Row, Col, Nav } from 'react-bootstrap';  // not standard
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
-import { acceptFriendRequest, denyFriendRequest } from "../apis/users"; 
+import { acceptFriendRequest, denyFriendRequest } from "../apis/users";
 
 function FriendRequestNotification({ notification }) {
   const [status, setStatus] = useState(null);
 
   const handleAccept = async () => {
     try {
-      const response = await acceptFriendRequest(notification._id); 
+      const response = await acceptFriendRequest(notification._id);
       if (response) {
         setStatus("accepted");
       }
@@ -21,7 +21,7 @@ function FriendRequestNotification({ notification }) {
 
   const handleDecline = async () => {
     try {
-      const response = await denyFriendRequest(notification._id); 
+      const response = await denyFriendRequest(notification._id);
       if (response) {
         setStatus("declined");
       }
