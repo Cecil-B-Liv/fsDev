@@ -1,147 +1,134 @@
 import axios from 'axios';
 
 // Set the base URL for your API requests
-const API = axios.create({ baseURL: 'http://localhost:3001' });
+const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 // Send a friend request
 export const sendFriendRequest = async (recipientId) => {
     try {
-        const response = await API.post('/friend-request', { recipientId }); // Changed to '/friend-request'
+        const response = await axios.post(`${API_BASE_URL}/users/friend-request`, { recipientId });
         return response.data;
     } catch (error) {
-        console.error('Error sending friend request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error sending friend request";
     }
 };
 
 // Send a group join request
-export const sendGroupJoinRequest = async (groupInfo) => {
+export const sendGroupJoinRequest = async (groupId) => {
     try {
-        const response = await API.post('/group-request', { groupInfo }); // Changed to '/group-request'
+        const response = await axios.post(`${API_BASE_URL}/users/group-request`, { groupId });
         return response.data;
     } catch (error) {
-        console.error('Error sending group join request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error sending group join request";
     }
 };
 
 // Get user profile
 export const getUser = async (userId) => {
     try {
-        const response = await API.get(`/users/${userId}`); // No change needed here
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching user profile:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching user profile";
     }
 };
 
 // Get user's friends
 export const getUserFriends = async (userId) => {
     try {
-        const response = await API.get(`/users/${userId}/friends`); // No change needed here
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}/friends`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching user friends:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching user friends";
     }
 };
 
 // Get user's groups
 export const getUserGroups = async (userId) => {
     try {
-        const response = await API.get(`/users/${userId}/groups`); // No change needed here
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}/groups`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching user groups:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching user groups";
     }
 };
 
 // Search for users
 export const searchUsers = async (query) => {
     try {
-        const response = await API.get('/search', { params: { q: query } }); // Changed to '/search'
+        const response = await axios.get(`${API_BASE_URL}/users/search`, { params: { q: query } });
         return response.data;
     } catch (error) {
-        console.error('Error searching for users:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error searching for users";
     }
 };
 
 // Get all users
 export const getUsers = async () => {
     try {
-        const response = await API.get('/users'); // No change needed here
+        const response = await axios.get(`${API_BASE_URL}/users`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching users:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching users";
     }
 };
 
 // Update user profile
 export const updateUserProfile = async (updatedFields) => {
     try {
-        const response = await API.put('/update', updatedFields); // Changed to '/update'
+        const response = await axios.put(`${API_BASE_URL}/users/update`, updatedFields);
         return response.data;
     } catch (error) {
-        console.error('Error updating profile:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error updating user profile";
     }
 };
 
 // Accept a friend request
 export const acceptFriendRequest = async (requestId) => {
     try {
-        const response = await API.patch(`/friend-request/${requestId}/accept`); // Changed to '/friend-request/...'
+        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/accept`);
         return response.data;
     } catch (error) {
-        console.error('Error accepting friend request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error accepting friend request";
     }
 };
 
 // Deny a friend request
 export const denyFriendRequest = async (requestId) => {
     try {
-        const response = await API.patch(`/friend-request/${requestId}/deny`); // Changed to '/friend-request/...'
+        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/deny`);
         return response.data;
     } catch (error) {
-        console.error('Error denying friend request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error denying friend request";
     }
 };
 
 // Suspend a user (for siteAdmin)
 export const suspendUser = async (userId) => {
     try {
-        const response = await API.patch(`/users/${userId}/suspend`); // Changed to '/users/.../suspend'
+        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/suspend`);
         return response.data;
     } catch (error) {
-        console.error('Error suspending user:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error suspending user";
     }
 };
 
 // Resume a user (for siteAdmin)
 export const resumeUser = async (userId) => {
     try {
-        const response = await API.patch(`/users/${userId}/resume`); // Changed to '/users/.../resume'
+        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/resume`);
         return response.data;
     } catch (error) {
-        console.error('Error resuming user:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error resuming user";
     }
 };
 
 // Remove a friend
 export const removeFriend = async (friendId) => {
     try {
-        const response = await API.delete(`/friends/${friendId}`); // No change needed here
+        const response = await axios.delete(`${API_BASE_URL}/users/friends/${friendId}`);
         return response.data;
     } catch (error) {
-        console.error('Error removing friend:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error removing friend";
     }
 };

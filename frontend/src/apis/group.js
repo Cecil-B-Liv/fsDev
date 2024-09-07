@@ -1,169 +1,156 @@
 import axios from 'axios';
 
 // Set the base URL for your API requests
-const API = axios.create({ baseURL: 'http://localhost:3001' });
+const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
-/* CREATE */
+
 // Create a new group
-export const createGroup = async (groupData) => {
+export const createGroup = async (formData) => {
     try {
-        const response = await API.post('/groups/create', groupData);
+        const response = await axios.post(`${API_BASE_URL}/groups/create`, formData,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error creating group:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error creating group";
     }
 };
 
 // Create a group post
 export const createGroupPost = async (groupId, postData) => {
     try {
-        const formData = new FormData();
-        for (let key in postData) {
-            formData.append(key, postData[key]);
-        }
+        // const formData = new FormData();
+        // for (let key in postData) {
+        //     formData.append(key, postData[key]);
+        // }
 
-        const response = await API.post(`/groups/${groupId}/posts/create`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        const response = await axios.post(`${API_BASE_URL}/groups/${groupId}/posts/create`, postData,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error creating group post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error creating group post";
     }
 };
 
-/* READ */
 // Get all approved groups
 export const getGroups = async () => {
     try {
-        const response = await API.get('/groups');
+        const response = await axios.get(`${API_BASE_URL}/groups`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching groups:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching groups";
     }
 };
 
 // Get specific group details and posts
 export const getGroup = async (groupId) => {
     try {
-        const response = await API.get(`/groups/${groupId}`);
+        const response = await axios.get(`${API_BASE_URL}/groups/${groupId}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching group details:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching group details";
     }
 };
 
 // Search for approved groups
 export const searchGroups = async (query) => {
     try {
-        const response = await API.get('/groups/search', { params: { q: query } });
+        const response = await axios.get(`${API_BASE_URL}/groups/search`, { params: { q: query } });
         return response.data;
     } catch (error) {
-        console.error('Error searching for groups:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error searching for groups";
     }
 };
 
 // Get all unapproved groups (siteAdmin)
 export const getUnapprovedGroups = async () => {
     try {
-        const response = await API.get('/groups/unapproved');
+        const response = await axios.get(`${API_BASE_URL}/groups/unapproved`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching unapproved groups:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching unapproved groups";
     }
 };
 
-/* UPDATE */
 // Approve group creation (siteAdmin)
 export const approveGroupCreation = async (groupId) => {
     try {
-        const response = await API.patch(`/groups/${groupId}/approve`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/approve`);
         return response.data;
     } catch (error) {
-        console.error('Error approving group creation:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error approving group creation";
     }
 };
 
 // Deny group creation (siteAdmin)
 export const denyGroupCreation = async (groupId) => {
     try {
-        const response = await API.patch(`/groups/${groupId}/deny`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/deny`);
         return response.data;
     } catch (error) {
-        console.error('Error denying group creation:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error denying group creation";
     }
 };
 
 // Update group details (groupAdmin)
-export const updateGroup = async (groupId, updatedGroupData) => {
+export const updateGroup = async (groupId, updatedFields) => {
     try {
-        const response = await API.put(`/groups/${groupId}/update`, updatedGroupData);
+        const response = await axios.put(`${API_BASE_URL}/groups/${groupId}/update`, updatedFields);
         return response.data;
     } catch (error) {
-        console.error('Error updating group:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error updating group details";
     }
 };
 
 // Approve a group join request (groupAdmin)
 export const approveGroupRequest = async (groupId, requestId) => {
     try {
-        const response = await API.patch(`/groups/${groupId}/requests/${requestId}/approve`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/approve`);
         return response.data;
     } catch (error) {
-        console.error('Error approving group join request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error approving group join request";
     }
 };
 
 // Deny a group join request (groupAdmin)
 export const denyGroupRequest = async (groupId, requestId) => {
     try {
-        const response = await API.patch(`/groups/${groupId}/requests/${requestId}/deny`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/deny`);
         return response.data;
     } catch (error) {
-        console.error('Error denying group join request:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error denying group join request";
     }
 };
 
-/* DELETE */
 // Remove a group member (groupAdmin)
 export const removeGroupMember = async (groupId, memberId) => {
     try {
-        const response = await API.delete(`/groups/${groupId}/members/${memberId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/members/${memberId}/delete`);
         return response.data;
     } catch (error) {
-        console.error('Error removing group member:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error removing group member";
     }
 };
 
 // Delete a group post
 export const deleteGroupPost = async (groupId, postId) => {
     try {
-        const response = await API.delete(`/groups/${groupId}/posts/${postId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/posts/${postId}/delete`);
         return response.data;
     } catch (error) {
-        console.error('Error deleting group post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error deleting group post";
     }
 };
 
 // Delete a comment from a group post
 export const deleteGroupComment = async (groupId, commentId) => {
     try {
-        const response = await API.delete(`/groups/${groupId}/comments/${commentId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/comments/${commentId}/delete`);
         return response.data;
     } catch (error) {
-        console.error('Error deleting group comment:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error deleting group comment";
     }
 };

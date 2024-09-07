@@ -1,91 +1,87 @@
 import axios from 'axios';
 
 // Set the base URL for your API requests
-const API = axios.create({ baseURL: 'http://localhost:3001' });
+const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
-/* CREATE */
 // Create a new post
-export const createPost = async (postData) => {
+export const createPost = async (formData) => {
     try {
-        const formData = new FormData();
-        for (let key in postData) {
-            formData.append(key, postData[key]);
-        }
+        // const formData = new FormData();
+        // for (let key in postData) {
+        //     formData.append(key, postData[key]);
+        // }
 
-        const response = await API.post('/posts/create', formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        const response = await axios.post(`${API_BASE_URL}/posts/create`, formData,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error creating post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error creating post";
     }
 };
 
 // Create a comment on a post
 export const createComment = async (postId, commentMessage) => {
     try {
-        const response = await API.post(`/posts/${postId}/comments/create`, { commentMessage });
+        const response = await axios.post(`${API_BASE_URL}/posts/${postId}/comments/create`, { commentMessage },
+            {
+                headers: { 'Content-Type': 'application/json' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error creating comment:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error creating comment";
     }
 };
 
-/* READ */
-// Get all posts for the current user's feed (filtered by relationships and visibility)
+// Get all posts to the feed
 export const getFeedPosts = async () => {
     try {
-        const response = await API.get('/posts');
+        const response = await axios.get(`${API_BASE_URL}/posts`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching feed posts:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching main feed posts";
     }
 };
 
-// Get all public posts for the feed
+// Get all public posts to the feed
 export const getPublicFeed = async () => {
     try {
-        const response = await API.get('/posts/public');
+        const response = await axios.get(`${API_BASE_URL}/posts/public`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching public feed:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching public feed";
     }
 };
 
-// Get all posts from friends for the feed
+// Get all friends posts to the feed
 export const getFriendsFeed = async () => {
     try {
-        const response = await API.get('/posts/friends');
+        const response = await axios.get(`${API_BASE_URL} / posts / friends`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching friends feed:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching friends feed";
     }
 };
 
 // Get all posts from a specific user
 export const getUserPosts = async (userId) => {
     try {
-        const response = await API.get(`/posts/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/posts/${userId}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching user posts:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching user posts";
     }
 };
 
-// Get all posts from a group (optional, if needed in the future)
+// Get all groups posts from a group (optional, if needed in the future)
 /* Example:
 export const getGroupPosts = async (groupId) => {
     try {
-        const response = await API.get(`/posts/groups/${groupId}`);
+        const response = await axios.get(`${API_BASE_URL}/posts/groups/${groupId}`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching group posts:', error.response?.data || error.message);
+        console.error('Error fetching grou`${API_BASE_URL} posts:', error.response?.data || error.message);
         throw error;
     }
 };
@@ -94,74 +90,73 @@ export const getGroupPosts = async (groupId) => {
 // Get all posts for siteAdmin (no filtering)
 export const adminGetPosts = async () => {
     try {
-        const response = await API.get('/posts/admin');
+        const response = await axios.get(`${API_BASE_URL}/posts/admin`);
         return response.data;
     } catch (error) {
-        console.error('Error fetching admin posts:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error fetching admin posts";
     }
 };
 
-/* UPDATE */
 // Add or update a reaction to a post
 export const reactToPost = async (postId, reactionType) => {
     try {
-        const response = await API.put(`/posts/${postId}/react`, { reactionType });
+        const response = await axios.put(`${API_BASE_URL}/posts/${postId}/react`, { reactionType },
+            {
+                headers: { 'Content-Type': 'application/json' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error reacting to post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error reacting to post";
     }
 };
 
 // Update an existing post
-export const updatePost = async (postId, updatedData) => {
+export const updatePost = async (postId, updatedFields) => {
     try {
-        const formData = new FormData();
-        for (let key in updatedData) {
-            formData.append(key, updatedData[key]);
-        }
+        // const formData = new FormData();
+        // for (let key in updatedData) {
+        //     formData.append(key, updatedData[key]);
+        // }
 
-        const response = await API.put(`/posts/${postId}/update`, formData, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        const response = await axios.put(`${API_BASE_URL}/posts/${postId}/update`, updatedFields,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error updating post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error updating post";
     }
 };
 
 // Update an existing comment
 export const updateComment = async (commentId, newCommentMessage) => {
     try {
-        const response = await API.put(`/posts/comments/${commentId}/update`, { newCommentMessage });
+        const response = await axios.put(`${API_BASE_URL}/posts/comments/${commentId}/update`, { newCommentMessage },
+            {
+                headers: { 'Content-Type': 'application/json' }
+            });
         return response.data;
     } catch (error) {
-        console.error('Error updating comment:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error updating comment";
     }
 };
 
-/* DELETE */
 // Delete a post
 export const deletePost = async (postId) => {
     try {
-        const response = await API.delete(`/posts/${postId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/posts/${postId}/delete`);
         return response.data;
     } catch (error) {
-        console.error('Error deleting post:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error deleting post";
     }
 };
 
 // Delete a comment from a post
 export const deleteComment = async (commentId) => {
     try {
-        const response = await API.delete(`/posts/comments/${commentId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/posts/comments/${commentId}/delete`);
         return response.data;
     } catch (error) {
-        console.error('Error deleting comment:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error deleting comment";
     }
 };

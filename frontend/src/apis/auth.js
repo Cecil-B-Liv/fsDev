@@ -6,8 +6,11 @@ const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 // Register
 export const register = async (formData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/auth/register`, formData);
-        return response.data; // Backend returns a success msg and registered user data
+        const response = await axios.post(`${API_BASE_URL}/auth/register`, formData,
+            {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+        return response.data;
     } catch (error) {
         throw error.response?.data?.error || "An error occurred during registration";
     }
@@ -22,7 +25,7 @@ export const login = async (formData) => {
                 withCredentials: true
             }
         );
-        return response.data; // Backend returns a success msg and user data
+        return response.data;
     } catch (error) {
         console.error("Login error:", error);
         throw error.response?.data?.error || "An error occurred during login";
@@ -51,7 +54,7 @@ export const logout = async () => {
                 withCredentials: true
             }
         );
-        return response.data; // Backend returns a success msg
+        return response.data;
     } catch (error) {
         throw error.response?.data?.error || "An error occurred during logout";
     }
