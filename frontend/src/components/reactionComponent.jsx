@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import "../styles/reactionComponent.css"; // Ensure the styles are in this file
+import "../styles/reactionComponent.css";
 
 const ReactionComponent = () => {
-  const [selectedReaction, setSelectedReaction] = useState("bi-hand-thumbs-up");
+  // State to store both icon and label, default to null
+  const [selectedReaction, setSelectedReaction] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
   const reactions = [
@@ -13,19 +14,29 @@ const ReactionComponent = () => {
     { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
+  useEffect(() => {
+    console.log(selectedReaction ? selectedReaction.label : null); // Log the updated reaction state after it changes
+  }, [selectedReaction]); // This effect runs every time selectedReaction changes
+
   const handleMainButtonClick = () => {
-    if (reactions.some((reaction) => selectedReaction === reaction.icon)) {
-      setSelectedReaction("bi-hand-thumbs-up");
+    if (
+      selectedReaction &&
+      reactions.some((reaction) => selectedReaction.icon === reaction.icon)
+    ) {
+      // Unselect the reaction
+      setSelectedReaction(null);
     } else {
-      setSelectedReaction("bi-hand-thumbs-up-fill");
+      // Select the "like" reaction by default
+      setSelectedReaction({ icon: "bi-hand-thumbs-up-fill", label: "like" });
     }
   };
 
-  const handleReactionClick = (icon) => {
-    if (selectedReaction === icon) {
-      setSelectedReaction("bi-hand-thumbs-up");
+  const handleReactionClick = (icon, label) => {
+    if (selectedReaction && selectedReaction.icon === icon) {
+      // Unselect if already selected
+      setSelectedReaction(null);
     } else {
-      setSelectedReaction(icon);
+      setSelectedReaction({ icon, label });
     }
     setIsHovered(false);
   };
@@ -42,9 +53,11 @@ const ReactionComponent = () => {
         onClick={handleMainButtonClick}
       >
         <i
-          className={`bi ${selectedReaction} ${
-            selectedReaction === "bi-hand-thumbs-up" ? "thumbs-up-black" : ""
-          } ${selectedReaction !== "bi-hand-thumbs-up" ? "selected-reaction-black" : ""}`}
+          className={`bi ${
+            selectedReaction ? selectedReaction.icon : "bi-hand-thumbs-up"
+          } ${
+            !selectedReaction ? "thumbs-up-black" : "selected-reaction-black"
+          }`}
         />
       </Button>
 
@@ -54,9 +67,11 @@ const ReactionComponent = () => {
             <div
               key={index}
               className={`reaction btn btn-light me-2 ${
-                selectedReaction === reaction.icon ? "selected" : ""
+                selectedReaction && selectedReaction.icon === reaction.icon
+                  ? "selected"
+                  : ""
               }`}
-              onClick={() => handleReactionClick(reaction.icon)}
+              onClick={() => handleReactionClick(reaction.icon, reaction.label)}
             >
               <i className={`bi ${reaction.icon}`} />
             </div>
