@@ -6,6 +6,8 @@ import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import "../styles/commentComponent.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 const CommentComponent = ({ username, content, likes, avatar }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -35,7 +37,7 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
       <Row className="align-items-start">
         <Col xs="auto">
           <Image
-            src={avatar}
+            src={avatar || "https://via.placeholder.com/50"}
             alt="Avatar"
             roundedCircle
             className="comment-avatar"
