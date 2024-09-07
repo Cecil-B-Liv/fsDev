@@ -20,6 +20,7 @@ import MemberManageList from "./components/memberManageList";
 import Profile from "./components/ProfileComponent"
 import ManageUsersList from "./components/manageUserList";
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
+import ProtectedRoute from "./Utils/ProtectedRoutes";
 
 // Data test add by NA
 const groups = [
@@ -58,81 +59,94 @@ const groups = [
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <LoginSignupPage />,
     errorElement: <NotFound />,
   },
   {
-    path: "/HomePage",
-    element: <HomePage />,
+    path: "/",
+    element: <ProtectedRoute/>,
+    errorElement: <NotFound />,
     children: [
       {
-        index: true,
-        element: <Feed />,
-      },
-      {
-        path: "Groups",
-        element: <UserGroupsComponent groups={groups} />,
-      },
-      {
-        path: "Profile",
-        element: <Profile/>,
-      },
-      {
-        path: "Groups/:GroupID",
-
-        element: <GroupWall />,
+        path: "/",
+        element: <HomePage />,
         children: [
           {
             index: true,
-            element: <Feed/>
-          },
-          {
-            path: "GroupFeeds",
             element: <Feed />,
           },
           {
-            path: "GroupMembers",
+            path: "Groups",
+            element: <UserGroupsComponent groups={groups} />,
+          },
+          {
+            path: "Profile",
+            element: <Profile/>,
+          },
+          {
+            path: "Groups/:GroupID",
+
+            element: <GroupWall />,
+            children: [
+              {
+                index: true,
+                element: <Feed/>
+              },
+              {
+                path: "GroupFeeds",
+                element: <Feed />,
+              },
+              {
+                path: "GroupMembers",
+                element: <FriendList />,
+              }
+            ],
+          },
+          {
+            path: "Friends",
             element: <FriendList />,
+          },
+          {
+            path: "CreateGroup",
+            element: <CreateGroupComponent />,
+          },
+          {
+            path: "FriendRequests",
+            element: <FriendRequest/>,
+          },
+          {
+            path: "SiteAdminDashboard",
+            element: <SiteAdminDashBoard/> 
           }
         ],
-      },
-      {
-        path: "Friends",
-        element: <FriendList />,
-      },
-      {
-        path: "CreateGroup",
-        element: <CreateGroupComponent />,
-      },
-      {
-        path: "FriendRequests",
-        element: <FriendRequest/>,
-      },
-      {
-        path: "SiteAdminDashboard",
-        element: <SiteAdminDashBoard/> 
-      }
-    ],
-  },
-  {
-    path: "/HomePage/Groups/:GroupID/ManageGroup",
-    element: <GroupAdminPage/>,
-    children: [
-      {
-        index:true,
-        element: <JoinRequestList/>
-      },
-      {
-        path: "JoinRequests",
-        element: <JoinRequestList/>
-      },
-      {
-        path:"Members",
-        element: <MemberManageList/>
       }
     ]
-  },
+  }
+  // {
+  //   
+  // },
+
+  //88888/
+
+  // {
+  //   path: "/HomePage/Groups/:GroupID/ManageGroup",
+  //   element: <GroupAdminPage/>,
+  //   children: [
+  //     {
+  //       index:true,
+  //       element: <JoinRequestList/>
+  //     },
+  //     {
+  //       path: "JoinRequests",
+  //       element: <JoinRequestList/>
+  //     },
+  //     {
+  //       path:"Members",
+  //       element: <MemberManageList/>
+  //     }
+  //   ]
+  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
