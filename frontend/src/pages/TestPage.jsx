@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';  //test
 export default function HomePage() {
   const navigate = useNavigate();
   const [currentUser, setCurrentUser] = useState(""); // test
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
   // const isGroupOwner = true; // for testing purpose only
 
   useEffect(() => {
@@ -36,10 +37,11 @@ export default function HomePage() {
     <>
       <div>
         <h1>Protected Page</h1>
-        <h2>Hello {currentUser.username} @{currentUser.displayName}</h2>
+        <h2>Hello, {currentUser.username}!</h2>
+        <h4>@{currentUser.displayName}</h4>
         <p>userId: {currentUser.userId}</p>
         <h4>Role: {currentUser.userRole}</h4>
-        <img src={`http://localhost:3001/assets/${currentUser.picturePath}`} alt={currentUser.displayName} style={{ width: "25%" }} />
+        <img src={`${assets}${currentUser.picturePath}`} alt={currentUser.displayName} style={{ width: "25%" }} />
         <hr />
         <button onClick={handleLogout}>Logout</button>
       </div>
