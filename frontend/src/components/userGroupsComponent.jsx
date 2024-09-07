@@ -8,7 +8,7 @@ const UserGroupsComponent = ({ groups }) => {
     <Container className="mt-5">
       <div className="d-flex justify-content-center mb-4">
         <Button variant="primary" size="lg">
-          <Link to="/HomePage/CreateGroup" className="text-white text-decoration-none">
+          <Link to="/creategroup" className="text-white text-decoration-none">
             ➕ Create New Group
           </Link>
         </Button>

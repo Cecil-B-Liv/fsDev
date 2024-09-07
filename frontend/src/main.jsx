@@ -77,7 +77,7 @@ const router = createBrowserRouter([
             element: <Feed />,
           },
           {
-            path: "Groups",
+            path: "groups",
             element: <UserGroupsComponent groups={groups} />,
           },
           {
@@ -85,7 +85,7 @@ const router = createBrowserRouter([
             element: <Profile/>,
           },
           {
-            path: "Groups/:GroupID",
+            path: "groups/:GroupID",
 
             element: <GroupWall />,
             children: [
@@ -104,49 +104,43 @@ const router = createBrowserRouter([
             ],
           },
           {
-            path: "Friends",
+            path: "friends",
             element: <FriendList />,
           },
           {
-            path: "CreateGroup",
+            path: "creategroup",
             element: <CreateGroupComponent />,
           },
           {
-            path: "FriendRequests",
+            path: "friendrequests",
             element: <FriendRequest/>,
           },
           {
-            path: "SiteAdminDashboard",
+            path: "siteadmindashboard",
             element: <SiteAdminDashBoard/> 
           }
         ],
+      },
+      {
+        path: "/HomePage/Groups/:GroupID/ManageGroup",
+        element: <GroupAdminPage/>,
+        children: [
+          {
+            index:true,
+            element: <JoinRequestList/>
+          },
+          {
+            path: "JoinRequests",
+            element: <JoinRequestList/>
+          },
+          {
+            path:"Members",
+            element: <MemberManageList/>
+          }
+        ]
       }
     ]
   }
-  // {
-  //   
-  // },
-
-  //88888/
-
-  // {
-  //   path: "/HomePage/Groups/:GroupID/ManageGroup",
-  //   element: <GroupAdminPage/>,
-  //   children: [
-  //     {
-  //       index:true,
-  //       element: <JoinRequestList/>
-  //     },
-  //     {
-  //       path: "JoinRequests",
-  //       element: <JoinRequestList/>
-  //     },
-  //     {
-  //       path:"Members",
-  //       element: <MemberManageList/>
-  //     }
-  //   ]
-  // },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

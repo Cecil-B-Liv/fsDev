@@ -26,28 +26,28 @@ export default function SideNav({ isSiteAdmin }) {
         <Nav className="sideNav flex-column">
           <div className="button-container">
             <Button>
-              <Nav.Link href="/HomePage/">
+              <Nav.Link href="/">
                 <i className="bi bi-newspaper"></i> Feed
               </Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/Friends">
+              <Nav.Link href="friends">
                 <i className="bi bi-people"></i> Friends
               </Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/FriendRequests">
+              <Nav.Link href="friendrequests">
                 <i className="bi bi-person-plus"></i> Friend Requests
               </Nav.Link>
             </Button>
             <Button>
-              <Nav.Link href="/HomePage/Groups">
+              <Nav.Link href="groups">
                 <i className="bi bi-people-fill"></i> Groups
               </Nav.Link>
             </Button>
             {showSiteAdminDashboardButton && (
               <Button>
-                <Nav.Link href={`/HomePage/SiteAdminDashboard`}>
+                <Nav.Link href={`siteadmindashboard`}>
                   <i className="bi bi-tools"></i> Admin Dashboard
                 </Nav.Link>
               </Button>

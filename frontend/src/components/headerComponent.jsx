@@ -8,10 +8,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import NotificationComponent from './notificationComponent'; 
+import { logout } from "../apis/auth";
+import { useNavigate } from 'react-router-dom';
 
 import '../styles/headerComponent.css';
 
 export default function Header() {
+    const navigate = useNavigate();
     const [prevScrollpos, setPrecScrollpos] = useState(window.scrollY);
     const [top, setTop] = useState(0);
     const [showNotifications, setShowNotifications] = useState(false); 
@@ -31,6 +34,11 @@ export default function Header() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [prevScrollpos]);
+
+    const handleLogout = async () => {
+        await logout();
+        navigate("/login");
+    };
 
     const headerNavStyle = {
         position: 'fixed',
@@ -97,12 +105,10 @@ export default function Header() {
                             <NavDropdown.Item href="HomePage/Profile">
                                 <i className="bi bi-person-circle"></i> Your Page 
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="#account/3.2">
-                                <i className="bi bi-gear-fill"></i> Preference 
-                            </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#account/3.4">
-                                <i className="bi bi-box-arrow-right"></i> Logout 
+                            <NavDropdown.Item onClick={handleLogout}>
+                                <i className="bi bi-box-arrow-right"></i> 
+                                Logout 
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
