@@ -9,7 +9,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
-
+import UserCommentComponent from "../components/userCommentComponent";
 export default function UserPost() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
@@ -17,7 +17,7 @@ export default function UserPost() {
   const [postText, setPostText] = useState(
     `Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus atque impedit fuga explicabo quo voluptate. Vero ipsum totam iure id, enim rem voluptatibus quasi consequatur mollitia. Officiis enim blanditiis natus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum libero molestiae sequi fugiat nisi aliquam deserunt, optio doloremque tenetur laborum necessitatibus molestias repellendus sunt rem unde aliquid harum rerum sit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime earum animi ducimus odio accusantium porro sequi explicabo rem dolore inventore nulla, odit nihil reprehenderit labore corporis, tenetur dignissimos, repudiandae blanditiis?`
   );
-  const [tempPostText, setTempPostText] = useState(postText); 
+  const [tempPostText, setTempPostText] = useState(postText);
 
   const shortenedText = postText.slice(0, 100);
 
@@ -122,6 +122,9 @@ export default function UserPost() {
           </Row>
           {showComments && <CommentListComponent />}
         </Card.Body>
+        <Card.Footer>
+          <UserCommentComponent avatar="https://placehold.co/50x50" />
+        </Card.Footer>
       </Card>
     </Container>
   );

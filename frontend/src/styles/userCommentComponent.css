@@ -1,0 +1,26 @@
+.comment-container {
+    background-color: #808080;
+    color: white;
+    width: 70%;
+  }
+  
+  .comment-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .auto-expand {
+    overflow: hidden;
+    width: 100%;
+  }
+  
+  form textarea {
+    line-height: 1.5;
+    padding: 0.5rem;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  
