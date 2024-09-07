@@ -98,7 +98,7 @@ const router = createBrowserRouter([
             element: <Feed />,
           },
           {
-            path: "GroupMemebers",
+            path: "GroupMembers",
             element: <FriendList />,
           }
         ],
