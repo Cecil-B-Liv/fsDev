@@ -40,7 +40,7 @@ export default function Feed() {
 
             <div>
                 {posts.map((post) => (
-                    <UserPostComponent key={post._id} post={post} />
+                    <UserPostComponent key={post._id.toString()} post={post.toString()} />
                 ))}
             </div>
             {/* <div>
