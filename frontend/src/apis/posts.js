@@ -37,7 +37,11 @@ export const createComment = async (postId, commentMessage) => {
 // Get all posts to the feed
 export const getFeedPosts = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts`);
+        const response = await axios.get(`${API_BASE_URL}/posts`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching main feed posts";
