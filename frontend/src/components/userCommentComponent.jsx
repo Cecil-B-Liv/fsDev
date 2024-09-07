@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import "../styles/userCommentComponent.css"; 
+import "../styles/userCommentComponent.css";
 
 const UserCommentComponent = ({ avatar }) => {
   const [comment, setComment] = useState("");
@@ -18,8 +18,8 @@ const UserCommentComponent = ({ avatar }) => {
   const autoExpandTextarea = () => {
     const textarea = textareaRef.current;
     if (textarea) {
-      textarea.style.height = "auto"; 
-      textarea.style.height = `${textarea.scrollHeight}px`; 
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
     }
   };
 
@@ -30,7 +30,7 @@ const UserCommentComponent = ({ avatar }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Comment Submitted: " + comment);
-    setComment(""); 
+    setComment("");
   };
 
   return (
@@ -43,8 +43,8 @@ const UserCommentComponent = ({ avatar }) => {
             className="comment-avatar"
           />
         </Col>
-        <Col>
-          <Form onSubmit={handleSubmit}>
+        <Col className="position-relative">
+          <Form onSubmit={handleSubmit} className="d-flex flex-column align-items-start  ">
             <Form.Group controlId="userComment">
               <Form.Control
                 as="textarea"
@@ -54,14 +54,16 @@ const UserCommentComponent = ({ avatar }) => {
                 onChange={handleCommentChange}
                 placeholder="Write a comment..."
                 className="auto-expand form-control mb-2"
-                style={{ resize: "none", overflow: "hidden" }} 
+                style={{ resize: "none", overflow: "hidden", width: "320%" }}
               />
             </Form.Group>
-            <div className="d-flex justify-content-end">
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </div>
+            <Button
+              variant="primary"
+              type="submit"
+              className="submit-btn position-absolute"
+            >
+              Submit
+            </Button>
           </Form>
         </Col>
       </Row>

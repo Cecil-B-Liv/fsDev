@@ -1,30 +1,38 @@
 .comment-container {
-    background-color: #808080;
-    color: white;
-    width: 100%;
-  }
-  
-  .comment-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  .auto-expand {
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  form textarea {
-    line-height: 1.5;
-    padding: 0.5rem;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  
-  .no-underline {
-    text-decoration: none !important; 
-  }
-  
+  background-color: #808080;
+  color: white;
+  width: 100%;
+}
+
+.comment-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  align-items: center;
+}
+
+.auto-expand {
+  overflow: hidden;
+  width: 100%;
+}
+
+form textarea {
+  line-height: 1.5;
+  padding: 0.5rem;
+  align-items: flex-start;
+}
+
+Button {
+  margin-top: 10px;
+}
+
+.submit-btn {
+  right: 0;
+  bottom: 0;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.no-underline {
+  text-decoration: none !important;
+}

@@ -121,7 +121,8 @@ export default function UserPost() {
                 onClick={toggleComments}
                 className="no-underline chat-icon-button-text"
               >
-                <i className="bi bi-chat chat-icon"></i> <span className="chat-number">32</span>
+                <i className="bi bi-chat chat-icon"></i>{" "}
+                <span className="chat-number">32</span>
               </Button>
             </Col>
           </Row>
