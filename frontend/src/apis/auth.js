@@ -32,7 +32,7 @@ export const login = async (formData) => {
     }
 };
 
-// Check Auth from user (isAuth, username, displayName, user, userId)
+// Check Auth from user (isAuth, username, displayName, user, userId, userRole)
 export const checkAuth = async () => {
     try {
         const response = await axios.get(`${API_BASE_URL}/auth/check-auth`,
