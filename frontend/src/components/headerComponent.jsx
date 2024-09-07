@@ -10,6 +10,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import NotificationComponent from './notificationComponent'; 
 import { logout } from "../apis/auth";
 import { useNavigate } from 'react-router-dom';
+import { Image } from 'react-bootstrap';
 
 import '../styles/headerComponent.css';
 
@@ -54,8 +55,8 @@ export default function Header() {
             <Container fluid>
                 <Navbar className="headerNav d-flex justify-content-between p-3" style={headerNavStyle}>
                     <Navbar.Brand href="/HomePage">
-                        <img
-                            src="/vite.svg"
+                        <Image
+                            src="/RushNetIcon.png"
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
@@ -102,9 +103,10 @@ export default function Header() {
                             id="basic-nav-dropdown"
                             align='end'
                         >
-                            <NavDropdown.Item href="HomePage/Profile">
+                            <NavDropdown.Item href="profile">
                                 <i className="bi bi-person-circle"></i> Your Page 
                             </NavDropdown.Item>
+
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={handleLogout}>
                                 <i className="bi bi-box-arrow-right"></i> 
