@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
 export default function GroupWall() {
+  const groupIDTest = 123;
   const [activeTab, setActiveTab] = useState('posts');
 
   const handleTabClick = (tab) => {
@@ -42,7 +43,7 @@ export default function GroupWall() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/HomePage/Group/GroupFeeds"
+                to={`groupfeeds`}
                 onClick={() => handleTabClick('posts')}
                 className={activeTab === 'posts' ? 'active text-white' : 'text-dark'}
                 style={{ 
@@ -58,7 +59,7 @@ export default function GroupWall() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/HomePage/Group/GroupMemebers"
+                to={`groupmembers`}
                 onClick={() => handleTabClick('members')}
                 className={activeTab === 'members' ? 'active text-white' : 'text-dark'}
                 style={{ 
