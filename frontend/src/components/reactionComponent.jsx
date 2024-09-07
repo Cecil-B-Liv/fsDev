@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import "../styles/reactionComponent.css";
+import "../styles/reactionComponent.css"; // Ensure the styles are in this file
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ReactionComponent = () => {
@@ -42,7 +42,11 @@ const ReactionComponent = () => {
         className="reaction-button"
         onClick={handleMainButtonClick}
       >
-        <i className={`bi ${selectedReaction}`} />
+        <i
+          className={`bi ${selectedReaction} ${
+            selectedReaction === "bi-hand-thumbs-up" ? "thumbs-up-black" : ""
+          }`}
+        />
       </Button>
 
       {isHovered && (

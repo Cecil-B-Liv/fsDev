@@ -44,3 +44,7 @@
 .reaction:hover {
     transform: scale(1.2);
 }
+.thumbs-up-black {
+    color: black;
+  }
+  

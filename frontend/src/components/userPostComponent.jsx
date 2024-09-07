@@ -10,14 +10,14 @@ import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Import Bootstrap Icons
+import "bootstrap-icons/font/bootstrap-icons.css"; 
 
 export default function UserPost() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [postText, setPostText] = useState(
-    `Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus atque impedit fuga explicabo quo voluptate. Vero ipsum totam iure id, enim rem voluptatibus quasi consequatur mollitia. Officiis enim blanditiis natus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum libero molestiae sequi fugiat nisi aliquam deserunt, optio doloremque tenetur laborum necessitatibus molestias repellendus sunt rem unde aliquid harum rerum sit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime earum animi ducimus odio accusantium porro sequi explicabo rem dolore inventore nulla, odit nihil reprehenderit labore corporis, tenetur dignissimos, repudiandae blanditiis?`
+    `Some quick example text to build on the card title and make up the bulk of the card's content...`
   );
   const [tempPostText, setTempPostText] = useState(postText);
 
@@ -120,9 +120,9 @@ export default function UserPost() {
               <Button
                 variant="link"
                 onClick={toggleComments}
-                className="no-underline" // Apply custom CSS class
+                className="no-underline chat-icon-button-text"
               >
-                <i className="bi bi-chat"></i> 32
+                <i className="bi bi-chat chat-icon"></i> <span className="chat-number">32</span>
               </Button>
             </Col>
           </Row>
