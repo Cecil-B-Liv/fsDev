@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { login } from "../apis/auth.js";
-export default function LoginComponent() {
+export default function LoginSignupComponent() {
   const [focusedButton, setFocusedButton] = useState(0);
 
   const handleFocus = (index) => {
@@ -35,6 +35,8 @@ export default function LoginComponent() {
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
+            type="email"
+            required
           ></input>
           <input
             className="password-input"
@@ -43,9 +45,9 @@ export default function LoginComponent() {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
-          >
-            {" "}
-          </input>
+            type="password"
+            required
+          ></input>
           {error && <div className="error">{error}</div>}
           <button className="login-btn" type="submit">
             Log in
