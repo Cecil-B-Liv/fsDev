@@ -1,23 +1,32 @@
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
-import "../styles/reactionComponent.css";
+import "../styles/reactionComponent.css"; // Ensure the styles are in this file
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const ReactionComponent = () => {
-  const [selectedReaction, setSelectedReaction] = useState("reaction");
+  const [selectedReaction, setSelectedReaction] = useState("bi-hand-thumbs-up");
   const [isHovered, setIsHovered] = useState(false);
 
   const reactions = [
-    { emoji: "❤️", label: "love" },
-    { emoji: "😂", label: "haha" },
-    { emoji: "😡", label: "angry" },
-    { emoji: "👍", label: "like" },
+    { icon: "bi-hand-thumbs-up-fill", label: "like" },
+    { icon: "bi-heart-fill", label: "love" },
+    { icon: "bi-emoji-laughing-fill", label: "haha" },
+    { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
-  const handleReactionClick = (emoji) => {
-    if (selectedReaction === emoji) {
-      setSelectedReaction("reaction");
+  const handleMainButtonClick = () => {
+    if (reactions.some((reaction) => selectedReaction === reaction.icon)) {
+      setSelectedReaction("bi-hand-thumbs-up");
     } else {
-      setSelectedReaction(emoji);
+      setSelectedReaction("bi-hand-thumbs-up-fill");
+    }
+  };
+
+  const handleReactionClick = (icon) => {
+    if (selectedReaction === icon) {
+      setSelectedReaction("bi-hand-thumbs-up");
+    } else {
+      setSelectedReaction(icon);
     }
     setIsHovered(false);
   };
@@ -28,19 +37,29 @@ const ReactionComponent = () => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Button variant="link" className="reaction-button">
-        {selectedReaction}
+      <Button
+        variant="link"
+        className="reaction-button"
+        onClick={handleMainButtonClick}
+      >
+        <i
+          className={`bi ${selectedReaction} ${
+            selectedReaction === "bi-hand-thumbs-up" ? "thumbs-up-black" : ""
+          } ${selectedReaction !== "bi-hand-thumbs-up" ? "selected-reaction-black" : ""}`}
+        />
       </Button>
+
       {isHovered && (
         <div className="reactions-popup position-absolute bg-white p-2 border rounded shadow-sm">
           {reactions.map((reaction, index) => (
             <div
               key={index}
-              className={`reaction btn btn-light me-2 ${selectedReaction === reaction.emoji ? "selected" : ""
-                }`}
-              onClick={() => handleReactionClick(reaction.emoji)}
+              className={`reaction btn btn-light me-2 ${
+                selectedReaction === reaction.icon ? "selected" : ""
+              }`}
+              onClick={() => handleReactionClick(reaction.icon)}
             >
-              {reaction.emoji}
+              <i className={`bi ${reaction.icon}`} />
             </div>
           ))}
         </div>

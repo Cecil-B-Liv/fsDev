@@ -7,7 +7,8 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import NotificationComponent from './NotificationComponent'; 
+import NotificationComponent from './notificationComponent'; 
+import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 import '../styles/headerComponent.css';
 
@@ -74,7 +75,7 @@ export default function Header() {
                             href="#notification"
                             onClick={() => setShowNotifications(!showNotifications)} 
                         >
-                            🔔
+                            <i className="bi bi-bell-fill"></i> 
                         </Nav.Link>
                         {showNotifications && (
                             <div
@@ -94,10 +95,16 @@ export default function Header() {
                             id="basic-nav-dropdown"
                             align='end'
                         >
-                            <NavDropdown.Item href="HomePage/Profile">📰 Your Page</NavDropdown.Item>
-                            <NavDropdown.Item href="#account/3.2">⚙️ Preference</NavDropdown.Item>
+                            <NavDropdown.Item href="HomePage/Profile">
+                                <i className="bi bi-person-circle"></i> Your Page 
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="#account/3.2">
+                                <i className="bi bi-gear-fill"></i> Preference 
+                            </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#account/3.4">❎ Logout</NavDropdown.Item>
+                            <NavDropdown.Item href="#account/3.4">
+                                <i className="bi bi-box-arrow-right"></i> Logout 
+                            </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar>

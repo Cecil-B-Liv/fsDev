@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
+import ReactionComponent from "./reactionComponent"; 
 import "../styles/commentComponent.css";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
 const CommentComponent = ({ username, content, likes, avatar }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -62,9 +62,9 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
               <Dropdown.Toggle
                 variant="none"
                 id="dropdown-basic"
-                className="text-white"
+                className="text-white p-0" // Custom class to remove padding and default styles
               >
-                ...
+                <i className="bi bi-three-dots-vertical"></i> {/* Replace ... with icon */}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleEditComment}>
@@ -91,9 +91,10 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
               </Button>
             </form>
           ) : (
-            <div className="d-flex justify-content-start align-items-center">
-              <div>
-                <i className="bi bi-heart"></i> {likes}
+            <div className="d-flex justify-content-start align-items-center ">
+              <ReactionComponent className="reaction-bg" /> 
+              <div className="ms-2">
+                {likes}
               </div>
             </div>
           )}

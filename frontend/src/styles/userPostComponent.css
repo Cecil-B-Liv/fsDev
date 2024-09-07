@@ -15,3 +15,19 @@
 .postText>Button {
     text-decoration: none;
 }
+.chat-icon-button-text {
+    color: black; 
+  }
+  
+  .no-underline {
+    text-decoration: none;
+  }
+  
+  .chat-icon {
+    color: black; 
+  }
+  
+  .chat-number {
+    color: black; 
+  }
+  
