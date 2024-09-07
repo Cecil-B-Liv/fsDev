@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
-import ReactionComponent from "./reactionComponent"; 
+import ReactionComponent from "./reactionComponent";
 import "../styles/commentComponent.css";
-import 'bootstrap-icons/font/bootstrap-icons.css'; 
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const CommentComponent = ({ username, content, likes, avatar }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [commentText, setCommentText] = useState(content);
   const [tempCommentText, setTempCommentText] = useState(content);
+
+  const textareaRef = useRef(null);
+
+  const handleTextareaChange = (e) => {
+    setTempCommentText(e.target.value);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [isEditing]);
 
   const handleEditComment = () => {
     setIsEditing(true);
@@ -49,10 +65,12 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
               <h6 className="mb-1 text-white">{username}</h6>
               {isEditing ? (
                 <textarea
+                  ref={textareaRef}
                   value={tempCommentText}
-                  onChange={(e) => setTempCommentText(e.target.value)}
+                  onChange={handleTextareaChange}
                   className="form-control mb-1"
                   rows={2}
+                  style={{ resize: "none", overflow: "hidden", width: "320%" }}
                 />
               ) : (
                 <p className="mb-1 text-white">{commentText}</p>
@@ -62,9 +80,9 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
               <Dropdown.Toggle
                 variant="none"
                 id="dropdown-basic"
-                className="text-white p-0" // Custom class to remove padding and default styles
+                className="text-white p-0"
               >
-                <i className="bi bi-three-dots-vertical"></i> {/* Replace ... with icon */}
+                <i className="bi bi-three-dots-vertical"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleEditComment}>
@@ -92,10 +110,8 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
             </form>
           ) : (
             <div className="d-flex justify-content-start align-items-center ">
-              <ReactionComponent className="reaction-bg" /> 
-              <div className="ms-2">
-                {likes}
-              </div>
+              <ReactionComponent className="reaction-bg" />
+              <div className="ms-2">{likes}</div>
             </div>
           )}
         </Col>
