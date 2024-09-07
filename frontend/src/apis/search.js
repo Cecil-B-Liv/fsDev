@@ -1,18 +1,14 @@
 import axios from 'axios';
 
 // Set the base URL for your API requests
-const API = axios.create({ baseURL: 'http://localhost:3001' });
+const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
-/* READ */
 // Search for users and approved groups
 export const searchUsersAndGroups = async (query) => {
     try {
-        const response = await API.get('/search', {
-            params: { q: query }
-        });
-        return response.data;  // Return the users and groups found
+        const response = await axios.get(`${API_BASE_URL}/search`, { params: { q: query } },);
+        return response.data;
     } catch (error) {
-        console.error('Error searching for users and groups:', error.response?.data || error.message);
-        throw error;
+        throw error.response?.data?.error || "Error searching for users and groups";
     }
 };
