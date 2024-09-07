@@ -8,15 +8,15 @@ const ReactionComponent = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const reactions = [
-    { icon: "bi-hand-thumbs-up", label: "like" },
+    { icon: "bi-hand-thumbs-up-fill", label: "like" },
     { icon: "bi-heart-fill", label: "love" },
-    { icon: "bi-emoji-laughing", label: "haha" },
-    { icon: "bi-emoji-angry", label: "angry" },
+    { icon: "bi-emoji-laughing-fill", label: "haha" },
+    { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
   const handleReactionClick = (icon) => {
     if (selectedReaction === icon) {
-      setSelectedReaction("reaction");
+      setSelectedReaction("bi-hand-thumbs-up");
     } else {
       setSelectedReaction(icon);
     }
