@@ -11,12 +11,14 @@ import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
 
-export default function UserPost() {
+export default function UserPost(post) {
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [postText, setPostText] = useState(
-    `Some quick example text to build on the card title and make up the bulk of the card's content...`
+    `${post.postDescription}`
   );
   const [tempPostText, setTempPostText] = useState(postText);
 
@@ -54,14 +56,14 @@ export default function UserPost() {
         <Card.Header>
           <Row>
             <Col className="userPostHeader d-flex justify-content-start align-items-center gap-2">
-              <Image src="https://placehold.co/50x50" roundedCircle />
-              <h5>John Doe</h5>
+              <Image src= {`${assets}${post.postPicturePath}`} roundedCircle />
+              <h5>${post.username}</h5>
               <a href="#johndoe" className="pb-2">
-                @johndoe
+                ${post.displayName}
               </a>
             </Col>
             <Col className="d-flex row-column justify-content-end align-items-baseline gap-2 mt-2">
-              <p>15 mins ago</p>
+              <p>${post.createdAt}</p>
               <Dropdown align="end">
                 <Dropdown.Toggle variant="none" id="dropdown-basic">
                   📤
