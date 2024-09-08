@@ -81,7 +81,7 @@ const router = createBrowserRouter([
         element: <UserGroupsComponent groups={groups} />,
       },
       {
-        path: "Profile",
+        path: "Profile/:profileId",
         element: <Profile/>,
       },
       {

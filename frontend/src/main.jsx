@@ -19,6 +19,7 @@ import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
 import SearchResults from "./components/searchResult";
+import OtherProfileComponent from "./components/otherProfileComponent";
 
 import "./index.css";
 
@@ -83,8 +84,9 @@ const router = createBrowserRouter([
             path: "yourprofile",
             element: <YourProfile />,
           },
-          { path: "profile/:userID", 
-
+          { 
+            path: "profile/:userId", 
+            element: <OtherProfileComponent/>
           },
           {
             path: "groups/:groupID",
