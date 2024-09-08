@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { logout as logoutAction } from "../redux/feature/authSlice";
 
 import NotificationComponent from './notificationComponent';
 import { checkAuth, logout } from "../apis/auth";
 
-import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -24,6 +21,7 @@ export default function Header() {
     const [top, setTop] = useState(0);
     const [showNotifications, setShowNotifications] = useState(false);
     const [currentUser, setCurrentUser] = useState("");
+    const [query, setQuery] = useState("");
 
     useEffect(() => {
         const handleScroll = () => {
@@ -70,6 +68,12 @@ export default function Header() {
         backgroundColor: 'white',
     };
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log(query);
+        navigate(`/searchresults?q=${query}`);
+    };
+
     return (
         <>
             <Container fluid>
@@ -84,11 +88,13 @@ export default function Header() {
                         />
                         RushNet
                     </Navbar.Brand>
-                    <Form inline>
+                    <Form inline onSubmit={handleSearch}>
                         <Row>
                             <Col xs="auto">
                                 <Form.Control
                                     type="text"
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
                                     placeholder="Search"
                                     className="mr-sm-2"
                                 />
@@ -98,6 +104,7 @@ export default function Header() {
                             </Col>
                         </Row>
                     </Form>
+
                     <Nav className='gap-3'>
                         <Nav.Link
                             onClick={() => setShowNotifications(!showNotifications)}
