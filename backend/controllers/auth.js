@@ -16,7 +16,7 @@ export const register = async (req, res) => {
         // Extract filename from uploaded file to the picturePath (if available)
         const picturePath = req.files && req.files['picturePath']
             ? req.files['picturePath'][0].filename
-            : "/assets/default_avatar.jpg"; // Default picture if no upload
+            : "default_avatar.jpg"; // Default picture if no upload
 
         // Check if user with the same email, username, or displayName already exists
         const existingUser = await User.findOne({ $or: [{ email }, { username }, { displayName }] });

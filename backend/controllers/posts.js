@@ -17,7 +17,14 @@ export const createPost = async (req, res) => {
         // Extract filename from uploaded file to the postPicturePath (if available)
         const postPicturePath = req.files && req.files['postPicturePath']
             ? req.files['postPicturePath'][0].filename
-            : null;
+            : "default_avatar.jpg";
+
+        /*
+        // Extract filename from uploaded file to the picturePath (if available)
+        const picturePath = req.files && req.files['picturePath']
+            ? req.files['picturePath'][0].filename
+            : "/assets/default_avatar.jpg"; // Default picture if no upload
+        */
 
         // Find the user who is creating the post
         if (!user) {
