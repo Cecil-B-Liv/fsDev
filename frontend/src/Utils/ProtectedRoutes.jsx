@@ -54,7 +54,7 @@ import { useState, useEffect } from 'react';
 
 import { checkAuth } from '../apis/auth.js';
 import useAuthorization from './Authorization'
-
+    
 const ProtectedRoute = () => {
     const location = useLocation();
     const [isAuthenticated, setIsAuthenticated] = useState(null);
