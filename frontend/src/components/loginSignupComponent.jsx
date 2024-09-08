@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/feature/authSlice";
 import { login } from "../apis/auth.js";
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 import "../styles/loginSignupComponent.css";
 
 export default function LoginSignupComponent() {
@@ -15,6 +20,7 @@ export default function LoginSignupComponent() {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -22,7 +28,10 @@ export default function LoginSignupComponent() {
 
       try {
         const response = await login(formData);
-        console.log("Login successful:", response);
+
+        // Dispatch the setUser action with the received user data
+        // dispatch(setUser(response.user));
+
         navigate("/");
       } catch (error) {
         console.error("Login error:", error);

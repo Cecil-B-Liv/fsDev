@@ -23,8 +23,6 @@ function LoginSignupPage() {
 
     try {
       const response = await login(formData);
-      console.log("Login successful:", response);
-      dispatch(setUser(response.user));
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);
