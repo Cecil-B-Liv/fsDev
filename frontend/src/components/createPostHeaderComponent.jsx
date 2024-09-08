@@ -17,8 +17,8 @@ import '../styles/createPostHeaderComponent.css'
 export default function CreatePostHeader() {
     const [formData, setFormData] = useState({postVisibility: "", postDescription: "", postPicturePath: null});
 
-    const [postText, setPostText] = useState("");
-    const [file, setFile] = useState(null);
+    // const [postText, setPostText] = useState("");
+    // const [file, setFile] = useState(null);
     const textareaRef = useRef(null);
 
     // // Handle Form Action
