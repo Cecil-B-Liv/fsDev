@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 
 import LoginSignupPage from "./pages/LoginSignUpPage";
 import HomePage from "./pages/Homepage";
@@ -19,6 +21,8 @@ import Profile from "./components/ProfileComponent"
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
+
+import "./index.css";
 
 // Data test add by NA
 const groups = [
@@ -63,7 +67,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <ProtectedRoute/>,
+    element: <ProtectedRoute />,
     errorElement: <NotFound />,
     children: [
       {
@@ -80,7 +84,7 @@ const router = createBrowserRouter([
           },
           {
             path: "profile",
-            element: <Profile/>,
+            element: <Profile />,
           },
           {
             path: "groups/:groupID",
@@ -89,7 +93,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Feed/>
+                element: <Feed />
               },
               {
                 path: "groupfeeds",
@@ -101,7 +105,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "groupmanage",
-                element: <GroupMange/>
+                element: <GroupMange />
               }
             ],
           },
@@ -115,29 +119,29 @@ const router = createBrowserRouter([
           },
           {
             path: "notifications",
-            element: <NotificationList/>,
+            element: <NotificationList />,
           },
           {
             path: "siteadmindashboard",
-            element: <SiteAdminDashBoard/> 
+            element: <SiteAdminDashBoard />
           }
         ],
       },
       {
         path: "/HomePage/Groups/:GroupID/ManageGroup",
-        element: <GroupAdminPage/>,
+        element: <GroupAdminPage />,
         children: [
           {
-            index:true,
-            element: <JoinRequestList/>
+            index: true,
+            element: <JoinRequestList />
           },
           {
             path: "JoinRequests",
-            element: <JoinRequestList/>
+            element: <JoinRequestList />
           },
           {
-            path:"Members",
-            element: <MemberManageList/>
+            path: "Members",
+            element: <MemberManageList />
           }
         ]
       }
@@ -148,6 +152,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
