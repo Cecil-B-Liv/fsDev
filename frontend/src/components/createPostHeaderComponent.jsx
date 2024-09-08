@@ -39,6 +39,8 @@ export default function CreatePostHeader() {
 
             await createPost(postData);
 
+            console.log("Post created successfully:", postData);
+
             // setFormData({
             //     postVisibility: "",
             //     postDescription: ""
