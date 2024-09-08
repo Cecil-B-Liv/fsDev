@@ -70,7 +70,6 @@ export default function Header() {
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log(query);
         navigate(`/searchresults?q=${query}`);
     };
 
