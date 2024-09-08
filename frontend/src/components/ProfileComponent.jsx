@@ -73,7 +73,7 @@ const ProfileComponent = () => {
     };
 
     fetchUserProfile();
-  }, []);
+  }, [userId]);
 
 if (isLoading) {
   return <div>Loading...</div>; // Display loading indicator
