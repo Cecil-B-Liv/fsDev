@@ -1,78 +1,54 @@
-import { Card } from "react-bootstrap";
-import { ListGroup } from "react-bootstrap";
-
+import { useState, useEffect } from "react";
+import { Card, ListGroup } from "react-bootstrap";
 import GroupCreationApproval from "./groupCreationApprovalNotiComponent";
 import GroupMemberRequest from "./groupMemberRequestNotiComponent";
 import FriendRequestNotification from "./friendReqNotiComponent";
 import GeneralNotiComponent from "./generalNotiComponent";
+import { getNotifications } from "../apis/notifications"; // Import the getNotifications function
 
 export default function NotificationList() {
-  const notifications = [
-    {
-      id: 1,
-      senderId: {
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "3 hours",
-      notiType: "friendRequest",
-      notiDescription: "Sam Guy has sent you a friend request.",
-      isNew: true,
-    },
-    {
-      id: 2,
-      senderId: {
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "3 hours",
-      notiType: "general",
-      notiDescription: "Hikaru Subaru and 13 others reacted to your video.",
-      isNew: false,
-    },
-    {
-      id: 3,
-      senderId: {
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "2 days",
-      notiType: "general",
-      notiDescription: "Firefly tagged you in the comment of a post.",
-      isNew: true,
-    },
-    {
-      id: 4,
-      senderId: {
-        displayName: "Dude",
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "2 days",
-      notiType: "groupMemberRequest",
-      notiDescription: "Dude sent you a group member request.",
-      isNew: false,
-    },
-    {
-      id: 5,
-      senderId: {
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "2 days",
-      notiType: "groupCreationApproval",
-      notiDescription: "Wattson requested group creation approval.",
-      isNew: true,
-    },
-    {
-      id: 6,
-      senderId: {
-        picturePath: "https://via.placeholder.com/50",
-      },
-      time: "3 hours",
-      notiType: "friendRequest",
-      notiDescription: "Sam Guy has sent you a friend request.",
-      isNew: true,
-    },
-  ];
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state for API call
+  const [error, setError] = useState(null); // Error state
+
+  // Fetch notifications from the API when the component mounts
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const data = await getNotifications();
+        setNotifications(data); // Set fetched notifications
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+        setError(err); // Handle error
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  if (loading) return <div>Loading...</div>; // Show loading indicator
+  if (error) return <div>Error: {error}</div>; // Show error message
 
   // Filter notifications based on the type
-  const generalNotifications = notifications.filter((noti) => noti.notiType === "general");
+  const generalNotificationTypes = [
+    "friendRequestAccepted",
+    "friendRequestDenied",
+    "friendRemoved",
+    "addedComment",
+    "addedReaction",
+    "groupCreationApproved",
+    "groupCreationDenied",
+    "groupMemberAccepted",
+    "groupMemberDenied",
+    "groupMemberRemoved"
+  ];
+
+  const generalNotifications = notifications.filter((noti) =>
+    generalNotificationTypes.includes(noti.notiType)
+  );
+  
   const friendRequests = notifications.filter((noti) => noti.notiType === "friendRequest");
   const groupMemberRequests = notifications.filter((noti) => noti.notiType === "groupMemberRequest");
   const groupCreationRequests = notifications.filter((noti) => noti.notiType === "groupCreationApproval");
@@ -94,7 +70,9 @@ export default function NotificationList() {
           }}
         >
           <ListGroup>
-           
+            {generalNotifications.map((noti) => (
+              <GeneralNotiComponent key={noti.id} notification={noti} />
+            ))}
           </ListGroup>
         </Card>
       </Card>
@@ -114,7 +92,9 @@ export default function NotificationList() {
           }}
         >
           <ListGroup>
-           
+            {friendRequests.map((noti) => (
+              <FriendRequestNotification key={noti.id} notification={noti} />
+            ))}
           </ListGroup>
         </Card>
       </Card>
@@ -134,7 +114,9 @@ export default function NotificationList() {
           }}
         >
           <ListGroup>
-            
+            {groupMemberRequests.map((noti) => (
+              <GroupMemberRequest key={noti.id} notification={noti} />
+            ))}
           </ListGroup>
         </Card>
       </Card>
@@ -154,8 +136,9 @@ export default function NotificationList() {
           }}
         >
           <ListGroup>
-            
-      
+            {groupCreationRequests.map((noti) => (
+              <GroupCreationApproval key={noti.id} notification={noti} />
+            ))}
           </ListGroup>
         </Card>
       </Card>
