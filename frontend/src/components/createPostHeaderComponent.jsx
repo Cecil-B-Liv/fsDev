@@ -30,7 +30,7 @@ export default function CreatePostHeader() {
             const postData = new FormData();
 
             if (selectedFile) {
-                postData.append('postPicturePath', selectedFile);
+                postData.append("postPicturePath", selectedFile);
             }
 
             for (const key in formData) {
@@ -39,12 +39,14 @@ export default function CreatePostHeader() {
 
             await createPost(postData);
 
-            setFormData({
-                postVisibility: "",
-                postDescription: ""
-            });
-            setSelectedFile(null);
+            console.log("Post created successfully:", postData);
 
+            // setFormData({
+            //     postVisibility: "",
+            //     postDescription: ""
+            // });
+            // setSelectedFile(null);
+            window.location.reload();
         } catch (error) {
             console.error('Error creating post:', error);
             setError(error.message || "An error occurred");
@@ -104,8 +106,7 @@ export default function CreatePostHeader() {
                                     <Form.Control
                                         type='file'
                                         name="postPicturePath"
-                                        value={formData.postPicturePath}
-                                        onChange={(e) => { selectedFile(e.target.files[0]) }}
+                                        onChange={(e) => { setSelectedFile(e.target.files[0]) }}
                                     >
                                     </Form.Control>
                                 </Col>
