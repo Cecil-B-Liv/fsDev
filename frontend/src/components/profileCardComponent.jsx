@@ -44,9 +44,6 @@ const ProfileCard = ({ user, mode }) => {
                     Check Profile
                   </Button>
                 </Link>
-                <Button variant="danger" onClick={handleUnfriend}>
-                  Unfriend
-                </Button>
               </>
             ) : status === "denied" ? (
               <p>Denied</p>
