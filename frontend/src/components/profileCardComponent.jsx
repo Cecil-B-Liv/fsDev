@@ -37,19 +37,22 @@ const ProfileCard = ({ user, mode }) => {
             </Card.Title>
           </div>
           <div className="profile-actions ms-auto d-flex">
-            {mode === "view" || status === "accepted" ? (
+            {mode === "friend" || status === "accepted" ? (
               <>
                 <Link to={`/profile/${user._id}`}>
                   <Button variant="primary" className="me-2">
                     Check Profile
                   </Button>
                 </Link>
+                <Button variant="danger" onClick={handleUnfriend}>
+                  Unfriend
+                </Button>
               </>
             ) : status === "denied" ? (
               <p>Denied</p>
             ) : (
               <>
-                <Button
+                {/* <Button
                   variant="primary"
                   className="me-2"
                   onClick={handleAccept}
@@ -58,7 +61,12 @@ const ProfileCard = ({ user, mode }) => {
                 </Button>
                 <Button variant="secondary" onClick={handleDeny}>
                   Deny
-                </Button>
+                </Button> */}
+                <Link to={`/profile/${user._id}`}>
+                  <Button variant="primary" className="me-2">
+                    Check Profile
+                  </Button>
+                </Link>
               </>
             )}
           </div>
