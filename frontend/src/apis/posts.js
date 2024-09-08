@@ -27,7 +27,8 @@ export const createComment = async (postId, commentMessage) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/posts/${postId}/comments/create`, { commentMessage },
             {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -38,7 +39,11 @@ export const createComment = async (postId, commentMessage) => {
 // Get all posts to the feed
 export const getFeedPosts = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts`);
+        const response = await axios.get(`${API_BASE_URL}/posts`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching main feed posts";
@@ -62,7 +67,11 @@ export const getPublicFeed = async () => {
 // Get all friends posts to the feed
 export const getFriendsFeed = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL} / posts / friends`);
+        const response = await axios.get(`${API_BASE_URL} / posts / friends`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching friends feed";
@@ -72,7 +81,11 @@ export const getFriendsFeed = async () => {
 // Get all posts from a specific user
 export const getUserPosts = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/posts/${userId}`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching user posts";
@@ -95,7 +108,11 @@ export const getGroupPosts = async (groupId) => {
 // Get all posts for siteAdmin (no filtering)
 export const adminGetPosts = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/posts/admin`);
+        const response = await axios.get(`${API_BASE_URL}/posts/admin`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching admin posts";
@@ -107,7 +124,8 @@ export const reactToPost = async (postId, reactionType) => {
     try {
         const response = await axios.put(`${API_BASE_URL}/posts/${postId}/react`, { reactionType },
             {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -125,7 +143,8 @@ export const updatePost = async (postId, updatedFields) => {
 
         const response = await axios.put(`${API_BASE_URL}/posts/${postId}/update`, updatedFields,
             {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -138,7 +157,8 @@ export const updateComment = async (commentId, newCommentMessage) => {
     try {
         const response = await axios.put(`${API_BASE_URL}/posts/comments/${commentId}/update`, { newCommentMessage },
             {
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -149,7 +169,11 @@ export const updateComment = async (commentId, newCommentMessage) => {
 // Delete a post
 export const deletePost = async (postId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/posts/${postId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/posts/${postId}/delete`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error deleting post";
@@ -159,7 +183,11 @@ export const deletePost = async (postId) => {
 // Delete a comment from a post
 export const deleteComment = async (commentId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/posts/comments/${commentId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/posts/comments/${commentId}/delete`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error deleting comment";

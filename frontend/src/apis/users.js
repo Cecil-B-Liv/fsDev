@@ -6,7 +6,11 @@ const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 // Send a friend request
 export const sendFriendRequest = async (recipientId) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/users/friend-request`, { recipientId });
+        const response = await axios.post(`${API_BASE_URL}/users/friend-request`, recipientId,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error sending friend request";
@@ -16,7 +20,11 @@ export const sendFriendRequest = async (recipientId) => {
 // Send a group join request
 export const sendGroupJoinRequest = async (groupId) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/users/group-request`, { groupId });
+        const response = await axios.post(`${API_BASE_URL}/users/group-request`, groupId,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error sending group join request";
@@ -26,7 +34,11 @@ export const sendGroupJoinRequest = async (groupId) => {
 // Get user profile
 export const getUser = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users/${userId}`);
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching user profile";
@@ -36,7 +48,11 @@ export const getUser = async (userId) => {
 // Get user's friends
 export const getUserFriends = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users/${userId}/friends`);
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}/friends`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching user friends";
@@ -46,7 +62,11 @@ export const getUserFriends = async (userId) => {
 // Get user's groups
 export const getUserGroups = async (userId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users/${userId}/groups`);
+        const response = await axios.get(`${API_BASE_URL}/users/${userId}/groups`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching user groups";
@@ -56,7 +76,11 @@ export const getUserGroups = async (userId) => {
 // Search for users
 export const searchUsers = async (query) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users/search`, { params: { q: query } });
+        const response = await axios.get(`${API_BASE_URL}/users/search`,
+            {
+                params: { q: query },
+                withCredentials: true
+            });
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error searching for users";
@@ -66,7 +90,11 @@ export const searchUsers = async (query) => {
 // Get all users
 export const getUsers = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/users`);
+        const response = await axios.get(`${API_BASE_URL}/users`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching users";
@@ -76,7 +104,11 @@ export const getUsers = async () => {
 // Update user profile
 export const updateUserProfile = async (updatedFields) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/users/update`, updatedFields);
+        const response = await axios.put(`${API_BASE_URL}/users/update`, updatedFields,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error updating user profile";
@@ -86,7 +118,11 @@ export const updateUserProfile = async (updatedFields) => {
 // Accept a friend request
 export const acceptFriendRequest = async (requestId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/accept`);
+        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/accept`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error accepting friend request";
@@ -96,7 +132,11 @@ export const acceptFriendRequest = async (requestId) => {
 // Deny a friend request
 export const denyFriendRequest = async (requestId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/deny`);
+        const response = await axios.patch(`${API_BASE_URL}/users/friend-request/${requestId}/deny`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error denying friend request";
@@ -106,7 +146,11 @@ export const denyFriendRequest = async (requestId) => {
 // Suspend a user (for siteAdmin)
 export const suspendUser = async (userId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/suspend`);
+        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/suspend`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error suspending user";
@@ -116,7 +160,11 @@ export const suspendUser = async (userId) => {
 // Resume a user (for siteAdmin)
 export const resumeUser = async (userId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/resume`);
+        const response = await axios.patch(`${API_BASE_URL}/users/${userId}/resume`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error resuming user";
@@ -126,7 +174,11 @@ export const resumeUser = async (userId) => {
 // Remove a friend
 export const removeFriend = async (friendId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/users/friends/${friendId}`);
+        const response = await axios.delete(`${API_BASE_URL}/users/friends/${friendId}`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error removing friend";

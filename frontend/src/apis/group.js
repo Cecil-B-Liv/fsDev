@@ -9,7 +9,8 @@ export const createGroup = async (formData) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/groups/create`, formData,
             {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -27,7 +28,8 @@ export const createGroupPost = async (groupId, postData) => {
 
         const response = await axios.post(`${API_BASE_URL}/groups/${groupId}/posts/create`, postData,
             {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
@@ -38,7 +40,11 @@ export const createGroupPost = async (groupId, postData) => {
 // Get all approved groups
 export const getGroups = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/groups`);
+        const response = await axios.get(`${API_BASE_URL}/groups`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching groups";
@@ -48,7 +54,11 @@ export const getGroups = async () => {
 // Get specific group details and posts
 export const getGroup = async (groupId) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/groups/${groupId}`);
+        const response = await axios.get(`${API_BASE_URL}/groups/${groupId}`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching group details";
@@ -58,7 +68,11 @@ export const getGroup = async (groupId) => {
 // Search for approved groups
 export const searchGroups = async (query) => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/groups/search`, { params: { q: query } });
+        const response = await axios.get(`${API_BASE_URL}/groups/search`, { params: { q: query } },
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error searching for groups";
@@ -68,7 +82,11 @@ export const searchGroups = async (query) => {
 // Get all unapproved groups (siteAdmin)
 export const getUnapprovedGroups = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/groups/unapproved`);
+        const response = await axios.get(`${API_BASE_URL}/groups/unapproved`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error fetching unapproved groups";
@@ -78,7 +96,11 @@ export const getUnapprovedGroups = async () => {
 // Approve group creation (siteAdmin)
 export const approveGroupCreation = async (groupId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/approve`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/approve`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error approving group creation";
@@ -88,7 +110,11 @@ export const approveGroupCreation = async (groupId) => {
 // Deny group creation (siteAdmin)
 export const denyGroupCreation = async (groupId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/deny`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/deny`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error denying group creation";
@@ -98,7 +124,11 @@ export const denyGroupCreation = async (groupId) => {
 // Update group details (groupAdmin)
 export const updateGroup = async (groupId, updatedFields) => {
     try {
-        const response = await axios.put(`${API_BASE_URL}/groups/${groupId}/update`, updatedFields);
+        const response = await axios.put(`${API_BASE_URL}/groups/${groupId}/update`, updatedFields,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error updating group details";
@@ -108,7 +138,11 @@ export const updateGroup = async (groupId, updatedFields) => {
 // Approve a group join request (groupAdmin)
 export const approveGroupRequest = async (groupId, requestId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/approve`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/approve`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error approving group join request";
@@ -118,7 +152,11 @@ export const approveGroupRequest = async (groupId, requestId) => {
 // Deny a group join request (groupAdmin)
 export const denyGroupRequest = async (groupId, requestId) => {
     try {
-        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/deny`);
+        const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/deny`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error denying group join request";
@@ -128,7 +166,11 @@ export const denyGroupRequest = async (groupId, requestId) => {
 // Remove a group member (groupAdmin)
 export const removeGroupMember = async (groupId, memberId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/members/${memberId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/members/${memberId}/delete`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error removing group member";
@@ -138,7 +180,11 @@ export const removeGroupMember = async (groupId, memberId) => {
 // Delete a group post
 export const deleteGroupPost = async (groupId, postId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/posts/${postId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/posts/${postId}/delete`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error deleting group post";
@@ -148,7 +194,11 @@ export const deleteGroupPost = async (groupId, postId) => {
 // Delete a comment from a group post
 export const deleteGroupComment = async (groupId, commentId) => {
     try {
-        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/comments/${commentId}/delete`);
+        const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}/comments/${commentId}/delete`,
+            {
+                withCredentials: true
+            }
+        );
         return response.data;
     } catch (error) {
         throw error.response?.data?.error || "Error deleting group comment";
