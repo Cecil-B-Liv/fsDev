@@ -34,7 +34,6 @@ export const uploadUserPicture = upload.fields([
 // Middleware for handling post with picture upload
 export const uploadPostPicture = upload.fields([
     { name: "postPicturePath", maxCount: 1 },
-    { name: "userId" },
     { name: "groupId" },
     { name: "postVisibility" },
     { name: "postDescription" },

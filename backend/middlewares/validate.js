@@ -149,6 +149,10 @@ export const validateCreatePost = [
 
     body("postVisibility")
         .isIn(["public", "friends", "group"]).withMessage("Invalid visibility option"),
+    
+    body("postPicturePath")
+        .isMimeType()
+        .escape(),
 ];
 
 // Update Post Validation

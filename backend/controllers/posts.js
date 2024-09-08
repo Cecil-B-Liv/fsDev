@@ -25,7 +25,7 @@ export const createPost = async (req, res) => {
         }
 
         const newPost = new Post({
-            currentUserId,
+            userId: currentUserId,
             groupId: null,
             postVisibility,
             postDescription,
@@ -320,7 +320,7 @@ export const updatePost = async (req, res) => {
         //     // Update picturePath only if a new one is provided
         //     post.postPicturePath = newPostPicturePath;
         // }
-        
+
         // Check if a new picture was uploaded and update the postPicturePath
         if (req.files && req.files['postPicturePath']) {
             post.postPicturePath = req.files['postPicturePath'][0].filename;

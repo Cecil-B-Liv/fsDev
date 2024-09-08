@@ -13,7 +13,8 @@ export const createPost = async (formData) => {
 
         const response = await axios.post(`${API_BASE_URL}/posts/create`, formData,
             {
-                headers: { 'Content-Type': 'multipart/form-data' }
+                headers: { 'Content-Type': 'multipart/form-data' },
+                withCredentials: true
             });
         return response.data;
     } catch (error) {
