@@ -26,6 +26,7 @@ const ProfileComponent = () => {
     e.preventDefault();
     setProfile(tempProfile);
     setIsEditing(false);
+    // Here you can add an API call to save the profile updates
   };
 
   const handleCancelEdit = () => {
@@ -65,9 +66,7 @@ const ProfileComponent = () => {
       }
     };
 
-   
     fetchUserProfile();
-
   }, [userId]);
 
   // GET USER POST
@@ -85,9 +84,7 @@ const ProfileComponent = () => {
       }
     };
 
-
     fetchUserPost();
-
   }, [userId]);
 
   if (isLoading) {
@@ -113,15 +110,6 @@ const ProfileComponent = () => {
                   <Form.Group className="mb-1">
                     <Form.Control
                       type="text"
-                      name="name"
-                      value={tempProfile.name || ""}
-                      onChange={handleInputChange}
-                      placeholder="Enter your name"
-                    />
-                  </Form.Group>
-                  <Form.Group className="mb-1">
-                    <Form.Control
-                      type="text"
                       name="username"
                       value={tempProfile.username || ""}
                       onChange={handleInputChange}
@@ -131,10 +119,19 @@ const ProfileComponent = () => {
                   <Form.Group className="mb-1">
                     <Form.Control
                       type="text"
-                      name="location"
-                      value={tempProfile.location || ""}
+                      name="displayName"
+                      value={tempProfile.displayName || ""}
                       onChange={handleInputChange}
-                      placeholder="Enter your location"
+                      placeholder="Enter your display name"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="text"
+                      name="userBio"
+                      value={tempProfile.userBio || ""}
+                      onChange={handleInputChange}
+                      placeholder="Enter your bio"
                     />
                   </Form.Group>
                   <Form.Group className="mb-1">
@@ -149,8 +146,8 @@ const ProfileComponent = () => {
                   <Form.Group className="mb-1">
                     <Form.Control
                       type="text"
-                      name="phoneNumber"
-                      value={tempProfile.phoneNumber || ""}
+                      name="telephone"
+                      value={tempProfile.telephone || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
                     />
@@ -167,9 +164,10 @@ const ProfileComponent = () => {
               ) : (
                 <>
                   <p className="mb-1">@{profile.username}</p>
-                  <p className="mb-1">Display name: {profile.username}</p>
+                  <p className="mb-1">Display name: {profile.displayName}</p>
+                  <p className="mb-0">Bio: {profile.userBio}</p>
                   <p className="mb-1">Email: {profile.email}</p>
-                  <p className="mb-0">Phone: {profile.phoneNumber}</p>
+                  <p className="mb-0">Phone: {profile.telephone}</p>
                 </>
               )}
             </Col>
