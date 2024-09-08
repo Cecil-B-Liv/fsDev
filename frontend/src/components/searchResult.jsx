@@ -2,30 +2,40 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { searchUsersAndGroups } from "../apis/search";
 import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import GroupCard from "./groupCardComponent";
 import ProfileCard from "../components/profileCardComponent";
-export default function SearchResults({ search }) {
-  // code to get the filter data in backend
-  const [searchResult, setSearchResult] = useState([]);
+
+export default function SearchResults() {
+  const [searchResult, setSearchResult] = useState({ user: [], group: [] });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [userResult, setUserResult] = useState(false);
   const [groupResult, setGroupResult] = useState(false);
 
+  const location = useLocation();
+  const query = new URLSearchParams(location.search).get("q");
+
   useEffect(() => {
     const fetchResult = async () => {
       try {
-        const response = await searchUsersAndGroups();
+        const response = await searchUsersAndGroups(query);
 
-        setSearchResult(response);
-        if (response.user != []) {
+        // Ensure response has user and group arrays, default to empty arrays if undefined
+        const users = response.user || [];
+        const groups = response.group || [];
+
+        if (users.length > 0) {
           setUserResult(true);
         }
-        if (response.group != []) {
+        if (groups.length > 0) {
           setGroupResult(true);
         }
+
+        // Set search results
+        setSearchResult({ user: users, group: groups });
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching search results:", error);
         setError(error);
       } finally {
         setIsLoading(false);
@@ -33,15 +43,19 @@ export default function SearchResults({ search }) {
     };
 
     fetchResult();
-  }, []);
+  }, [query]);
 
   if (isLoading) {
     return <div>Loading...</div>; // Display loading indicator
   }
 
+  if (error) {
+    return <div>Error loading search results</div>;
+  }
+
   return (
     <>
-      {/*Group Results*/}
+      {/* Group Results */}
       <Card className="mb-4">
         <Card.Header
           style={{
@@ -62,22 +76,18 @@ export default function SearchResults({ search }) {
           }}
         >
           <ListGroup>
-            {/*GROUP LIST*/}
             {groupResult && (
-              <div>
-                {outputs.map((searchResult) => (
-                  <GroupCard
-                    key={searchResult.group._id}
-                    group={searchResult.group}
-                  />
+              <>
+                {searchResult.group.map((group) => (
+                  <GroupCard key={group._id} group={group} />
                 ))}
-              </div>
+              </>
             )}
           </ListGroup>
         </Card>
       </Card>
 
-      {/*User Results*/}
+      {/* User Results */}
       <Card className="mb-4">
         <Card.Header
           style={{
@@ -98,17 +108,12 @@ export default function SearchResults({ search }) {
           }}
         >
           <ListGroup>
-            {/*USERS LIST*/}
             {userResult && (
-              <div>
-                {outputs.map((searchResult) => (
-                  <ProfileCard
-                    key={searchResult.user._id}
-                    user={searchResult.user}
-                    mode={"view"}
-                  />
+              <>
+                {searchResult.user.map((user) => (
+                  <ProfileCard key={user._id} user={user} mode={"view"} />
                 ))}
-              </div>
+              </>
             )}
           </ListGroup>
         </Card>

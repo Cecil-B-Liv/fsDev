@@ -5,30 +5,63 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-import { getGroups } from '../apis/group';
+import { checkAuth } from '../apis/auth.js';
+import { getUserGroups } from '../apis/users';
 
 const UserGroupsComponent = () => {
-  const [groups, setGroups] = useState([]);
+
+  const [currentUserID, setCurrentUserID] = useState("");
+  const [userGroups, setUserGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Get current user ID
+  useEffect(() => {
+    const user = async () => {
+      const response = await checkAuth();
+      const currentUser = response;
+      setCurrentUserID(currentUser.userId);
+      console.log(response);
+    };
+
+    user();
+  }, []);
+
+  // Get User Group
   
   useEffect(() =>{
-    const fetchGroups = async () =>{
+    const fetchUserGroups = async () =>{
       try {
-        const response = await getGroups();
+        const response = await getUserGroups(currentUserID);
+        
 
-        setGroups(response);
-        console.log(`Group data fetch: ${response}`);
-      } catch (error) {
+        setUserGroups(response);
+        
+      } catch (error){
         console.error("Error fetching groups: ", error);
         setError(error); // Set error state
-      } finally {
-        setIsLoading(false); // Set loading to false regardless of success or failure
       }
     }
+    
+    fetchUserGroups();
+  }, [currentUserID]);
+  // useEffect(() =>{
+  //   const fetchGroups = async () =>{
+  //     try {
+  //       const response = await getGroups();
 
-    fetchGroups();
-  }, []);
+  //       setGroups(response);
+  //       console.log(`Group data fetch: ${response}`);
+  //     } catch (error) {
+  //       console.error("Error fetching groups: ", error);
+  //       setError(error); // Set error state
+  //     } finally {
+  //       setIsLoading(false); // Set loading to false regardless of success or failure
+  //     }
+  //   }
+
+  //   fetchGroups();
+  // }, []);
 
   if (isLoading) {
     return <div>Loading...</div>; // Display loading indicator
