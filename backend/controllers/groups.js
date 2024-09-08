@@ -93,7 +93,7 @@ export const createGroupPost = async (req, res) => {
         }
 
         const newPost = new Post({
-            currentUserId,
+            userId: currentUserId,
             groupId,
             postVisibility: "group",
             postDescription,
