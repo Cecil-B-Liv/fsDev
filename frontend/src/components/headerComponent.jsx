@@ -128,7 +128,7 @@ export default function Header() {
                             id="basic-nav-dropdown"
                             align='end'
                         >
-                            <NavDropdown.Item href="/profile">
+                            <NavDropdown.Item href="/yourprofile">
                                 <i className="bi bi-person-circle"></i> Your Page
                             </NavDropdown.Item>
 

@@ -26,12 +26,6 @@ export default function CreatePostHeader() {
         e.preventDefault();
         setError(null);
 
-<<<<<<< Updated upstream
-        // Call API
-        try {
-            await createPost(formData);
-            window.location.reload();
-=======
         try {
             const postData = new FormData();
 
@@ -51,7 +45,6 @@ export default function CreatePostHeader() {
             });
             setSelectedFile(null);
 
->>>>>>> Stashed changes
         } catch (error) {
             console.error('Error creating post:', error);
             setError(error.message || "An error occurred");

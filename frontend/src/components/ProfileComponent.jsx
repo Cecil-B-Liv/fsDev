@@ -1,8 +1,21 @@
 import { useState } from "react";
+import { Container, Card, Row, Col, Button, Form } from "react-bootstrap";
+import { useEffect } from "react";
+
+import { getUser } from "../apis/users";
+import { checkAuth } from '../apis/auth.js';
+
 import UserPostComponent from "../components/userPostComponent";
 
+
+
 const ProfileComponent = () => {
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
+
+  const [userId, setuserId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [profile, setProfile] = useState({
     name: "Hotaru",
     username: "hotaru123",
@@ -10,6 +23,7 @@ const ProfileComponent = () => {
     email: "hotaru@example.com",
     phoneNumber: "123-456-7890",
   });
+
   const [tempProfile, setTempProfile] = useState(profile);
 
   const handleEditProfile = () => {
@@ -32,95 +46,132 @@ const ProfileComponent = () => {
     setTempProfile({ ...tempProfile, [name]: value });
   };
 
+  // Get current user ID
+  useEffect(() => {
+    const user = async () => {
+      const response = await checkAuth();
+      const currentUser = response;
+      setuserId(currentUser.userId);
+    };
+
+    user();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+          const response = await getUser(userId);
+
+          setProfile(response);
+          console.log(response);
+      } catch (error) {
+          console.error("Error fetching user profile:", error);
+          setError(error); // Set error state
+      } finally {
+          setIsLoading(false); // Set loading to false regardless of success or failure
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
+if (isLoading) {
+  return <div>Loading...</div>; // Display loading indicator
+}
+
   return (
-    <div className="container mt-4">
-      <div className="card bg-dark text-white">
-        <div className="card-body">
-          <div className="d-flex align-items-center">
-            <img
-              src="https://via.placeholder.com/80"
-              alt="Profile"
-              className="rounded-circle"
-              style={{ width: "80px", height: "80px", objectFit: "cover" }}
-            />
-            <div className="ms-3 flex-grow-1">
+    <Container className="mt-4">
+      <Card bg="dark" text="white">
+        <Card.Body>
+          <Row className="align-items-center">
+            <Col xs="auto">
+              <img
+                src={`${assets}${profile.picturePath}`}
+                alt="Profile"
+                className="rounded-circle"
+                style={{ width: "80px", height: "80px", objectFit: "cover" }}
+              />
+            </Col>
+            <Col>
               {isEditing ? (
-                <form onSubmit={handleSaveProfile}>
-                  <input
-                    type="text"
-                    name="name"
-                    value={tempProfile.name}
-                    onChange={handleInputChange}
-                    placeholder="Enter your name"
-                    className="form-control mb-1"
-                  />
-                  <input
-                    type="text"
-                    name="username"
-                    value={tempProfile.username}
-                    onChange={handleInputChange}
-                    placeholder="Enter your username"
-                    className="form-control mb-1"
-                  />
-                  <input
-                    type="text"
-                    name="location"
-                    value={tempProfile.location}
-                    onChange={handleInputChange}
-                    placeholder="Enter your location"
-                    className="form-control mb-1"
-                  />
-                  <input
-                    type="email"
-                    name="email"
-                    value={tempProfile.email}
-                    onChange={handleInputChange}
-                    placeholder="Enter your email"
-                    className="form-control mb-1"
-                  />
-                  <input
-                    type="text"
-                    name="phoneNumber"
-                    value={tempProfile.phoneNumber}
-                    onChange={handleInputChange}
-                    placeholder="Enter your phone number"
-                    className="form-control mb-1"
-                  />
+                <Form onSubmit={handleSaveProfile}>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="text"
+                      name="name"
+                      value={tempProfile.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter your name"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="text"
+                      name="username"
+                      value={tempProfile.username}
+                      onChange={handleInputChange}
+                      placeholder="Enter your username"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="text"
+                      name="location"
+                      value={tempProfile.location}
+                      onChange={handleInputChange}
+                      placeholder="Enter your location"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="email"
+                      name="email"
+                      value={tempProfile.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-1">
+                    <Form.Control
+                      type="text"
+                      name="phoneNumber"
+                      value={tempProfile.phoneNumber}
+                      onChange={handleInputChange}
+                      placeholder="Enter your phone number"
+                    />
+                  </Form.Group>
                   <div className="d-flex justify-content-end mt-3">
-                    <button type="submit" className="btn btn-success me-2">
+                    <Button variant="success" type="submit" className="me-2">
                       Save
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={handleCancelEdit}
-                    >
+                    </Button>
+                    <Button variant="secondary" onClick={handleCancelEdit}>
                       Cancel
-                    </button>
+                    </Button>
                   </div>
-                </form>
+                </Form>
               ) : (
                 <>
-                  <h4 className="mb-0">{profile.name}</h4>
                   <p className="mb-1">@{profile.username}</p>
-                  <p className="mb-1">Lives in {profile.location}</p>
+                  <p className="mb-1">Display name: {profile.username}</p>
                   <p className="mb-1">Email: {profile.email}</p>
-                  <p className="mb-0">Phone: {profile.phoneNumber}</p>
+                  <p className="mb-0">Phone: {profile.telephone}</p>
                 </>
               )}
-            </div>
+            </Col>
             {!isEditing && (
-              <button className="btn btn-primary" onClick={handleEditProfile}>
-                Edit Profile
-              </button>
+              <Col xs="auto">
+                <Button variant="primary" onClick={handleEditProfile}>
+                  Edit Profile
+                </Button>
+              </Col>
             )}
-          </div>
-        </div>
-      </div>
+          </Row>
+        </Card.Body>
+      </Card>
       <div className="mt-4">
         {/* <UserPostComponent /> */}
       </div>
-    </div>
+    </Container>
   );
 };
 
