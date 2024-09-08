@@ -21,6 +21,7 @@ import Profile from "./components/ProfileComponent"
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
+import SearchResults from "./components/searchResult";
 
 import "./index.css";
 
@@ -124,27 +125,33 @@ const router = createBrowserRouter([
           {
             path: "siteadmindashboard",
             element: <SiteAdminDashBoard />
+          },
+          {
+            path: "serachresults",
+            element: <SearchResults/>
           }
         ],
       },
-      {
-        path: "/HomePage/Groups/:GroupID/ManageGroup",
-        element: <GroupAdminPage />,
-        children: [
-          {
-            index: true,
-            element: <JoinRequestList />
-          },
-          {
-            path: "JoinRequests",
-            element: <JoinRequestList />
-          },
-          {
-            path: "Members",
-            element: <MemberManageList />
-          }
-        ]
-      }
+
+      // TESTING 
+      // {
+      //   path: "/HomePage/Groups/:GroupID/ManageGroup",
+      //   element: <GroupAdminPage />,
+      //   children: [
+      //     {
+      //       index: true,
+      //       element: <JoinRequestList />
+      //     },
+      //     {
+      //       path: "JoinRequests",
+      //       element: <JoinRequestList />
+      //     },
+      //     {
+      //       path: "Members",
+      //       element: <MemberManageList />
+      //     }
+      //   ]
+      // }
     ]
   }
 ]);
