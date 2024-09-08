@@ -14,7 +14,7 @@ import NotificationList from "./components/notificationList";
 import GroupAdminPage from "./pages/GroupAdminPage";
 import JoinRequestList from "./components/joinRequestList";
 import MemberManageList from "./components/memberManageList";
-import Profile from "./components/ProfileComponent";
+import YourProfile from "./components/ProfileComponent";
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
@@ -80,8 +80,8 @@ const router = createBrowserRouter([
             element: <UserGroupsComponent groups={groups} />,
           },
           {
-            path: "profile",
-            element: <Profile />,
+            path: "yourprofile",
+            element: <YourProfile />,
           },
           { path: "profile/:userID", 
 
