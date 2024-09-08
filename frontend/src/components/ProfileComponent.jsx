@@ -185,7 +185,9 @@ if (isLoading) {
         </Card.Body>
       </Card>
       <div className="mt-4">
-        {/* <UserPostComponent /> */}
+              {posts.map((post) => (
+                    <UserPostComponent key={post._id} post={post} />
+                ))}
       </div>
     </Container>
   );
