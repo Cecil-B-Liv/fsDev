@@ -20,7 +20,8 @@ export default function UserPost({ post }) {
   const [postText, setPostText] = useState(post.postDescription);
   const [tempPostText, setTempPostText] = useState(postText);
 
-  const shortenedText = postText.slice(0, 100);
+  // const shortenedText = postText.slice(0, 100);
+  const shortenedText = postText;
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);

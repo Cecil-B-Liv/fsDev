@@ -118,7 +118,7 @@ const ProfileComponent = () => {
         </div>
       </div>
       <div className="mt-4">
-        <UserPostComponent />
+        {/* <UserPostComponent /> */}
       </div>
     </div>
   );
