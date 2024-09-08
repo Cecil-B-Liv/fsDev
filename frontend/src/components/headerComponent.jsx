@@ -20,7 +20,6 @@ import '../styles/headerComponent.css';
 
 export default function Header() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [prevScrollpos, setPrecScrollpos] = useState(window.scrollY);
     const [top, setTop] = useState(0);
     const [showNotifications, setShowNotifications] = useState(false);

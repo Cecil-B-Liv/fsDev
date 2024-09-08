@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 
 import { checkAuth } from '../apis/auth.js';
