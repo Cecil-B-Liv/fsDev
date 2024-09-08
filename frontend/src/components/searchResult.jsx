@@ -22,8 +22,9 @@ export default function SearchResults() {
         const response = await searchUsersAndGroups(query);
 
         // Ensure response has user and group arrays, default to empty arrays if undefined
-        const users = response.user || [];
-        const groups = response.group || [];
+        const users = response.users || [];
+        const groups = response.groups || [];
+
 
         if (users.length > 0) {
           setUserResult(true);
@@ -111,7 +112,7 @@ export default function SearchResults() {
             {userResult && (
               <>
                 {searchResult.user.map((user) => (
-                  <ProfileCard key={user._id} user={user} mode={"view"} />
+                  <ProfileCard key={user._id} user={user} mode="view" />
                 ))}
               </>
             )}
