@@ -1,73 +1,11 @@
+import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import GroupCreationApproval from "./groupCreationApprovalNotiComponent";
 import GroupMemberRequest from "./groupMemberRequestNotiComponent";
 import FriendRequestNotification from "./friendReqNotiComponent";
 import GeneralNotiComponent from "./generalNotiComponent";
-
-const notifications = [
-  {
-    id: 1,
-    senderId: {
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "3 hours",
-    notiType: "friendRequest",
-    notiDescription: "Sam Guy has sent you a friend request.",
-    isNew: true,
-  },
-  {
-    id: 2,
-    senderId: {
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "3 hours",
-    notiType: "general",
-    notiDescription: "Hikaru Subaru and 13 others reacted to your video.",
-    isNew: false,
-  },
-  {
-    id: 3,
-    senderId: {
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "2 days",
-    notiType: "general",
-    notiDescription: "Firefly tagged you in the comment of a post.",
-    isNew: true,
-  },
-  {
-    id: 4,
-    senderId: {
-      displayName: "Dude",
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "2 days",
-    notiType: "groupMemberRequest",
-    notiDescription: "Dude sent you a group member request.",
-    isNew: false,
-  },
-  {
-    id: 5,
-    senderId: {
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "2 days",
-    notiType: "groupCreationApproval",
-    notiDescription: "Wattson requested group creation approval.",
-    isNew: true,
-  },
-  {
-    id: 6,
-    senderId: {
-      picturePath: "https://via.placeholder.com/50",
-    },
-    time: "3 hours",
-    notiType: "friendRequest",
-    notiDescription: "Sam Guy has sent you a friend request.",
-    isNew: true,
-  },
-];
+import { getNotifications } from "../apis/notifications"; // Import the getNotifications function
 
 const renderNotification = (notification) => {
   switch (notification.notiType) {
@@ -77,12 +15,36 @@ const renderNotification = (notification) => {
       return <GroupCreationApproval notification={notification} />;
     case "groupMemberRequest":
       return <GroupMemberRequest notification={notification} />;
-    case "general":
+    default:
       return <GeneralNotiComponent notification={notification} />;
   }
 };
 
 const NotificationComponent = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state for API call
+  const [error, setError] = useState(null); // Error state
+
+  // Fetch notifications from the API when the component mounts
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const data = await getNotifications();
+        setNotifications(data); // Set fetched notifications
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+        setError(err); // Handle error
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  if (loading) return <div>Loading...</div>; // Show loading indicator
+  if (error) return <div>Error: {error}</div>; // Show error message
+
   return (
     <Card
       style={{
