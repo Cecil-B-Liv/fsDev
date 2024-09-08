@@ -4,14 +4,14 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 // Create a new post
-export const createPost = async (formData) => {
+export const createPost = async (postData) => {
     try {
         // const formData = new FormData();
         // for (let key in postData) {
         //     formData.append(key, postData[key]);
         // }
 
-        const response = await axios.post(`${API_BASE_URL}/posts/create`, formData,
+        const response = await axios.post(`${API_BASE_URL}/posts/create`, postData,
             {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true

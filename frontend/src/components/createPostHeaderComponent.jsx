@@ -1,21 +1,20 @@
-// API
-import { createPost } from '../apis/posts'; 
-
-// HOOK
 import { useRef, useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 
-// BOOTSTRAP
+import { createPost } from '../apis/posts';
+
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+
 import '../styles/createPostHeaderComponent.css'
 
-
 export default function CreatePostHeader() {
-    const [formData, setFormData] = useState({postVisibility: "", postDescription: "", postPicturePath: null});
+    const [formData, setFormData] = useState({ postVisibility: "", postDescription: "" });
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [error, setError] = useState(null);
 
 
     const textareaRef = useRef(null);
@@ -24,14 +23,38 @@ export default function CreatePostHeader() {
 
     // Handle Submit Action
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
+        setError(null);
 
+<<<<<<< Updated upstream
         // Call API
         try {
             await createPost(formData);
             window.location.reload();
+=======
+        try {
+            const postData = new FormData();
+
+            if (selectedFile) {
+                postData.append('postPicturePath', selectedFile);
+            }
+
+            for (const key in formData) {
+                postData.append(key, formData[key]);
+            }
+
+            await createPost(postData);
+
+            setFormData({
+                postVisibility: "",
+                postDescription: ""
+            });
+            setSelectedFile(null);
+
+>>>>>>> Stashed changes
         } catch (error) {
             console.error('Error creating post:', error);
+            setError(error.message || "An error occurred");
         }
     };
 
@@ -52,10 +75,10 @@ export default function CreatePostHeader() {
                                 className='my-2'
                                 placeholder="What's on your mind?"
                                 value={formData.postDescription}
-                                onChange={(e) =>{
-                                    setFormData({...formData, postDescription: e.target.value})
+                                onChange={(e) => {
+                                    setFormData({ ...formData, postDescription: e.target.value })
                                 }}
-                                style={{ resize: 'none', overflow: 'hidden' }} 
+                                style={{ resize: 'none', overflow: 'hidden' }}
                             />
 
                             {/* Visibility Radio Buttons */}
@@ -85,19 +108,21 @@ export default function CreatePostHeader() {
                             {/*Image*/}
                             <Row>
                                 <Col className='d-flex justify-content-start'>
-                                    <Form.Control 
-                                    type='file'
-                                    value={formData.postPicturePath}
-                                    onChange={(e)=>{
-                                        setFormData({...formData, postPicturePath: e.target.value})
-                                    }}>
+                                    <Form.Control
+                                        type='file'
+                                        name="postPicturePath"
+                                        value={formData.postPicturePath}
+                                        onChange={(e) => { selectedFile(e.target.files[0]) }}
+                                    >
                                     </Form.Control>
                                 </Col>
                                 <Col className='d-flex justify-content-end'>
-                                    <Button variant="primary" type="submit">Post</Button>
+                                    <Button variant="primary" type="submit">
+                                        Post
+                                    </Button>
                                 </Col>
                             </Row>
-
+                            {error && <div className="error">{error}</div>}
                         </Form>
                     </Card.Body>
                 </Card>
