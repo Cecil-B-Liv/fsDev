@@ -1,4 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "../redux/feature/authSlice";
+
+import NotificationComponent from './notificationComponent';
+import { checkAuth, logout } from "../apis/auth";
+
+import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,16 +15,12 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import NotificationComponent from './notificationComponent';
-import { useNavigate } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
 
 import '../styles/headerComponent.css';
 
-import { checkAuth, logout } from "../apis/auth";
-
 export default function Header() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [prevScrollpos, setPrecScrollpos] = useState(window.scrollY);
     const [top, setTop] = useState(0);
     const [showNotifications, setShowNotifications] = useState(false);
@@ -40,6 +44,10 @@ export default function Header() {
 
     const handleLogout = async () => {
         await logout();
+
+        // Dispatch the logout action to clear the Redux store
+        // dispatch(logoutAction());
+
         navigate("/login");
     };
 
@@ -47,7 +55,6 @@ export default function Header() {
         const user = async () => {
             const response = await checkAuth();
             setCurrentUser(response);
-            console.log(response);
         };
 
         user();

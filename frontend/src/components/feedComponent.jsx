@@ -13,10 +13,8 @@ export default function Feed() {
         const fetchPosts = async () => {
             try {
                 const response = await getPublicFeed();
-                console.log(response);
 
                 setPosts(response);
-                console.log("There is a post")
             } catch (error) {
                 console.error("Error fetching posts:", error);
                 setError(error); // Set error state
