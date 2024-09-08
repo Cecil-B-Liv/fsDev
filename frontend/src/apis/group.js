@@ -5,9 +5,9 @@ const API_BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 
 // Create a new group
-export const createGroup = async (formData) => {
+export const createGroup = async (groupData) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/groups/create`, formData,
+        const response = await axios.post(`${API_BASE_URL}/groups/create`, groupData,
             {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
