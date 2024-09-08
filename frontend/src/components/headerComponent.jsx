@@ -49,6 +49,7 @@ export default function Header() {
         // dispatch(logoutAction());
 
         navigate("/login");
+        window.location.reload();
     };
 
     useEffect(() => {
