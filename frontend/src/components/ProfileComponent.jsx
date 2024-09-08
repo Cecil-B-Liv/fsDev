@@ -76,9 +76,9 @@ const ProfileComponent = () => {
       }
     };
 
-    if (userId) {
+   
       fetchUserProfile();
-    }
+ 
   }, [userId]);
 
   // Fetch user posts
@@ -95,9 +95,9 @@ const ProfileComponent = () => {
       }
     };
 
-    if (userId) {
+    
       fetchUserPost();
-    }
+   
   }, [userId]);
 
   if (isLoading) {
