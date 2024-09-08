@@ -56,7 +56,7 @@ const OtherProfileComponent = () => {
     };
 
     fetchUserPost();
-  }, [userId]);
+  }, [profile]);
 
   if (isLoading) {
     return <div>Loading...</div>;

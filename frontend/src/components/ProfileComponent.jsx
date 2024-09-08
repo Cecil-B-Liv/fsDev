@@ -98,7 +98,7 @@ const ProfileComponent = () => {
     
       fetchUserPost();
    
-  }, [userId]);
+  }, [profile]);
 
   if (isLoading) {
     return <div>Loading...</div>;
