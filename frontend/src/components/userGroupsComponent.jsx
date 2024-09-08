@@ -21,7 +21,6 @@ const UserGroupsComponent = () => {
       const response = await checkAuth();
       const currentUser = response;
       setCurrentUserID(currentUser.userId);
-      console.log(response);
     };
 
     user();
@@ -33,13 +32,13 @@ const UserGroupsComponent = () => {
     const fetchUserGroups = async () =>{
       try {
         const response = await getUserGroups(currentUserID);
-        
-
         setUserGroups(response);
         
       } catch (error){
         console.error("Error fetching groups: ", error);
         setError(error); // Set error state
+      } finally {
+        setIsLoading(false);
       }
     }
     
@@ -82,18 +81,22 @@ const UserGroupsComponent = () => {
       {/*Groups Display*/}
       <h2 className="text-center">Joined Groups</h2>
       <hr />
-      <Row>
-        {groups.map((group) => (
-          <Col key={group.groupId} className="mb-2">
-            <GroupCard
-              groupId={group.groupId}
-              groupName={group.name} //
-              groupDescription={group.description} //
-              groupAvatar={group.groupBannerPath} //
-            />
-          </Col>
-        ))}
-      </Row>
+      {userGroups.length === 0 ? (
+        <div className="text-center">No groups joined yet</div>
+      ) : (
+        <Row>
+          {userGroups.map((group) => (
+            <Col key={group.groupId} className="mb-2">
+              <GroupCard
+                groupId={group.groupId}
+                groupName={group.name}
+                groupDescription={group.description}
+                groupAvatar={group.groupBannerPath}
+              />
+            </Col>
+          ))}
+        </Row>
+      )}
 
     </Container>
   );
