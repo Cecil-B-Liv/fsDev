@@ -17,47 +17,25 @@ import '../styles/createPostHeaderComponent.css'
 export default function CreatePostHeader() {
     const [formData, setFormData] = useState({postVisibility: "", postDescription: "", postPicturePath: null});
 
-    // const [postText, setPostText] = useState("");
-    // const [file, setFile] = useState(null);
+
     const textareaRef = useRef(null);
 
-    // // Handle Form Action
-    // const handlePostTextChange = (e) => {
-    //     setPostText(e.target.value);
-    //     autoExpandTextarea();
-    // };
-    // const handleFileChange = (e) => {
-    //     setFile(e.target.files[0]); // Capture the selected file
-    // };
+
 
     // Handle Submit Action
     const handleSubmit = async (e) => {
         e.preventDefault(); 
 
-        // // Create new form data
-        // const formData = new FormData();
-        // formData.append('postText', postText); 
-        // if (file) formData.append('file', file); 
-
         // Call API
         try {
             await createPost(formData);
+            window.location.reload();
         } catch (error) {
             console.error('Error creating post:', error);
         }
     };
 
-    // // Expand text function
-    // const autoExpandTextarea = () => {
-    //     const textarea = textareaRef.current;
-    //     if (textarea) {
-    //         textarea.style.height = "auto"; 
-    //         textarea.style.height = `${textarea.scrollHeight}px`; 
-    //     }
-    // };
-    // useEffect(() => {
-    //     autoExpandTextarea(); 
-    // }, [postText]);
+
 
 
     return (
