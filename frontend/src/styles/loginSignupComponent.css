@@ -1,69 +1,80 @@
 .center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .login-container {
-    border: 2px solid #454bcf;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 300px;
-    height: auto;
-    width: 100%;
-    max-width: 500px;
-    background-color: white;
-  }
-  
-  .login-signup-options-btn {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .option {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .option:first-child {
-    margin-right: 20px;
-  }
-  
-  .custom-input {
-    font-size: 1.2rem;
-    padding: 15px;
-    width: 100%;
-    text-align: start;
-  }
-  
-  Form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .login-btn {
-    display: block;
-    padding: 10px 20px;
-    background-color: #454bcf;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    margin-top: 20px;
-    width: 100%;
-    transition: background-color 0.3s ease;
-  }
-  
-  .login-btn:hover {
-    background-color: #3740b0;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh; /* Ensures the container is vertically centered */
+}
+
+.login-container {
+  border: 2px solid #454bcf;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  background-color: white;
+  transition: min-height 0.3s ease; /* Smooth transition between login and signup */
+  min-height: auto; /* Let the content define the height */
+}
+
+.login-height {
+  min-height: 300px; /* Minimum height for the login form */
+}
+
+.signup-height {
+  min-height: 700px; /* Minimum height for the signup form */
+}
+
+.login-signup-options-btn {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.option {
+  width: 50%;
+  padding: 8px; /* Reduced padding to make the button shorter */
+  border: none;
+  cursor: pointer;
+  font-size: 14px; /* Reduced font size */
+  border-radius: 10px;
+}
+
+.option:first-child {
+  margin-right: 20px;
+}
+
+.custom-input {
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 100%;
+  text-align: start;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.login-btn {
+  display: block;
+  padding: 8px 20px; /* Reduced padding to make the button shorter */
+  font-size: 14px; /* Reduced font size */
+  background-color: #454bcf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #3740b0;
+}
