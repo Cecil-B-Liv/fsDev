@@ -131,7 +131,7 @@ export default function UserPost({ post }) {
           {showComments && <CommentListComponent />}
         </Card.Body>
         <Card.Footer>
-          <UserCommentComponent avatar="https://placehold.co/50x50" />
+          <UserCommentComponent postId={post._id} />
         </Card.Footer>
       </Card>
     </Container>

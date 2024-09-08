@@ -2,6 +2,7 @@ import Post from "../models/Post.js";
 import User from "../models/User.js";
 import Group from "../models/Group.js";
 import Comment from "../models/Comment.js";
+import { createNotification } from "./notifications.js";
 
 /* CREATE */
 // Create a user post
@@ -53,14 +54,15 @@ export const createPost = async (req, res) => {
 export const createComment = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
-        const { postId, commentMessage } = req.body;
+        const {postId} = req.params;
+        const {commentMessage } = req.body;
         const post = await Post.findById(postId);
         const postOwnerId = post.userId;
         const commenter = await User.findById(currentUserId);
 
         const newComment = new Comment({
             postId,
-            currentUserId,
+            userId: currentUserId,
             commentMessage,
         });
         await newComment.save();
@@ -83,7 +85,7 @@ export const createComment = async (req, res) => {
                 `${commenter.username} (${commenter.displayName}) commented on your post!`
             );
         }
-
+        
         res.status(201).json(updatedPost);
     } catch (error) {
         res.status(404).json({ message: error.message });

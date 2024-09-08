@@ -94,7 +94,6 @@ const OtherProfileComponent = () => {
           <p>No posts available</p>
         )}
       </>
-      <h1>{userId}</h1>
     </Container>
   );
 };
