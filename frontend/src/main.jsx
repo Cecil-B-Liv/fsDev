@@ -89,17 +89,17 @@ const router = createBrowserRouter([
             element: <OtherProfileComponent/>
           },
           {
-            path: "groups/:groupID",
+            path: "groups/:groupId",
 
             element: <GroupWall />,
             children: [
               {
                 index: true,
-                element: <Feed />,
+                // element: <Feed />,
               },
               {
                 path: "groupfeeds",
-                element: <Feed />,
+                // element: <Feed />,
               },
               {
                 path: "groupmembers",

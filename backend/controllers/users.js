@@ -146,7 +146,7 @@ export const getUserGroups = async (req, res) => {
         const groups = await Promise.all(
             user.groupList.map(async (id) => {
                 const group = await Group.findById(id);
-                return group && !group.isApproved ? group : null;   // Return null if group is not approved
+                return group && group.isApproved ? group : null;   // Return null if group is not approved
             })
         );
         // Filter out null values
