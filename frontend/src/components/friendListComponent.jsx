@@ -1,36 +1,51 @@
+import { useState, useEffect } from 'react';
+import { checkAuth } from "../apis/auth.js";
+import { getUserFriends } from "../apis/users.js";
+
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import ProfileCard from "./profileCardComponent";
+
 import "../styles/friendRequestCardComponent.css";
 
 const FriendList = () => {
-  const profiles = [
-    {
-      username: "Dude",
-      location: "Living in California",
-      imageSrc: "path_to_image_1",
-    },
-    {
-      username: "Dude",
-      location: "Living in California",
-      imageSrc: "path_to_image_2",
-    },
-  ];
+  const [currentUser, setCurrentUser] = useState("");
+  const [userFriends, setUserFriends] = useState([]);
 
-  const numFriends = profiles.length;
+  useEffect(() => {
+    const user = async () => {
+      const response = await checkAuth();
+      setCurrentUser(response);
+    };
+
+    user();
+
+    const userId = currentUser._id;
+
+    const friend = async () => {
+      const response = await getUserFriends(userId);
+      setUserFriends(response);
+    };
+
+    friend();
+  }, []);
+
+  // Count user friends number
+  const friendNum = userFriends.length;
+
+
+  // const numFriends = profiles.length;
 
   return (
     <Container className="marginS">
       <Card className="bg">
         <Card.Header as="h5">Friends List</Card.Header>
         <Card.Body>
-          <Card.Title>You have {numFriends} friend(s)</Card.Title>
-          {profiles.map((profile, index) => (
+          <Card.Title>You have {friendNum} friend(s)</Card.Title>
+          {userFriends.map((userFriend) => (
             <ProfileCard
-              key={index}
-              username={profile.username}
-              location={profile.location}
-              imageSrc={profile.imageSrc}
+              key={userFriend._id}
+              user={userFriend}
               mode="view"
             />
           ))}
