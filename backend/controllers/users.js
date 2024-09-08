@@ -154,8 +154,8 @@ export const getUserGroups = async (req, res) => {
 
         // Populate the groupList
         const formattedGroups = approvedGroups.map(
-            ({ _id, name, description }) => {
-                return { _id, name, description };
+            ({ _id, name, description, groupBannerPath }) => {
+                return { _id, name, description, groupBannerPath };
             }
         );
         res.status(200).json(formattedGroups);
@@ -262,6 +262,9 @@ export const acceptFriendRequest = async (req, res) => {
             `${recipient.username} (${recipient.displayName}) accepted your friend request!`
         );
 
+        // Delete the request notification
+        await Notification.findOneAndDelete({ senderId, recipientId, type: "friendRequest" });
+
         res.status(200).json({ msg: "Friend request accepted successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -298,6 +301,9 @@ export const denyFriendRequest = async (req, res) => {
             "friendRequestDenied",
             `${recipient.username} (${recipient.displayName}) denied your friend request.`
         );
+
+        // Delete the request notification
+        await Notification.findOneAndDelete({ senderId, recipientId, type: "friendRequest" });
 
         res.status(200).json({ msg: "Friend request denied successfully" });
     } catch (err) {

@@ -30,6 +30,7 @@ const router = express.Router();
 router.post("/create",
     isAuthenticated,
     validateCreateGroup,    // Add validation middleware
+    uploadGroupPicture,
     createGroup);   // Create a new group
 router.post("/:groupId/posts/create",
     isAuthenticated,
@@ -66,6 +67,7 @@ router.put("/:groupId/update",
     isAuthenticated,
     isGroupAdmin,
     validateUpdateGroup,    // Add validation middleware
+    uploadGroupPicture,
     updateGroup
 );  // Update a group detail
 router.patch("/:groupId/requests/:requestId/approve",

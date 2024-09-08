@@ -246,6 +246,9 @@ export const approveGroupCreation = async (req, res) => {
             `Your group '${group.name}' creation has been approved!`
         );
 
+        // Delete the request notification
+        await Notification.findOneAndDelete({ groupId: groupId, notificationType: "groupCreationRequest" });
+
         res.status(200).json({ message: "Group creation approved successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -278,6 +281,9 @@ export const denyGroupCreation = async (req, res) => {
             "groupCreationDenied",
             `Your group '${group.name}' creation has been denied.`
         );
+
+        // Delete the request notification
+        await Notification.findOneAndDelete({ groupId: groupId, notificationType: "groupCreationRequest" });
 
         res.status(200).json({ message: "Group creation denied and group deleted" });
     } catch (err) {
@@ -356,6 +362,9 @@ export const approveGroupRequest = async (req, res) => {
             `Your request to join group '${group.name}' has been approved by ${groupAdmin.username} (${groupAdmin.displayName})!`
         );
 
+        // Delete the request notification
+        await Notification.findOneAndDelete({ userId: requestId, groupId: groupId, notificationType: "groupMemberRequest" });
+
         res.status(200).json({ message: "Join request approved successfully" });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -394,6 +403,9 @@ export const denyGroupRequest = async (req, res) => {
             "groupMemberDenied",
             `Your request to join group '${group.name}' has been declined by ${groupAdmin.username} (${groupAdmin.displayName}).`
         );
+
+        // Delete the request notification
+        await Notification.findOneAndDelete({ userId: requestId, groupId: groupId, notificationType: "groupMemberRequest" });
 
         res.status(200).json({ message: "Join request declined successfully" });
     } catch (err) {

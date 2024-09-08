@@ -27,21 +27,21 @@ const UserGroupsComponent = () => {
   }, []);
 
   // Get User Group
-  
-  useEffect(() =>{
-    const fetchUserGroups = async () =>{
+
+  useEffect(() => {
+    const fetchUserGroups = async () => {
       try {
         const response = await getUserGroups(currentUserID);
         setUserGroups(response);
-        
-      } catch (error){
+        console.log(response)
+      } catch (error) {
         console.error("Error fetching groups: ", error);
         setError(error); // Set error state
       } finally {
         setIsLoading(false);
       }
     }
-    
+
     fetchUserGroups();
   }, [currentUserID]);
   // useEffect(() =>{
@@ -88,10 +88,11 @@ const UserGroupsComponent = () => {
           {userGroups.map((group) => (
             <Col key={group.groupId} className="mb-2">
               <GroupCard
-                groupId={group.groupId}
-                groupName={group.name}
-                groupDescription={group.description}
-                groupAvatar={group.groupBannerPath}
+                // groupId={group.groupId}
+                // groupName={group.name}
+                // groupDescription={group.description}
+                // groupAvatar={group.groupBannerPath}
+                group={group}
               />
             </Col>
           ))}
