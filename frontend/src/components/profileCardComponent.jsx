@@ -3,8 +3,10 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import "../styles/profileCardComponent.css";
+import { Link } from "react-router-dom";
 
-const ProfileCard = ({ username, location, imageSrc, mode }) => {
+const ProfileCard = ({ user, mode }) => {
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
   const [status, setStatus] = useState(null);
 
   const handleAccept = () => {
@@ -23,18 +25,24 @@ const ProfileCard = ({ username, location, imageSrc, mode }) => {
     <div className="card-container">
       <Card className="profile-card bg-light">
         <Card.Body className="d-flex align-items-center">
-          <Image src={imageSrc} roundedCircle width={50} height={50} />
+          <Image
+            src={`${assets}${user.picturePath}`}
+            roundedCircle
+            width={50}
+            height={50}
+          />
           <div className="profile-info ms-3">
             <Card.Title as="h5" className="mb-1">
-              {username}
+              {user.username}
             </Card.Title>
-            <Card.Text className="text-muted mb-0">{location}</Card.Text>
           </div>
           <div className="profile-actions ms-auto d-flex">
             {mode === "view" || status === "accepted" ? (
               <>
                 <Button variant="primary" className="me-2">
-                  Check Profile
+                  <Link to={`/profile/${user._id}`}>
+                    Check Profile
+                  </Link>
                 </Button>
                 <Button variant="danger" onClick={handleUnfriend}>
                   Unfriend
@@ -44,7 +52,11 @@ const ProfileCard = ({ username, location, imageSrc, mode }) => {
               <p>Denied</p>
             ) : (
               <>
-                <Button variant="primary" className="me-2" onClick={handleAccept}>
+                <Button
+                  variant="primary"
+                  className="me-2"
+                  onClick={handleAccept}
+                >
                   Accept
                 </Button>
                 <Button variant="secondary" onClick={handleDeny}>

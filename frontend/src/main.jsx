@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
 import LoginSignupPage from "./pages/LoginSignUpPage";
 import HomePage from "./pages/Homepage";
 import Feed from "./components/feedComponent";
@@ -15,7 +14,7 @@ import NotificationList from "./components/notificationList";
 import GroupAdminPage from "./pages/GroupAdminPage";
 import JoinRequestList from "./components/joinRequestList";
 import MemberManageList from "./components/memberManageList";
-import Profile from "./components/ProfileComponent"
+import Profile from "./components/ProfileComponent";
 import SiteAdminDashBoard from "./components/siteAdminDashboard";
 import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
@@ -57,7 +56,6 @@ const groups = [
   },
 ];
 
-
 const router = createBrowserRouter([
   {
     path: "/login",
@@ -85,6 +83,9 @@ const router = createBrowserRouter([
             path: "profile",
             element: <Profile />,
           },
+          { path: "profile/:userID", 
+
+          },
           {
             path: "groups/:groupID",
 
@@ -92,7 +93,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <Feed />
+                element: <Feed />,
               },
               {
                 path: "groupfeeds",
@@ -104,8 +105,8 @@ const router = createBrowserRouter([
               },
               {
                 path: "groupmanage",
-                element: <GroupMange />
-              }
+                element: <GroupMange />,
+              },
             ],
           },
           {
@@ -122,16 +123,16 @@ const router = createBrowserRouter([
           },
           {
             path: "siteadmindashboard",
-            element: <SiteAdminDashBoard />
+            element: <SiteAdminDashBoard />,
           },
           {
-            path: "serachresults",
-            element: <SearchResults />
-          }
+            path: "searchresults",
+            element: <SearchResults />,
+          },
         ],
       },
 
-      // TESTING 
+      // TESTING
       // {
       //   path: "/HomePage/Groups/:GroupID/ManageGroup",
       //   element: <GroupAdminPage />,
@@ -150,8 +151,8 @@ const router = createBrowserRouter([
       //     }
       //   ]
       // }
-    ]
-  }
+    ],
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
