@@ -17,11 +17,12 @@ export default function UserPost({ post }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [postText, setPostText] = useState(post.postDescription);
+  const [postText, setPostText] = useState(`${post.postDescription}`);
   const [tempPostText, setTempPostText] = useState(postText);
 
-  // const shortenedText = postText.slice(0, 100);
-  const shortenedText = postText;
+  const shortenedText = postText.slice(0, 100);
+  // const shortenedText = postText;
+  // const shortenedText = postText ? postText.slice(0, 100) : '';
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
