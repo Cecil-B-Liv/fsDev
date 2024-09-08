@@ -1,14 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Card, Row, Col, Button, Form } from "react-bootstrap";
-import { useEffect } from "react";
 
 import { getUser } from "../apis/users";
 import { checkAuth } from '../apis/auth.js';
 import { getUserPosts } from "../apis/posts";
 
 import UserPostComponent from "../components/userPostComponent";
-
-
 
 const ProfileComponent = () => {
   const assets = import.meta.env.VITE_SERVER_ASSETS;
@@ -17,9 +14,8 @@ const ProfileComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [profile, setProfile] = useState();
-  const [posts, setPosts] = useState();
-
+  const [profile, setProfile] = useState({});
+  const [posts, setPosts] = useState([]); // Initialized as an empty array
   const [tempProfile, setTempProfile] = useState(profile);
 
   const handleEditProfile = () => {
@@ -27,7 +23,7 @@ const ProfileComponent = () => {
   };
 
   const handleSaveProfile = (e) => {
-    e.preventDefault(); // Prevent page refresh on form submit
+    e.preventDefault();
     setProfile(tempProfile);
     setIsEditing(false);
   };
@@ -57,43 +53,46 @@ const ProfileComponent = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-          const response = await getUser(userId);
-
-          setProfile(response);
-          console.log(response);
+        const response = await getUser(userId);
+        setProfile(response);
+        setTempProfile(response);
+        console.log(response);
       } catch (error) {
-          console.error("Error fetching user profile:", error);
-          setError(error); // Set error state
+        console.error("Error fetching user profile:", error);
+        setError(error);
       } finally {
-          setIsLoading(false); // Set loading to false regardless of success or failure
+        setIsLoading(false);
       }
     };
 
+   
     fetchUserProfile();
+
   }, [userId]);
 
   // GET USER POST
-  useEffect(() =>{
-    const fetchUserPost = async () =>{
+  useEffect(() => {
+    const fetchUserPost = async () => {
       try {
         const response = await getUserPosts(userId);
-
         setPosts(response);
         console.log(response);
-      } catch (error){
+      } catch (error) {
         console.error("Error fetching user posts:", error);
-        setError(error); // Set error state
+        setError(error);
       } finally {
-        setIsLoading(false); // Set loading to false regardless of success or failure
+        setIsLoading(false);
       }
-    }
+    };
+
 
     fetchUserPost();
-  }, [userId])
 
-if (isLoading) {
-  return <div>Loading...</div>; // Display loading indicator
-}
+  }, [userId]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container className="mt-4">
@@ -115,7 +114,7 @@ if (isLoading) {
                     <Form.Control
                       type="text"
                       name="name"
-                      value={tempProfile.name}
+                      value={tempProfile.name || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your name"
                     />
@@ -124,7 +123,7 @@ if (isLoading) {
                     <Form.Control
                       type="text"
                       name="username"
-                      value={tempProfile.username}
+                      value={tempProfile.username || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your username"
                     />
@@ -133,7 +132,7 @@ if (isLoading) {
                     <Form.Control
                       type="text"
                       name="location"
-                      value={tempProfile.location}
+                      value={tempProfile.location || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your location"
                     />
@@ -142,7 +141,7 @@ if (isLoading) {
                     <Form.Control
                       type="email"
                       name="email"
-                      value={tempProfile.email}
+                      value={tempProfile.email || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your email"
                     />
@@ -151,7 +150,7 @@ if (isLoading) {
                     <Form.Control
                       type="text"
                       name="phoneNumber"
-                      value={tempProfile.phoneNumber}
+                      value={tempProfile.phoneNumber || ""}
                       onChange={handleInputChange}
                       placeholder="Enter your phone number"
                     />
@@ -170,7 +169,7 @@ if (isLoading) {
                   <p className="mb-1">@{profile.username}</p>
                   <p className="mb-1">Display name: {profile.username}</p>
                   <p className="mb-1">Email: {profile.email}</p>
-                  <p className="mb-0">Phone: {profile.telephone}</p>
+                  <p className="mb-0">Phone: {profile.phoneNumber}</p>
                 </>
               )}
             </Col>
@@ -184,11 +183,15 @@ if (isLoading) {
           </Row>
         </Card.Body>
       </Card>
-      <div className="mt-4">
-              {posts.map((post) => (
-                    <UserPostComponent key={post._id} post={post} />
-                ))}
-      </div>
+      <>
+        {posts && posts.length > 0 ? (
+          posts.map((post) => (
+            <UserPostComponent key={post._id} post={post} />
+          ))
+        ) : (
+          <p>No posts available</p>
+        )}
+      </>
     </Container>
   );
 };
