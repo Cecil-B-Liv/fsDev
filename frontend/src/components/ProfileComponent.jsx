@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { getUser } from "../apis/users";
 import { checkAuth } from '../apis/auth.js';
+import { getUserPosts } from "../apis/posts";
 
 import UserPostComponent from "../components/userPostComponent";
 
@@ -16,13 +17,8 @@ const ProfileComponent = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [profile, setProfile] = useState({
-    name: "Hotaru",
-    username: "hotaru123",
-    location: "Somewhere in Penacony",
-    email: "hotaru@example.com",
-    phoneNumber: "123-456-7890",
-  });
+  const [profile, setProfile] = useState();
+  const [posts, setPosts] = useState();
 
   const [tempProfile, setTempProfile] = useState(profile);
 
@@ -57,6 +53,7 @@ const ProfileComponent = () => {
     user();
   }, []);
 
+  // GET USER DATA
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -74,6 +71,25 @@ const ProfileComponent = () => {
 
     fetchUserProfile();
   }, [userId]);
+
+  // GET USER POST
+  useEffect(() =>{
+    const fetchUserPost = async () =>{
+      try {
+        const response = await getUserPosts(userId);
+
+        setPosts(response);
+        console.log(response);
+      } catch (error){
+        console.error("Error fetching user posts:", error);
+        setError(error); // Set error state
+      } finally {
+        setIsLoading(false); // Set loading to false regardless of success or failure
+      }
+    }
+
+    fetchUserPost();
+  }, [userId])
 
 if (isLoading) {
   return <div>Loading...</div>; // Display loading indicator
