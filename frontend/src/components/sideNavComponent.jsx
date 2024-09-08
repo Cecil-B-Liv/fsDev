@@ -1,24 +1,36 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+
+import useAuthorization from "../Utils/Authorization";
+
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Button } from "react-bootstrap";
-import { useLocation } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+
 import "../styles/sideNavComponent.css";
 
 export default function SideNav({ isSiteAdmin }) {
-  const groupID = "123";
   const location = useLocation();
   const [showSiteAdminDashboardButton, setShowSiteAdminDashboardButton] = useState(false);
+  const authorizationCheck = useAuthorization(["siteAdmin"]);
 
   // Path Checking
-  useEffect(() => {
-    if (isSiteAdmin) {
-      setShowSiteAdminDashboardButton(true);
-    } else {
-      setShowSiteAdminDashboardButton(false);
-    }
-  }, [location, isSiteAdmin]);
+  // useEffect(() => {
+  //   if (isSiteAdmin) {
+  //     setShowSiteAdminDashboardButton(true);
+  //   } else {
+  //     setShowSiteAdminDashboardButton(false);
+  //   }
+  // }, [location, isSiteAdmin]);
+
+  // useEffect(() => {
+  //   if (authorizationCheck == true) {
+  //     setShowSiteAdminDashboardButton(true);
+  //   } else {
+  //     setShowSiteAdminDashboardButton(false);
+  //   }
+  // }, []);
 
   return (
     <Container>
@@ -45,7 +57,14 @@ export default function SideNav({ isSiteAdmin }) {
                 <i className="bi bi-people-fill"></i> Groups
               </Nav.Link>
             </Button>
-            {showSiteAdminDashboardButton && (
+            {/* {showSiteAdminDashboardButton && (
+              <Button>
+                <Nav.Link href={`siteadmindashboard`}>
+                  <i className="bi bi-tools"></i> Admin Dashboard
+                </Nav.Link>
+              </Button>
+            )} */}
+            {authorizationCheck && (
               <Button>
                 <Nav.Link href={`siteadmindashboard`}>
                   <i className="bi bi-tools"></i> Admin Dashboard
