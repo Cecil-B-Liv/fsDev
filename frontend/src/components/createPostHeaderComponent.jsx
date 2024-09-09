@@ -41,11 +41,7 @@ export default function CreatePostHeader() {
 
       console.log("Post created successfully:", postData);
 
-      // setFormData({
-      //     postVisibility: "",
-      //     postDescription: ""
-      // });
-      // setSelectedFile(null);
+     
       window.location.reload();
     } catch (error) {
       console.error("Error creating post:", error);

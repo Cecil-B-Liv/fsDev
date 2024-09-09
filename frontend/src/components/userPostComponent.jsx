@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
@@ -10,7 +11,8 @@ import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
-
+import { updatePost } from "../apis/posts";
+import { checkAuth } from "../apis/auth.js";
 export default function UserPost({ post }) {
   const assets = import.meta.env.VITE_SERVER_ASSETS;
 
@@ -19,10 +21,52 @@ export default function UserPost({ post }) {
   const [isEditing, setIsEditing] = useState(false);
   const [postText, setPostText] = useState(`${post.postDescription}`);
   const [tempPostText, setTempPostText] = useState(postText);
+  const [updateFields, setUpdateFields] = useState({
+    postVisibility: "",
+    postDescription: "",
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const postId = post._id;
+  const [error, setError] = useState(null);
+  const [currentUser, setCurrentUser] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
 
   const shortenedText = postText.slice(0, 100);
-  // const shortenedText = postText;
-  // const shortenedText = postText ? postText.slice(0, 100) : '';
+
+  useEffect(() => {
+    const user = async () => {
+      const response = await checkAuth();
+      setCurrentUser(response);
+    };
+
+    user();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    try {
+      const updateFields = new FormData();
+
+      if (selectedFile) {
+        updateFields.append("postPicturePath", selectedFile);
+      }
+
+      for (const key in updateFields) {
+        updateFields.append(key, updateFields[key]);
+      }
+
+      await updatePost(postId, updateFields);
+
+      console.log("Post created successfully:", updateFields);
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Error creating post:", error);
+      setError(error.message || "An error occurred");
+    }
+  };
 
   const toggleExpanded = () => {
     setIsExpanded(!isExpanded);
@@ -56,7 +100,11 @@ export default function UserPost({ post }) {
         <Card.Header>
           <Row>
             <Col className="userPostHeader d-flex justify-content-start align-items-center gap-2">
-              <Image src={`${assets}${post.userId.picturePath}`} roundedCircle style={{ width: "25%", height: "auto" }} />
+              <Image
+                src={`${assets}${post.userId.picturePath}`}
+                roundedCircle
+                style={{ width: "25%", height: "auto" }}
+              />
               <h5>{post.userId.username}</h5>
               <a href="#johndoe" className="pb-2">
                 {post.userId.displayName}
@@ -83,22 +131,53 @@ export default function UserPost({ post }) {
         <Card.Body>
           {isEditing ? (
             <>
-              <textarea
-                className="form-control mb-2"
-                rows="5"
-                value={tempPostText}
-                onChange={(e) => setTempPostText(e.target.value)}
-              />
-              <Button
-                variant="primary"
-                onClick={handleSaveEdit}
-                className="me-2"
-              >
-                Save
-              </Button>
-              <Button variant="secondary" onClick={handleCancelEdit}>
-                Cancel
-              </Button>
+              <Form onSubmit={handleSubmit}>
+                <Form.Select
+                  aria-label="Visibility"
+                  defaultValue="public"
+                  onChange={(e) =>
+                    setUpdateFields({
+                      ...updateFields,
+                      postVisibility: e.target.value,
+                    })
+                  }
+                >
+                  <option value="public">Public</option>
+                  <option value="friends">Friends</option>
+                </Form.Select>
+                <textarea
+                  className="form-control mb-2"
+                  rows="5"
+                  placeholder={tempPostText}
+                  value={updateFields.postDescription}
+                  onChange={(e) =>
+                    setUpdateFields({
+                      ...updateFields,
+                      postDescription: e.target.value,
+                    })
+                  }
+                />
+                <Form.Group controlId="formFile" className="mb-3">
+                  <Form.Control
+                    type="file"
+                    name="postPicturePath"
+                    onChange={(e) => {
+                      setSelectedFile(e.target.files[0]);
+                    }}
+                  />
+                </Form.Group>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  //onClick={handleSaveEdit}
+                  className="me-2"
+                >
+                  Save
+                </Button>
+                <Button variant="secondary" onClick={handleCancelEdit}>
+                  Cancel
+                </Button>
+              </Form>
             </>
           ) : (
             <>
