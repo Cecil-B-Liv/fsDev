@@ -21,42 +21,9 @@ import GroupMange from "./components/groupManage";
 import SearchResults from "./components/searchResult";
 import OtherProfileComponent from "./components/otherProfileComponent";
 import GroupMemberList from "./components/groupMemberList";
+import GroupFeed from "./components/groupFeed";
 
 import "./index.css";
-
-// Data test add by NA
-const groups = [
-  {
-    groupId: 1,
-    groupName: "Group 1",
-    groupDescription: "Demo Group, This group link is active",
-  },
-  {
-    groupId: 2,
-    groupName: "Group 2",
-    groupDescription: "Description 2",
-  },
-  {
-    groupId: 3,
-    groupName: "Group 1",
-    groupDescription: "Description 1",
-  },
-  {
-    groupId: 4,
-    groupName: "Group 2",
-    groupDescription: "Description 2",
-  },
-  {
-    groupId: 5,
-    groupName: "Group 1",
-    groupDescription: "Description 1",
-  },
-  {
-    groupId: 6,
-    groupName: "Group 2",
-    groupDescription: "Description 2",
-  },
-];
 
 const router = createBrowserRouter([
   {
@@ -79,7 +46,7 @@ const router = createBrowserRouter([
           },
           {
             path: "groups",
-            element: <UserGroupsComponent groups={groups} />,
+            element: <UserGroupsComponent/>,
           },
           {
             path: "yourprofile",
@@ -96,11 +63,11 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                // element: <Feed />,
+                element: <GroupFeed />,
               },
               {
                 path: "groupfeeds",
-                // element: <Feed />,
+                element: <GroupFeed />,
               },
               {
                 path: "groupmembers",
