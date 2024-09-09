@@ -1,4 +1,5 @@
 import { Container, Image, Row, Col, Nav } from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Outlet, Link, useParams } from "react-router-dom";
 
@@ -118,6 +119,34 @@ export default function GroupWall() {
               ? `Group Description: ${groupDetails.description}`
               : "Group Description: Loading..."}
           </h3>
+        </Col>
+        <Col>
+        {isMember ? (
+              <Button
+                variant="success"
+                className="px-4 py-2"
+                disabled
+                style={{
+                  fontSize: '16px',
+                  cursor: 'not-allowed', // The cursor indicates that the button is disabled
+                }}
+              >
+                ✔️ Member
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                className="px-4 py-2"
+                style={{
+                  fontSize: '16px',
+                }}
+                onClick={() => {
+                  // Add your join request logic here
+                }}
+              >
+                Send Join Request
+              </Button>
+            )}
         </Col>
       </Row>
 
