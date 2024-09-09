@@ -1,42 +1,36 @@
 import GroupCreateRequestCard from "./groupCreateRequestCard";
 import { ListGroupItem } from "react-bootstrap";
+import { useEffect, useState } from 'react';
 
-export default function GroupCreateRequestList(){
-  const groupRequests = [
-    {
-      username: "JohnDoe",
-      imageSrc: "https://example.com/johndoe.jpg",
-      groupName: "Nature Lovers",
-      groupDescription: "A group for people who love nature and outdoor activities.",
-      reasons: "We need a space to share our experiences and organize events."
-    },
-    {
-      username: "JaneSmith",
-      imageSrc: "https://example.com/janesmith.jpg",
-      groupName: "Tech Innovators",
-      groupDescription: "A group for discussing the latest trends in technology.",
-      reasons: "We want to share innovative ideas and tech solutions."
-    },
-    {
-      username: "MikeRoss",
-      imageSrc: "https://example.com/mikeross.jpg",
-      groupName: "Fitness Freaks",
-      groupDescription: "A group dedicated to fitness enthusiasts.",
-      reasons: "We aim to motivate each other to stay fit and healthy."
-    }
-  ];
+import {getUnapprovedGroups} from "../apis/group";
+
+export default function GroupCreateRequestList() {
+  const [groupRequests, setGroupRequests] = useState([]);
+
+  useEffect(() => {
+    const fetchGroupRequests = async () => {
+      try {
+        const response = await getUnapprovedGroups(); // Call the API to fetch unapproved groups
+        setGroupRequests(response); // Set the response data to state
+        console.log("Group requests:", response); // Log the response for debugging
+      } catch (error) {
+        console.error("Error fetching group requests:", error); // Error handling
+      }
+    };
+
+    fetchGroupRequests(); // Call the function inside useEffect
+  }, []); // Empty dependency array to run this only once on component mount
 
     return(
       <div>
       {groupRequests.map((request, index) => (
         <ListGroupItem>
           <GroupCreateRequestCard
-          key={index}
-          username={request.username}
-          imageSrc={request.imageSrc}
-          groupName={request.groupName}
-          groupDescription={request.groupDescription}
-          reasons={request.reasons}
+          groupId = {request._id}
+          username={request.groupAdminId.username}
+          imageSrc={request.groupBannerPath}
+          groupName={request.name}
+          groupDescription={request.description}
           />
         </ListGroupItem>
       ))}

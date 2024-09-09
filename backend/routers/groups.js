@@ -44,13 +44,15 @@ router.get("/search",
     validateSearchQuery,    // Add validation middleware
     searchGroups);   // Search all approved groups
 router.get("/", isAuthenticated, getGroups); // Get all approved groups
-router.get("/:groupId",
-    isAuthenticated,
-    getGroup);  // Get a specific approved group detail and posts (depends on public or private)
+
 router.get("/unapproved",
     isAuthenticated,
     isSiteAdmin,
     getUnapprovedGroups);   // Get all unapproved groups for siteAdmin
+
+router.get("/:groupId",
+    isAuthenticated,
+    getGroup);  // Get a specific approved group detail and posts (depends on public or private)
 
 /* UPDATE */
 router.patch("/:groupId/approve",
