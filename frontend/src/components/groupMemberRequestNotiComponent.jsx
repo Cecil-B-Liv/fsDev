@@ -7,12 +7,14 @@ import { approveGroupRequest, denyGroupRequest } from "../apis/group.js";
 
 function GroupMemberRequest({ notification }) {
   const [status, setStatus] = useState(null);
+  const groupId = notification.senderId;
+  const requestId = notification.requestId;
 
   const handleAccept = async () => {
     try {
       const response = await approveGroupRequest(
-        notification.groupId,
-        notification._id
+        groupId,
+        requestId
       );
       if (response) {
         setStatus("accepted");
@@ -25,8 +27,8 @@ function GroupMemberRequest({ notification }) {
   const handleDeny = async () => {
     try {
       const response = await denyGroupRequest(
-        notification.groupId,
-        notification._id
+        groupId,
+        requestId
       );
       if (response) {
         setStatus("denied");

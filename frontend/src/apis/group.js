@@ -140,6 +140,7 @@ export const approveGroupRequest = async (groupId, requestId) => {
     try {
         const response = await axios.patch(`${API_BASE_URL}/groups/${groupId}/requests/${requestId}/approve`,
             {
+                headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
             }
         );

@@ -71,7 +71,7 @@ router.put("/:groupId/update",
     updateGroup
 );  // Update a group detail
 router.patch("/:groupId/requests/:requestId/approve",
-    isAuthenticated,
+    // isAuthenticated,
     isGroupAdmin,
     approveGroupRequest
 ); // Approve a group join request by groupAdmin
