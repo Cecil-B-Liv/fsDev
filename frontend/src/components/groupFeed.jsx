@@ -2,7 +2,9 @@ import { Container, Card, Spinner, Alert } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getGroup } from "../apis/group";
+
 import UserPostComponent from "./userPostComponent"
+import CreatePostGroupComponent from "./createPostGroupComponent";
 
 export default function GroupFeed() {
   const { groupId } = useParams(); // Get groupId from URL params
@@ -42,6 +44,7 @@ export default function GroupFeed() {
   return (
     <>
       <div>
+        <CreatePostGroupComponent groupId={groupId}/>
         {groupFeed.map((post) => (
           <UserPostComponent key={post._id} post={post} />
         ))}

@@ -176,10 +176,10 @@ export default function GroupWall() {
       {/* Render the component based on the selected tab */}
       <Row className="pt-4">
         <Col>
-          {/* Check if the 'posts' tab is active and render CreatePostGroupComponent */}
+          {/* Check if the 'posts' tab is active and render CreatePostGroupComponent
           {activeTab === "posts" && <CreatePostGroupComponent 
           groupId={groupId}
-          />}
+          />} */}
           <Outlet />
         </Col>
       </Row>
