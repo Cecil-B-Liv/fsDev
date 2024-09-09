@@ -1,8 +1,5 @@
 import { useState } from "react";
-import Badge from "react-bootstrap/Badge";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
+import { Badge, Card, Button, Image} from "react-bootstrap";
 import { acceptFriendRequest, denyFriendRequest } from "../apis/users";
 
 function FriendRequestNotification({ notification }) {

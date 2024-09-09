@@ -1,5 +1,4 @@
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
+import {Card, Container} from 'react-bootstrap/Card';
 import ProfileCard from "./profileCardComponent";
 import "../styles/friendRequestCardComponent.css"
 

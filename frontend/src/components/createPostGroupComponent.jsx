@@ -2,12 +2,7 @@ import { useState } from "react";
 import { createGroupPost } from "../apis/group"; // Import the correct group-specific API
 import { useParams } from "react-router-dom"; // To get the groupId from URL
 
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import {Container, Button, Form, Card, Row, Col} from "react-bootstrap";
 
 import "../styles/createPostHeaderComponent.css";
 

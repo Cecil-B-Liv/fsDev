@@ -14,9 +14,9 @@ const ReactionComponent = () => {
     { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
-  useEffect(() => {
-    console.log(selectedReaction ? selectedReaction.label : null); // Log the updated reaction state after it changes
-  }, [selectedReaction]); // This effect runs every time selectedReaction changes
+  // useEffect(() => {
+  //   console.log(selectedReaction ? selectedReaction.label : null); // Log the updated reaction state after it changes
+  // }, [selectedReaction]); // This effect runs every time selectedReaction changes
 
   const handleMainButtonClick = () => {
     if (

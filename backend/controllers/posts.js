@@ -312,7 +312,7 @@ export const updatePost = async (req, res) => {
         }
 
         // Check if the current user is the owner of the post
-        if (post.userId !== currentUserId) {
+        if (post.userId.toString() !== currentUserId) {
             return res.status(403).json({ msg: "Unauthorized to edit this post" });
         }
 
@@ -321,11 +321,9 @@ export const updatePost = async (req, res) => {
             postDescription: post.postDescription,
             postPicturePath: post.postPicturePath,
         });
-
         // Update the post
         post.postVisibility = newPostVisibility;
         post.postDescription = newPostDescription;
-
         // if (newPostPicturePath) {
         //     // Update picturePath only if a new one is provided
         //     post.postPicturePath = newPostPicturePath;
@@ -336,7 +334,6 @@ export const updatePost = async (req, res) => {
             post.postPicturePath = req.files['postPicturePath'][0].filename;
         }
         const updatedPost = await post.save();
-
         res.status(200).json(updatedPost);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -357,8 +354,8 @@ export const updateComment = async (req, res) => {
         }
 
         // Check if the current user is the owner of the comment
-        if (comment.userId !== currentUserId) {
-            return res.status(403).json({ msg: "Unauthorized to edit this post" });
+        if (comment.userId.toString() !== currentUserId) {
+            return res.status(403).json({ msg: "Unauthorized to edit this comment" });
         }
 
         // Store the previous comment message in the history array
@@ -398,12 +395,19 @@ export const deletePost = async (req, res) => {
 
         // Check if the current user is the owner of the post,
         // the group admin if the post belong to the group, or a site admin
-        if (post.userId !== currentUserId ||
-            user.userRole !== "siteAdmin" ||
-            group.groupAdminId !== currentUserId
+        // Check if the current user is the owner of the post,
+        // a site admin, or the group admin if the post belongs to the group.
+        
+        const postUserId = post.userId.toString();
+
+        if (
+            postUserId !== currentUserId && // Not the post owner
+            user.userRole !== "siteAdmin" && // Not a site admin
+            (!group || group.groupAdminId.toString() !== currentUserId) // Not a group admin, or no group associated
         ) {
             return res.status(403).json({ msg: "Unauthorized to delete this post" });
         }
+        
 
         // Delete the post and associated comments
         await Promise.all([
