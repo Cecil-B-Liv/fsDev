@@ -7,8 +7,8 @@ import { approveGroupRequest, denyGroupRequest } from "../apis/group.js";
 
 function GroupMemberRequest({ notification }) {
   const [status, setStatus] = useState(null);
-  const groupId = notification.senderId;
-  const requestId = notification.requestId;
+  const groupId = notification.recipientId;
+  const requestId = notification._id;
 
   const sender = notification.senderId;
   const assets = import.meta.env.VITE_SERVER_ASSETS;
