@@ -35,6 +35,7 @@ export default function UserPost({ post }) {
   const [isOwner, setIsOwner] = useState(false);
 
   const postId = post._id;
+  const commentNum = post.postComments.length;
 
   const shortenedText = postText.slice(0, 100);
 
@@ -46,32 +47,6 @@ export default function UserPost({ post }) {
 
     user();
   }, []);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError(null);
-
-  //   try {
-  //     const updateFields = new FormData();
-
-  //     if (selectedFile) {
-  //       updateFields.append("postPicturePath", selectedFile);
-  //     }
-
-  //     for (const key in updateFields) {
-  //       updateFields.append(key, updateFields[key]);
-  //     }
-
-  //     await updatePost(postId, updateFields);
-
-  //     console.log("Post created successfully:", updateFields);
-
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error("Error creating post:", error);
-  //     setError(error.message || "An error occurred");
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -234,7 +209,7 @@ export default function UserPost({ post }) {
                 className="no-underline chat-icon-button-text"
               >
                 <i className="bi bi-chat chat-icon"></i>{" "}
-                <span className="chat-number">32</span>
+                <span className="chat-number"> {commentNum} </span>
               </Button>
             </Col>
           </Row>
