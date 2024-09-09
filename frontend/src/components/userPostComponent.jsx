@@ -25,11 +25,11 @@ export default function UserPost({ post }) {
   const [tempPostText, setTempPostText] = useState(postText);
 
   const [updateFields, setUpdateFields] = useState({
-    newPostVisibility: "public", 
-    newPostDescription: postText, 
+    newPostVisibility: "public",
+    newPostDescription: postText,
   });
   const [selectedFile, setSelectedFile] = useState(null);
- 
+
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState("");
   const [isOwner, setIsOwner] = useState(false);
@@ -111,7 +111,7 @@ export default function UserPost({ post }) {
   const handleRemovePost = async () => {
     console.log(postId);
     await deletePost(postId);
-    
+
     alert("Post removed!");
   };
 
@@ -225,7 +225,7 @@ export default function UserPost({ post }) {
           )}
           <Row className="gap-2 mt-3">
             <Col xs="auto">
-              <ReactionComponent />
+              <ReactionComponent postId={post._id} />
             </Col>
             <Col>
               <Button
@@ -238,7 +238,9 @@ export default function UserPost({ post }) {
               </Button>
             </Col>
           </Row>
-          {showComments && <CommentListComponent />}
+          {showComments && (
+            <CommentListComponent comments={post.postComments} />
+          )}
         </Card.Body>
         <Card.Footer>
           <UserCommentComponent postId={post._id} />

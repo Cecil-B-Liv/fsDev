@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import "../styles/reactionComponent.css";
+import { reactToPost } from "../apis/posts"; // Import your API function
 
-const ReactionComponent = () => {
+const ReactionComponent = ({ postId }) => {
   // State to store both icon and label, default to null
   const [selectedReaction, setSelectedReaction] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -14,29 +15,31 @@ const ReactionComponent = () => {
     { icon: "bi-emoji-angry-fill", label: "angry" },
   ];
 
-  // useEffect(() => {
-  //   console.log(selectedReaction ? selectedReaction.label : null); // Log the updated reaction state after it changes
-  // }, [selectedReaction]); // This effect runs every time selectedReaction changes
-
-  const handleMainButtonClick = () => {
+  const handleMainButtonClick = async () => {
     if (
       selectedReaction &&
       reactions.some((reaction) => selectedReaction.icon === reaction.icon)
     ) {
       // Unselect the reaction
       setSelectedReaction(null);
+      await reactToPost(postId, null); // Remove the reaction by passing null to the backend
     } else {
       // Select the "like" reaction by default
-      setSelectedReaction({ icon: "bi-hand-thumbs-up-fill", label: "like" });
+      const newReaction = { icon: "bi-hand-thumbs-up-fill", label: "like" };
+      setSelectedReaction(newReaction);
+      await reactToPost(postId, newReaction.label); // Send the "like" reaction to the backend
     }
   };
 
-  const handleReactionClick = (icon, label) => {
+  const handleReactionClick = async (icon, label) => {
     if (selectedReaction && selectedReaction.icon === icon) {
       // Unselect if already selected
       setSelectedReaction(null);
+      await reactToPost(postId, null); // Remove the reaction by passing null to the backend
     } else {
-      setSelectedReaction({ icon, label });
+      const newReaction = { icon, label };
+      setSelectedReaction(newReaction);
+      await reactToPost(postId, label); // Send the selected reaction to the backend
     }
     setIsHovered(false);
   };
