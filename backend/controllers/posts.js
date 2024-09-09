@@ -140,8 +140,15 @@ export const getPublicFeed = async (req, res) => {
     try {
         const posts = await Post.find({ postVisibility: "public" })
             .populate("userId", "username displayName picturePath")
-            .populate("postComments")
-            .populate("postComments.userId", "username displayName picturePath")
+            // .populate("postComments")
+            // .populate("postComments.userId", "username displayName picturePath")
+            .populate({ // Nested population for comments
+                path: "postComments",
+                populate: {
+                    path: "userId",
+                    select: "username picturePath" // Select only the fields you need
+                }
+            })
             .sort({ createdAt: -1 });
 
         res.status(200).json(posts);
