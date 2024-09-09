@@ -4,16 +4,16 @@ import { Outlet, Link, useParams } from "react-router-dom";
 
 import { getGroup } from "../apis/group";
 import { checkAuth } from "../apis/auth.js";
-import CreatePostGroupComponent from "./createPostGroupComponent"; // Import the new component
 
 export default function GroupWall() {
   const { groupId } = useParams(); // Get groupId from URL params
   const [userId, setuserId] = useState("");
   const assets = import.meta.env.VITE_SERVER_ASSETS;
-
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [groupDetails, setGroupDetails] = useState({});
+
 
   // FETCH GROUP DETAILS
   useEffect(() => {
@@ -57,6 +57,11 @@ export default function GroupWall() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+ 
+  // Check if the group is public or if the current user is a member
+  const isMember = false; // TESTING
+  const canViewContent = isMember; //groupDetails.groupVisibility === "public" || 
 
   return (
     <Container fluid className="p-0 m-0">
@@ -173,14 +178,26 @@ export default function GroupWall() {
         </Col>
       </Row>
 
-      {/* Render the component based on the selected tab */}
+      {/* Render Outlet only if the group is public or the user is a member */}
       <Row className="pt-4">
         <Col>
-          {/* Check if the 'posts' tab is active and render CreatePostGroupComponent
-          {activeTab === "posts" && <CreatePostGroupComponent 
-          groupId={groupId}
-          />} */}
-          <Outlet />
+          {canViewContent ? (
+            <Outlet />
+          ) : (
+            <p className="text-center" style={{ 
+              fontSize: '1.5rem', 
+              color: '#721c24', 
+              fontWeight: 'bold', 
+              padding: '20px', 
+              backgroundColor: '#f8d7da', 
+              borderRadius: '8px', 
+              border: '1px solid #f5c6cb', 
+              maxWidth: '600px', 
+              margin: '20px auto' 
+            }}>
+              You do not have permission to view the content of this group.
+            </p>
+          )}
         </Col>
       </Row>
     </Container>
