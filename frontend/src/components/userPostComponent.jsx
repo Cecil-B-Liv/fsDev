@@ -22,8 +22,8 @@ export default function UserPost({ post }) {
   const [postText, setPostText] = useState(`${post.postDescription}`);
   const [tempPostText, setTempPostText] = useState(postText);
   const [updateFields, setUpdateFields] = useState({
-    postVisibility: "",
-    postDescription: "",
+    newPostVisibility: "public", 
+    newPostDescription: postText, 
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const postId = post._id;
@@ -42,28 +42,51 @@ export default function UserPost({ post }) {
     user();
   }, []);
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError(null);
+
+  //   try {
+  //     const updateFields = new FormData();
+
+  //     if (selectedFile) {
+  //       updateFields.append("postPicturePath", selectedFile);
+  //     }
+
+  //     for (const key in updateFields) {
+  //       updateFields.append(key, updateFields[key]);
+  //     }
+
+  //     await updatePost(postId, updateFields);
+
+  //     console.log("Post created successfully:", updateFields);
+
+  //     window.location.reload();
+  //   } catch (error) {
+  //     console.error("Error creating post:", error);
+  //     setError(error.message || "An error occurred");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const updateFields = new FormData();
-
+      // Create FormData and append necessary fields
+      const formData = new FormData();
       if (selectedFile) {
-        updateFields.append("postPicturePath", selectedFile);
+        formData.append("postPicturePath", selectedFile);
       }
+      formData.append("newPostVisibility", updateFields.newPostVisibility);
+      formData.append("newPostDescription", updateFields.newPostDescription);
 
-      for (const key in updateFields) {
-        updateFields.append(key, updateFields[key]);
-      }
+      await updatePost(postId, formData);
 
-      await updatePost(postId, updateFields);
-
-      console.log("Post created successfully:", updateFields);
-
+      console.log("Post updated successfully:", formData);
       window.location.reload();
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error updating post:", error);
       setError(error.message || "An error occurred");
     }
   };
@@ -134,11 +157,11 @@ export default function UserPost({ post }) {
               <Form onSubmit={handleSubmit}>
                 <Form.Select
                   aria-label="Visibility"
-                  defaultValue="public"
+                  value={updateFields.newPostVisibility}
                   onChange={(e) =>
                     setUpdateFields({
                       ...updateFields,
-                      postVisibility: e.target.value,
+                      newPostVisibility: e.target.value,
                     })
                   }
                 >
@@ -149,11 +172,11 @@ export default function UserPost({ post }) {
                   className="form-control mb-2"
                   rows="5"
                   placeholder={tempPostText}
-                  value={updateFields.postDescription}
+                  value={updateFields.newPostDescription}
                   onChange={(e) =>
                     setUpdateFields({
                       ...updateFields,
-                      postDescription: e.target.value,
+                      newPostDescription: e.target.value,
                     })
                   }
                 />
