@@ -2,38 +2,47 @@ import { useState, useEffect } from 'react';
 import { checkAuth } from "../apis/auth.js";
 import { getUserFriends } from "../apis/users.js";
 
-import {Card, Container} from 'react-bootstrap';
+import { Card, Container } from 'react-bootstrap';
 import ProfileCard from "./profileCardComponent";
 
 import "../styles/friendRequestCardComponent.css";
 
 const FriendList = () => {
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState(null); // Initialize with null
   const [userFriends, setUserFriends] = useState([]);
 
+  // First useEffect: Fetch current authenticated user
   useEffect(() => {
-    const user = async () => {
-      const response = await checkAuth();
-      setCurrentUser(response);
+    const fetchCurrentUser = async () => {
+      try {
+        const response = await checkAuth();
+        setCurrentUser(response);  // Set the user after checking authentication
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+      }
     };
 
-    user();
+    fetchCurrentUser();
+  }, []); // Empty dependency array ensures this runs only once on mount
 
-    const userId = currentUser._id;
+  // Second useEffect: Fetch user friends only after currentUser is set
+  useEffect(() => {
+    if (!currentUser || !currentUser.userId) return; // Wait until currentUser is populated
 
-    const friend = async () => {
-      const response = await getUserFriends(userId);
-      setUserFriends(response);
+    const fetchUserFriends = async () => {
+      try {
+        const response = await getUserFriends(currentUser.userId);  // Fetch friends using the user ID
+        setUserFriends(response);  // Update the userFriends state
+      } catch (error) {
+        console.error("Error fetching user friends:", error);
+      }
     };
 
-    friend();
-  }, []);
+    fetchUserFriends();
+  }, [currentUser]); // This effect depends on currentUser being set
 
   // Count user friends number
   const friendNum = userFriends.length;
-
-
-  // const numFriends = profiles.length;
 
   return (
     <Container className="marginS">
