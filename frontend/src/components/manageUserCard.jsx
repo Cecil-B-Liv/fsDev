@@ -3,23 +3,24 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 
-export default function ManageUserCard({ username, location, imageSrc, initialStatus }) {
+export default function ManageUserCard({ username, location, imageSrc, initialStatus = "suspended" }) {
   
   const [status, setStatus] = useState(initialStatus);
 
-
-  // Code Template to handle button cick
+  // Handle button click for suspending user
   const handleSuspend = () => {
     setStatus("suspended");
-    console.log(`${username} has been suspended.`);
+    alert(`${username} has been suspended.`);
   };
 
+  // Handle button click for resuming user
   const handleResume = () => {
     setStatus("active");
-    console.log(`${username} has been resumed.`);
+    alert(`${username} has been resumed.`);
   };
 
-  const cardBgColor = status === false ? "bg-success" : "bg-danger";
+  // Set card background color based on status
+  const cardBgColor = status === "active" ? "bg-success" : "bg-danger";
 
   return (
     <div className="card-container">
@@ -32,19 +33,19 @@ export default function ManageUserCard({ username, location, imageSrc, initialSt
             </Card.Title>
             <Card.Text className="text-white-50 mb-0">{location}</Card.Text>
             <Card.Text className="text-white-50 mb-0">
-              Status: {status === false ? "Active" : "Suspended"}
+              Status: {status === "active" ? "Active" : "Suspended"}
             </Card.Text>
           </div>
           <div className="profile-actions ms-auto">
-            {status === false ? (
-              <Button variant="danger" onClick={handleResume}>
-                Resume
-              </Button>
-            ): (
-              <Button variant="success" onClick={handleSuspend}>
+            {status === "active" ? (
+              <Button variant="danger" onClick={handleSuspend}>
                 Suspend
               </Button>
-            ) }
+            ) : (
+              <Button variant="success" onClick={handleResume}>
+                Resume
+              </Button>
+            )}
           </div>
         </Card.Body>
       </Card>
