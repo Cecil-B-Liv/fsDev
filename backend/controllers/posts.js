@@ -196,6 +196,7 @@ export const getUserPosts = async (req, res) => {
             } else if (post.postVisibility === 'group') {
                 // Check if the group is public OR the current user is in the same group
                 const group = await Group.findById(post.groupId);
+                if (group === null) { return null; };
                 if (group.groupVisibility === 'public' || group.groupMemberList.includes(currentUserId)) {
                     return post;
                 }
@@ -397,7 +398,7 @@ export const deletePost = async (req, res) => {
         // the group admin if the post belong to the group, or a site admin
         // Check if the current user is the owner of the post,
         // a site admin, or the group admin if the post belongs to the group.
-        
+
         const postUserId = post.userId.toString();
 
         if (
@@ -407,7 +408,7 @@ export const deletePost = async (req, res) => {
         ) {
             return res.status(403).json({ msg: "Unauthorized to delete this post" });
         }
-        
+
 
         // Delete the post and associated comments
         await Promise.all([
