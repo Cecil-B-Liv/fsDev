@@ -10,6 +10,7 @@ import CommentListComponent from "../components/commentsListComponent";
 import ReactionComponent from "../components/reactionComponent";
 import "../styles/userPostComponent.css";
 import UserCommentComponent from "../components/userCommentComponent";
+import { deletePost } from "../apis/posts";
 
 export default function UserPost({ post }) {
   const assets = import.meta.env.VITE_SERVER_ASSETS;
@@ -19,6 +20,7 @@ export default function UserPost({ post }) {
   const [isEditing, setIsEditing] = useState(false);
   const [postText, setPostText] = useState(`${post.postDescription}`);
   const [tempPostText, setTempPostText] = useState(postText);
+  
 
   const shortenedText = postText.slice(0, 100);
   // const shortenedText = postText;
@@ -36,7 +38,12 @@ export default function UserPost({ post }) {
     setIsEditing(true);
   };
 
-  const handleRemovePost = () => {
+  const postId = post._id;
+
+  const handleRemovePost = async () => {
+    console.log(postId);
+    await deletePost(postId);
+    
     alert("Post removed!");
   };
 

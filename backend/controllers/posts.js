@@ -395,12 +395,19 @@ export const deletePost = async (req, res) => {
 
         // Check if the current user is the owner of the post,
         // the group admin if the post belong to the group, or a site admin
-        if (post.userId !== currentUserId ||
-            user.userRole !== "siteAdmin" ||
-            group.groupAdminId !== currentUserId
+        // Check if the current user is the owner of the post,
+        // a site admin, or the group admin if the post belongs to the group.
+        
+        const postUserId = post.userId.toString();
+
+        if (
+            postUserId !== currentUserId && // Not the post owner
+            user.userRole !== "siteAdmin" && // Not a site admin
+            (!group || group.groupAdminId.toString() !== currentUserId) // Not a group admin, or no group associated
         ) {
             return res.status(403).json({ msg: "Unauthorized to delete this post" });
         }
+        
 
         // Delete the post and associated comments
         await Promise.all([

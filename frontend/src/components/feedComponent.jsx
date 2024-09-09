@@ -9,6 +9,7 @@ export default function Feed() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     useEffect(() => {
         const fetchPosts = async () => {
             try {
@@ -25,6 +26,8 @@ export default function Feed() {
 
         fetchPosts();
     }, []);
+
+    
 
     if (isLoading) {
         return <div>Loading...</div>; // Display loading indicator
