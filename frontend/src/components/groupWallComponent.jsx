@@ -80,7 +80,7 @@ export default function GroupWall() {
   // HANDLE JOIN REQUEST
   const handleJoinRequest = async () => {
     try {
-      await sendGroupJoinRequest({groupId});
+      await sendGroupJoinRequest({ groupId });
       setJoinRequestSent(true); // Mark the request as sent
     } catch (error) {
       console.error("Error sending join request:", error);
@@ -121,11 +121,11 @@ export default function GroupWall() {
         </Col>
       </Row>
 
-      {/* Group Descriptions */}
+      {/* Group Description */}
       <Row className="bg-primary text-white py-3">
         <Col>
           <h3 className="mb-0 text-center">
-            {groupDetails.name
+            {groupDetails.description
               ? `Group Description: ${groupDetails.description}`
               : "Group Description: Loading..."}
           </h3>
@@ -171,77 +171,88 @@ export default function GroupWall() {
         </Col>
       </Row>
 
-      {/* Navigation Tabs */}
+      {/* Conditional Rendering of Tabs */}
       <Row className="bg-light py-3">
         <Col className="d-flex justify-content-center">
           <Nav variant="pills">
-            {/*GROUP FEEDS*/}
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to={`groupfeeds`}
-                onClick={() => handleTabClick("posts")}
-                className={
-                  activeTab === "posts" ? "active text-white" : "text-dark"
-                }
-                style={{
-                  backgroundColor:
-                    activeTab === "posts" ? "#f44336" : "transparent",
-                  borderRadius: "50px",
-                  padding: "0.5rem 1.5rem",
-                  marginRight: "0.5rem",
-                }}
-              >
-                Posts
-              </Nav.Link>
-            </Nav.Item>
+            {/* Group Feeds - Only show if user is a member or group is public */}
+            {canViewContent && (
+              <>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to={`groupfeeds`}
+                    onClick={() => handleTabClick("posts")}
+                    className={
+                      activeTab === "posts" ? "active text-white" : "text-dark"
+                    }
+                    style={{
+                      backgroundColor:
+                        activeTab === "posts" ? "#f44336" : "transparent",
+                      borderRadius: "50px",
+                      padding: "0.5rem 1.5rem",
+                      marginRight: "0.5rem",
+                    }}
+                  >
+                    Posts
+                  </Nav.Link>
+                </Nav.Item>
 
-            {/*GROUP MEMBERS*/}
-            <Nav.Item>
-              <Nav.Link
-                as={Link}
-                to={`groupmembers`}
-                onClick={() => handleTabClick("members")}
-                className={
-                  activeTab === "members" ? "active text-white" : "text-dark"
-                }
-                style={{
-                  backgroundColor:
-                    activeTab === "members" ? "#f44336" : "transparent",
-                  borderRadius: "50px",
-                  padding: "0.5rem 1.5rem",
-                }}
-              >
-                Members
-              </Nav.Link>
-            </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to={`groupmembers`}
+                    onClick={() => handleTabClick("members")}
+                    className={
+                      activeTab === "members"
+                        ? "active text-white"
+                        : "text-dark"
+                    }
+                    style={{
+                      backgroundColor:
+                        activeTab === "members"
+                          ? "#f44336"
+                          : "transparent",
+                      borderRadius: "50px",
+                      padding: "0.5rem 1.5rem",
+                    }}
+                  >
+                    Members
+                  </Nav.Link>
+                </Nav.Item>
 
-            {/*GROUP MANAGE - Check if current user is admin*/}
-            {userId === groupDetails.groupAdminId?._id && (
-              <Nav.Item>
-                <Nav.Link
-                  as={Link}
-                  to={`groupmanage`}
-                  onClick={() => handleTabClick("manage")}
-                  className={
-                    activeTab === "manage" ? "active text-white" : "text-dark"
-                  }
-                  style={{
-                    backgroundColor:
-                      activeTab === "manage" ? "#f44336" : "transparent",
-                    borderRadius: "50px",
-                    padding: "0.5rem 1.5rem",
-                  }}
-                >
-                  Manage Group
-                </Nav.Link>
-              </Nav.Item>
+                {/* Group Manage - Show only if user is an admin */}
+                {userId === groupDetails.groupAdminId?._id && (
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to={`groupmanage`}
+                      onClick={() => handleTabClick("manage")}
+                      className={
+                        activeTab === "manage"
+                          ? "active text-white"
+                          : "text-dark"
+                      }
+                      style={{
+                        backgroundColor:
+                          activeTab === "manage"
+                            ? "#f44336"
+                            : "transparent",
+                        borderRadius: "50px",
+                        padding: "0.5rem 1.5rem",
+                      }}
+                    >
+                      Manage Group
+                    </Nav.Link>
+                  </Nav.Item>
+                )}
+              </>
             )}
           </Nav>
         </Col>
       </Row>
 
-      {/* Render Outlet only if the group is public or the user is a member */}
+      {/* Only render content if the user can view the group (public or member) */}
       <Row className="pt-4">
         <Col>
           {canViewContent ? (

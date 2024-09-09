@@ -4,6 +4,7 @@ import Image from "react-bootstrap/Image";
 
 function GeneralNotiComponent({ notification }) {
   const sender = notification.senderId;
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
 
   return (
     <Card
@@ -16,7 +17,7 @@ function GeneralNotiComponent({ notification }) {
     >
       <Card.Body className="d-flex align-items-start">
         <Image
-          src={sender.picturePath || "https://via.placeholder.com/50"}
+          src={`${assets}${sender.picturePath}` || "https://via.placeholder.com/50"}
           alt={sender.displayName}
           roundedCircle
           style={{

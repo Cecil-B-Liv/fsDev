@@ -10,6 +10,9 @@ function GroupMemberRequest({ notification }) {
   const groupId = notification.senderId;
   const requestId = notification.requestId;
 
+  const sender = notification.senderId;
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
+
   const handleAccept = async () => {
     try {
       const response = await approveGroupRequest(
@@ -50,7 +53,7 @@ function GroupMemberRequest({ notification }) {
       <Card.Body className="d-flex align-items-start">
         <Image
           src={
-            notification.senderId.picturePath ||
+            `${assets}${sender.picturePath}` ||
             "https://via.placeholder.com/50"
           }
           alt={notification.senderId.displayName}

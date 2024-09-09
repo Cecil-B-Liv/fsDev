@@ -4,6 +4,7 @@ import { acceptFriendRequest, denyFriendRequest } from "../apis/users";
 
 function FriendRequestNotification({ notification }) {
   const [status, setStatus] = useState(null);
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
 
   const handleAccept = async () => {
     try {
@@ -27,7 +28,7 @@ function FriendRequestNotification({ notification }) {
     }
   };
 
-  const picturePath = notification.senderId.picturePath;
+  const sender = notification.senderId; 
 
   return (
     <Card
@@ -40,7 +41,7 @@ function FriendRequestNotification({ notification }) {
     >
       <Card.Body className="d-flex align-items-start">
         <Image
-          src={picturePath || "https://via.placeholder.com/50"}
+          src={`${assets}${sender.picturePath}` || "https://via.placeholder.com/50"}
           roundedCircle
           style={{
             width: "50px",
