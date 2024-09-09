@@ -79,7 +79,7 @@ export default function Header() {
                 <Navbar className="headerNav d-flex justify-content-between p-3" style={headerNavStyle}>
                     <Navbar.Brand href="/">
                         <img
-                            src="/vite.svg"
+                            src="/rush_net_logo.png"
                             width="30"
                             height="30"
                             className="d-inline-block align-top"
