@@ -3,29 +3,30 @@ import { Container } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Image } from "react-bootstrap";
 import { useState } from "react";
+import {approveGroupCreation, denyGroupCreation} from "../apis/group"
 
 export default function GroupCreateRequestCard({
+  groupId,
   username,
   imageSrc,
   groupName,
   groupDescription,
-  reasons,
 }) {
 
-  const [response, setResponse] = useState("");
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
+
+  // const [response, setResponse] = useState("");
 
   // Handler for Accept or Deny template
-  const handleAccept = () => {
-    setResponse("Request Accepted");
-    console.log("Request Accepted");
-
+  const handleAccept = async () => {
+    const response = await approveGroupCreation(groupId);
+    alert (response.message)
   };
 
 
-  const handleDeny = () => {
-    setResponse("Request Denied");
-    console.log("Request Denied");
-
+  const handleDeny = async () => {
+    const response = await denyGroupCreation(groupId);
+    alert (response.message)
   };
 
   return (
@@ -34,7 +35,7 @@ export default function GroupCreateRequestCard({
         <Card className="profile-card bg-light">
           <Card.Body className="d-flex align-items-center">
             <Image
-              src={imageSrc || "https://placehold.co/50x50"}
+              src={`${assets}${imageSrc}`}
               roundedCircle
               width={50}
               height={50}
@@ -49,9 +50,7 @@ export default function GroupCreateRequestCard({
               <Card.Text className="text-muted mb-0">
                 <strong>Group Description: </strong> {groupDescription}
               </Card.Text>
-              <Card.Text className="text-muted mb-0">
-                <strong>Reason: </strong>{reasons}
-              </Card.Text>
+
             </div>
             <div className="profile-actions ms-auto">
               <Button variant="success" className="me-2" onClick={handleAccept}>
