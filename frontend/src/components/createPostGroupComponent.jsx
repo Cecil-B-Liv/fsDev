@@ -33,7 +33,7 @@ export default function CreatePostGroupComponent({ groupId }) {
       await createGroupPost(groupId, postData);
 
       console.log("Group post created successfully:", postData);
-
+      window.location.reload();
       //Reset form after successful post
       //setFormData({ postDescription: "" });
       //setSelectedFile(null);
