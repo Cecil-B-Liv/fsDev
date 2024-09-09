@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
 
-    /* 
-    add id adminOfGrp[] (the groupAdmin id will be stored in the group model so if the user is the admin of that group, that group will store that user id in its property call groupAdminId)
-    */
     {
         username:
         {
