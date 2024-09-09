@@ -7,13 +7,13 @@ import { checkAuth } from "../apis/auth.js";
 
 export default function GroupWall() {
   const { groupId } = useParams(); // Get groupId from URL params
-  const [userId, setuserId] = useState("");
+  const [userId, setUserId] = useState("");
   const assets = import.meta.env.VITE_SERVER_ASSETS;
-  
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [groupDetails, setGroupDetails] = useState({});
-
+  const [isMember, setIsMember] = useState(false);
 
   // FETCH GROUP DETAILS
   useEffect(() => {
@@ -33,16 +33,31 @@ export default function GroupWall() {
     fetchGroupDetails();
   }, [groupId]);
 
-  // GET CURRENT USER ID AFTER GET GROUP DETAILS
+  // GET CURRENT USER ID
   useEffect(() => {
-    const user = async () => {
-      const response = await checkAuth();
-      const currentUser = response;
-      setuserId(currentUser.userId);
+    const getUserData = async () => {
+      try {
+        const response = await checkAuth();
+        const currentUser = response;
+        setUserId(currentUser.userId);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setError(error);
+      }
     };
 
-    user();
-  }, [groupDetails]);
+    getUserData();
+  }, []);
+
+  // Check if the current user is a member of the group once both groupDetails and userId are loaded
+  useEffect(() => {
+    if (groupDetails.groupMemberList && userId) {
+      const memberCheck = groupDetails.groupMemberList.some(
+        (member) => member._id === userId
+      );
+      setIsMember(memberCheck);
+    }
+  }, [groupDetails, userId]);
 
   const [activeTab, setActiveTab] = useState("posts");
 
@@ -58,11 +73,6 @@ export default function GroupWall() {
     return <div>Error: {error.message}</div>;
   }
 
-  // Check if the current user is a member of the group
-  const isMember = groupDetails.groupMemberList?.some(
-    (member) => member._id === userId
-  );
-  
   // Check if the group is public or if the current user is a member
   const canViewContent = groupDetails.groupVisibility === "public" || isMember;
 
