@@ -3,16 +3,24 @@ import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
+import { useParams } from "react-router-dom";
 import "../styles/profileCardComponent.css";
+
+import { removeGroupMember } from "../apis/group";
 
 export default function MemberManageCard({member}) {
   const assets = import.meta.env.VITE_SERVER_ASSETS;
   const [status, setStatus] = useState(null);
 
-  const handleKick = () => {
-    // Logic to kick the member out of the group
-    setStatus("kicked");
-    console.log(`${username} has been kicked out of the group.`);
+  const {groupId} = useParams();
+  const memberId = member._id;
+
+  const handleKick = async () => {
+    try {
+      await removeGroupMember(groupId, memberId);
+    } catch (error){
+      console.error("Can not remove memebr", error);
+    }
   };
 
   return (
