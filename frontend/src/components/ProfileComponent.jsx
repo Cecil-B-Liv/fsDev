@@ -76,7 +76,6 @@ const ProfileComponent = () => {
       }
     };
 
-   
       fetchUserProfile();
  
   }, [userId]);
@@ -94,7 +93,6 @@ const ProfileComponent = () => {
         setIsLoading(false);
       }
     };
-
     
       fetchUserPost();
    

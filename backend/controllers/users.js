@@ -8,6 +8,7 @@ export const sendFriendRequest = async (req, res) => {
     try {
         const senderId = req.session.userId;
         const { recipientId } = req.body;
+        console.log(req.body);
         const sender = await User.findById(senderId);
 
         // Find the recipient user

@@ -140,6 +140,8 @@ export const getPublicFeed = async (req, res) => {
     try {
         const posts = await Post.find({ postVisibility: "public" })
             .populate("userId", "username displayName picturePath")
+            .populate("postComments")
+            .populate("postComments.userId", "username displayName picturePath")
             .sort({ createdAt: -1 });
 
         res.status(200).json(posts);
