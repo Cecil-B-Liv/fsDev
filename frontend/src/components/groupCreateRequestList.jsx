@@ -12,7 +12,6 @@ export default function GroupCreateRequestList() {
       try {
         const response = await getUnapprovedGroups(); // Call the API to fetch unapproved groups
         setGroupRequests(response); // Set the response data to state
-        console.log("Group requests:", response); // Log the response for debugging
       } catch (error) {
         console.error("Error fetching group requests:", error); // Error handling
       }

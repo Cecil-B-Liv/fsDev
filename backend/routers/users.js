@@ -40,6 +40,9 @@ router.get('/search',
     isAuthenticated,
     validateSearchQuery,    // Add validation middleware
     searchUsers);  // Search user
+
+    
+
 router.get("/:userId",
     isAuthenticated,
     getUser);   // Get user profile

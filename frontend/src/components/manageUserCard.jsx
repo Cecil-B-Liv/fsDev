@@ -4,7 +4,9 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 
 export default function ManageUserCard({ username, location, imageSrc, initialStatus }) {
+  
   const [status, setStatus] = useState(initialStatus);
+
 
   // Code Template to handle button cick
   const handleSuspend = () => {
@@ -17,7 +19,7 @@ export default function ManageUserCard({ username, location, imageSrc, initialSt
     console.log(`${username} has been resumed.`);
   };
 
-  const cardBgColor = status === "active" ? "bg-success" : "bg-danger";
+  const cardBgColor = status === false ? "bg-success" : "bg-danger";
 
   return (
     <div className="card-container">
@@ -30,19 +32,19 @@ export default function ManageUserCard({ username, location, imageSrc, initialSt
             </Card.Title>
             <Card.Text className="text-white-50 mb-0">{location}</Card.Text>
             <Card.Text className="text-white-50 mb-0">
-              Status: {status === "active" ? "Active" : "Suspended"}
+              Status: {status === false ? "Active" : "Suspended"}
             </Card.Text>
           </div>
           <div className="profile-actions ms-auto">
-            {status === "active" ? (
-              <Button variant="warning" onClick={handleSuspend}>
-                Suspend
-              </Button>
-            ) : (
-              <Button variant="success" onClick={handleResume}>
+            {status === false ? (
+              <Button variant="danger" onClick={handleResume}>
                 Resume
               </Button>
-            )}
+            ): (
+              <Button variant="success" onClick={handleSuspend}>
+                Suspend
+              </Button>
+            ) }
           </div>
         </Card.Body>
       </Card>

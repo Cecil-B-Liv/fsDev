@@ -1,39 +1,36 @@
 import ManageUserCard from "./manageUserCard";
 import { ListGroupItem } from "react-bootstrap";
+import { useEffect, useState } from 'react';
+import {getUsers} from "../apis/users"
 
 export default function ManageUsersList() {
-  const users = [
-    {
-      username: "JohnDoe",
-      location: "New York, USA",
-      imageSrc: "https://example.com/johndoe.jpg",
-      initialStatus: "active",
-    },
-    {
-      username: "JaneSmith",
-      location: "London, UK",
-      imageSrc: "https://example.com/janesmith.jpg",
-      initialStatus: "suspended",
-    },
-    {
-      username: "MikeRoss",
-      location: "Toronto, Canada",
-      imageSrc: "https://example.com/mikeross.jpg",
-      initialStatus: "active",
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const getUserList = async () => {
+      try {
+        const response = await getUsers(); // Call the API to fetch users
+        setUsers(response); // Update state with the users
+        console.log("Users fetched:", response); // Debugging log
+      } catch (error) {
+        console.error("Error fetching user list:", error); // Log the error
+      }
+    };
+
+    getUserList(); // Invoke the fetch function on mount
+  }, []); // Empty dependency array to run on component mount
 
   return (
     <div>
       {users.map((user, index) => (
-        <ListGroupItem>
+        // Moved the `key` to the outermost component
+        <ListGroupItem key={index}>
           <ManageUserCard
-          key={index}
-          username={user.username}
-          location={user.location}
-          imageSrc={user.imageSrc}
-          initialStatus={user.initialStatus}
-        />
+            username={user.username}
+            location={user.location}
+            imageSrc={user.imageSrc}
+            initialStatus={user.isSuspended}
+          />
         </ListGroupItem>
       ))}
     </div>
