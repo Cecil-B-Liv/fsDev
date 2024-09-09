@@ -3,7 +3,7 @@ import { Container, Row, Col, Image, Dropdown, Button } from "react-bootstrap";
 import ReactionComponent from "./reactionComponent";
 import "../styles/commentComponent.css";
 
-const CommentComponent = ({ content, commenter }) => {
+const CommentComponent = ({ commenter, content }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [commentText, setCommentText] = useState(content);
   const [tempCommentText, setTempCommentText] = useState(content);
@@ -18,7 +18,7 @@ const CommentComponent = ({ content, commenter }) => {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   };
-
+  
   useEffect(() => {
     if (isEditing && textareaRef.current) {
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
@@ -48,8 +48,8 @@ const CommentComponent = ({ content, commenter }) => {
       <Row className="align-items-start">
         <Col xs="auto">
           <Image
-            src={`${assets}${commenter.userId.picturePath}`}
-            alt={commenter.userId.username}
+            src={`${assets}${commenter.picturePath}`}
+            alt={commenter.username}
             roundedCircle
             className="comment-avatar"
           />
@@ -57,7 +57,7 @@ const CommentComponent = ({ content, commenter }) => {
         <Col>
           <div className="d-flex justify-content-between">
             <div>
-              <h6 className="mb-1 text-white">{commenter.userId.username}</h6>
+              <h6 className="mb-1 text-white">{commenter.username}</h6>
               {isEditing ? (
                 <textarea
                   ref={textareaRef}

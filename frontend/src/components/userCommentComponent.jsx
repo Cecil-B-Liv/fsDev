@@ -44,6 +44,7 @@ const UserCommentComponent = ({ postId }) => {
 
       // Clear the comment input field
       setComment("");
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting comment:", error);
       setError("An error occurred while submitting the comment.");
