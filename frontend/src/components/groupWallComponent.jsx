@@ -58,10 +58,13 @@ export default function GroupWall() {
     return <div>Error: {error.message}</div>;
   }
 
- 
+  // Check if the current user is a member of the group
+  const isMember = groupDetails.groupMemberList?.some(
+    (member) => member._id === userId
+  );
+  
   // Check if the group is public or if the current user is a member
-  const isMember = false; // TESTING
-  const canViewContent = isMember; //groupDetails.groupVisibility === "public" || 
+  const canViewContent = groupDetails.groupVisibility === "public" || isMember;
 
   return (
     <Container fluid className="p-0 m-0">
