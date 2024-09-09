@@ -134,14 +134,14 @@ export const reactToPost = async (postId, reactionType) => {
 };
 
 // Update an existing post
-export const updatePost = async (postId, updatedFields) => {
+export const updatePost = async (postId, updateFields) => {
     try {
         // const formData = new FormData();
         // for (let key in updatedData) {
         //     formData.append(key, updatedData[key]);
         // }
 
-        const response = await axios.put(`${API_BASE_URL}/posts/${postId}/update`, updatedFields,
+        const response = await axios.put(`${API_BASE_URL}/posts/${postId}/update`, updateFields,
             {
                 headers: { 'Content-Type': 'multipart/form-data' },
                 withCredentials: true
