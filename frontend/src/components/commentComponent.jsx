@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import {Container, Row, Col, Image, Dropdown, Button} from "react-bootstrap";
+import { Container, Row, Col, Image, Dropdown, Button } from "react-bootstrap";
 import ReactionComponent from "./reactionComponent";
 import "../styles/commentComponent.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
 
-const CommentComponent = ({ username, content, likes, avatar }) => {
+const CommentComponent = ({ content, commenter }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [commentText, setCommentText] = useState(content);
   const [tempCommentText, setTempCommentText] = useState(content);
 
+  const assets = import.meta.env.VITE_SERVER_ASSETS;
   const textareaRef = useRef(null);
 
   const handleTextareaChange = (e) => {
@@ -48,8 +48,8 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
       <Row className="align-items-start">
         <Col xs="auto">
           <Image
-            src={avatar || "https://via.placeholder.com/50"}
-            alt="Avatar"
+            src={`${assets}${commenter.userId.picturePath}`}
+            alt={commenter.userId.username}
             roundedCircle
             className="comment-avatar"
           />
@@ -57,7 +57,7 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
         <Col>
           <div className="d-flex justify-content-between">
             <div>
-              <h6 className="mb-1 text-white">{username}</h6>
+              <h6 className="mb-1 text-white">{commenter.userId.username}</h6>
               {isEditing ? (
                 <textarea
                   ref={textareaRef}
@@ -104,10 +104,7 @@ const CommentComponent = ({ username, content, likes, avatar }) => {
               </Button>
             </form>
           ) : (
-            <div className="d-flex justify-content-start align-items-center ">
-              <ReactionComponent className="reaction-bg" />
-              <div className="ms-2">{likes}</div>
-            </div>
+            <></>
           )}
         </Col>
       </Row>
