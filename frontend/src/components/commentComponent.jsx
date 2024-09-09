@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Dropdown from "react-bootstrap/Dropdown";
-import Button from "react-bootstrap/Button";
+import {Container, Row, Col, Image, Dropdown, Button} from "react-bootstrap";
 import ReactionComponent from "./reactionComponent";
 import "../styles/commentComponent.css";
 import "bootstrap-icons/font/bootstrap-icons.css";

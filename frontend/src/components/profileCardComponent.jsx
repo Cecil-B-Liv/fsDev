@@ -1,7 +1,5 @@
 import { useState } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
+import {Card, Button, Image} from "react-bootstrap";
 import "../styles/profileCardComponent.css";
 import { Link } from "react-router-dom";
 

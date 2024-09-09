@@ -1,10 +1,5 @@
 import { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
+import {Container, Row, Col, Form, Button, Image} from "react-bootstrap";
 import { useNavigate } from "react-router-dom"; // Use for redirecting after successful creation
 import { createGroup } from "../apis/group.js"; // Assuming you have an API function to create a group
 import "../styles/createGroupComponent.css";

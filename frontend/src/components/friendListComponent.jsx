@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { checkAuth } from "../apis/auth.js";
 import { getUserFriends } from "../apis/users.js";
 
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
+import {Card, Container} from 'react-bootstrap';
 import ProfileCard from "./profileCardComponent";
 
 import "../styles/friendRequestCardComponent.css";
