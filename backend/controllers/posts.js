@@ -54,8 +54,8 @@ export const createPost = async (req, res) => {
 export const createComment = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
-        const {postId} = req.params;
-        const {commentMessage } = req.body;
+        const { postId } = req.params;
+        const { commentMessage } = req.body;
         const post = await Post.findById(postId);
         const postOwnerId = post.userId;
         const commenter = await User.findById(currentUserId);
@@ -85,7 +85,7 @@ export const createComment = async (req, res) => {
                 `${commenter.username} (${commenter.displayName}) commented on your post!`
             );
         }
-        
+
         res.status(201).json(updatedPost);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -185,6 +185,7 @@ export const getUserPosts = async (req, res) => {
 
         // Filter posts based on visibility and relationships
         const filteredPosts = await Promise.all(posts.map(async (post) => {
+            if (post.userId._id.toString() === currentUserId) { return post; }
             if (post.postVisibility === 'public') {
                 return post; // Public posts are always visible
             } else if (post.postVisibility === 'friends') {
