@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { login, register } from "../apis/auth.js"; // Import both register and login
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import "../styles/loginSignupComponent.css";
 
 export default function LoginSignupComponent() {
@@ -77,7 +79,7 @@ export default function LoginSignupComponent() {
       password: "",
       userBio: "",
     });
-
+    const [selectedFile, setSelectedFile] = useState(null);
     const [error, setError] = useState(null);
 
     const handleSubmit = async (event) => {
@@ -85,8 +87,18 @@ export default function LoginSignupComponent() {
       setError(null);
 
       try {
-        const response = await register(formData); // No FormData, just send JSON data
-        console.log("Signup successful:", response);
+        const resgisterData = new FormData();
+
+        if (selectedFile) {
+          resgisterData.append("picturePath", selectedFile);
+        }
+        for (const key in formData) {
+          resgisterData.append(key, formData[key]);
+        }
+
+        await register(resgisterData); // Sending FormData to handle file upload
+        
+        console.log("Signup successful");
         navigate("/"); // Redirect after successful signup
       } catch (error) {
         console.error("Signup error:", error);
@@ -175,7 +187,20 @@ export default function LoginSignupComponent() {
           />
         </Form.Group>
 
+        <Row>
+          <Col className="d-flex justify-content-start">
+            <Form.Control
+              type="file"
+              name="picturePath"
+              onChange={(e) => {
+                setSelectedFile(e.target.files[0]);
+              }}
+            />
+          </Col>
+        </Row>
+
         {error && <div className="error">{error}</div>}
+
         <Button className="login-btn" type="submit" variant="primary">
           Create Account
         </Button>

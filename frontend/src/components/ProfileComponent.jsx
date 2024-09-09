@@ -1,63 +1,73 @@
 import { useState, useEffect } from "react";
 import { Container, Card, Row, Col, Button, Form } from "react-bootstrap";
-
-import { getUser } from "../apis/users";
-import { checkAuth } from '../apis/auth.js';
-import { getUserPosts } from "../apis/posts";
+import { getUser } from "../apis/users"; // Function to get user data
+import { checkAuth } from "../apis/auth.js"; // Function to check current user authentication
+import { getUserPosts } from "../apis/posts"; // Function to get user posts
+import { updateUserProfile } from "../apis/users"; // Function to update user profile
 
 import UserPostComponent from "../components/userPostComponent";
 
 const ProfileComponent = () => {
-  const assets = import.meta.env.VITE_SERVER_ASSETS;
+  const assets = import.meta.env.VITE_SERVER_ASSETS; // Path for profile picture
 
   const [userId, setuserId] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [profile, setProfile] = useState({});
-  const [posts, setPosts] = useState([]); // Initialized as an empty array
+  const [posts, setPosts] = useState([]);
   const [tempProfile, setTempProfile] = useState(profile);
 
+  // Toggle editing mode for profile
   const handleEditProfile = () => {
     setIsEditing(true);
   };
 
-  const handleSaveProfile = (e) => {
+  // Save profile and call API
+  const handleSaveProfile = async (e) => {
     e.preventDefault();
-    setProfile(tempProfile);
-    setIsEditing(false);
-    // Here you can add an API call to save the profile updates
+    try {
+      // Call updateUserProfile API with tempProfile data
+      const updatedProfile = await updateUserProfile(tempProfile);
+      setProfile(updatedProfile); // Update state with new profile data
+      setIsEditing(false); // Turn off editing mode
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError(
+        error.message || "An error occurred while updating the profile."
+      );
+    }
   };
 
+  // Cancel profile editing
   const handleCancelEdit = () => {
     setTempProfile(profile);
     setIsEditing(false);
   };
 
+  // Update form inputs in state
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTempProfile({ ...tempProfile, [name]: value });
   };
 
-  // Get current user ID
+  // Fetch current user ID
   useEffect(() => {
-    const user = async () => {
+    const fetchUser = async () => {
       const response = await checkAuth();
       const currentUser = response;
       setuserId(currentUser.userId);
     };
-
-    user();
+    fetchUser();
   }, []);
 
-  // GET USER DATA
+  // Fetch user profile data
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await getUser(userId);
         setProfile(response);
-        setTempProfile(response);
-        console.log(response);
+        setTempProfile(response); // Sync tempProfile with profile
       } catch (error) {
         console.error("Error fetching user profile:", error);
         setError(error);
@@ -66,16 +76,17 @@ const ProfileComponent = () => {
       }
     };
 
-    fetchUserProfile();
+   
+      fetchUserProfile();
+ 
   }, [userId]);
 
-  // GET USER POST
+  // Fetch user posts
   useEffect(() => {
     const fetchUserPost = async () => {
       try {
         const response = await getUserPosts(userId);
         setPosts(response);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching user posts:", error);
         setError(error);
@@ -84,8 +95,10 @@ const ProfileComponent = () => {
       }
     };
 
-    fetchUserPost();
-  }, [userId]);
+    
+      fetchUserPost();
+   
+  }, [profile]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -93,7 +106,7 @@ const ProfileComponent = () => {
 
   return (
     <Container className="mt-4">
-      <Card bg="dark" text="white">
+      <Card bg="dark" text="white" className="mb-4">
         <Card.Body>
           <Row className="align-items-center">
             <Col xs="auto">
@@ -164,7 +177,7 @@ const ProfileComponent = () => {
               ) : (
                 <>
                   <p className="mb-1">@{profile.username}</p>
-                  <p className="mb-1">Display name: {profile.displayName}</p>
+                  <p className="mb-1">Name: {profile.displayName}</p>
                   <p className="mb-0">Bio: {profile.userBio}</p>
                   <p className="mb-1">Email: {profile.email}</p>
                   <p className="mb-0">Phone: {profile.telephone}</p>
@@ -183,9 +196,7 @@ const ProfileComponent = () => {
       </Card>
       <>
         {posts && posts.length > 0 ? (
-          posts.map((post) => (
-            <UserPostComponent key={post._id} post={post} />
-          ))
+          posts.map((post) => <UserPostComponent key={post._id} post={post} />)
         ) : (
           <p>No posts available</p>
         )}

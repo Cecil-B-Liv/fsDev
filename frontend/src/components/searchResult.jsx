@@ -112,7 +112,7 @@ export default function SearchResults() {
             {userResult && (
               <>
                 {searchResult.user.map((user) => (
-                  <ProfileCard key={user._id} user={user} mode="view" />
+                  <ProfileCard key={user._id} user={user}/>
                 ))}
               </>
             )}

@@ -56,7 +56,7 @@ const OtherProfileComponent = () => {
     };
 
     fetchUserPost();
-  }, [userId]);
+  }, [profile]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -94,7 +94,6 @@ const OtherProfileComponent = () => {
           <p>No posts available</p>
         )}
       </>
-      <h1>{userId}</h1>
     </Container>
   );
 };

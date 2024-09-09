@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect } from "react";
-
-import { createPost } from "../apis/posts";
+import { useState } from "react";
+import { createGroupPost } from "../apis/group"; // Import the correct group-specific API
+import { useParams } from "react-router-dom"; // To get the groupId from URL
 
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -11,15 +11,12 @@ import Col from "react-bootstrap/Col";
 
 import "../styles/createPostHeaderComponent.css";
 
-export default function CreatePostHeader() {
+export default function CreatePostGroupComponent({ groupId }) {
   const [formData, setFormData] = useState({
-    postVisibility: "",
     postDescription: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [error, setError] = useState(null);
-
-  const textareaRef = useRef(null);
 
   // Handle Submit Action
   const handleSubmit = async (e) => {
@@ -37,14 +34,17 @@ export default function CreatePostHeader() {
         postData.append(key, formData[key]);
       }
 
-      await createPost(postData);
+      // Call the correct API for group posts with the groupId
+      await createGroupPost(groupId, postData);
 
-      console.log("Post created successfully:", postData);
+      console.log("Group post created successfully:", postData);
 
-     
-      window.location.reload();
+      //Reset form after successful post
+      //setFormData({ postDescription: "" });
+      //setSelectedFile(null);
+      //window.location.reload(); // Reload the page after submission
     } catch (error) {
-      console.error("Error creating post:", error);
+      console.error("Error creating group post:", error);
       setError(error.message || "An error occurred");
     }
   };
@@ -57,10 +57,9 @@ export default function CreatePostHeader() {
             <Form onSubmit={handleSubmit}>
               <Form.Control
                 as="textarea"
-                // ref={textareaRef}
                 rows={2}
                 className="my-2"
-                placeholder="What's on your mind?"
+                placeholder="What's on your mind in the group?"
                 value={formData.postDescription}
                 onChange={(e) => {
                   setFormData({ ...formData, postDescription: e.target.value });
@@ -68,41 +67,7 @@ export default function CreatePostHeader() {
                 style={{ resize: "none", overflow: "hidden" }}
               />
 
-              {/* Visibility Radio Buttons */}
-              <Row className="my-3">
-                <Col>
-                  <Form.Check
-                    type="radio"
-                    id="public"
-                    label="Public"
-                    name="postVisibility"
-                    value="public"
-                    checked={formData.postVisibility === "public"}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        postVisibility: e.target.value,
-                      })
-                    }
-                  />
-                  <Form.Check
-                    type="radio"
-                    id="friends"
-                    label="Friends"
-                    name="postVisibility"
-                    value="friends"
-                    checked={formData.postVisibility === "friends"}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        postVisibility: e.target.value,
-                      })
-                    }
-                  />
-                </Col>
-              </Row>
-
-              {/*Image*/}
+              {/* Image Upload */}
               <Row>
                 <Col className="d-flex justify-content-start">
                   <Form.Control
@@ -111,11 +76,11 @@ export default function CreatePostHeader() {
                     onChange={(e) => {
                       setSelectedFile(e.target.files[0]);
                     }}
-                  ></Form.Control>
+                  />
                 </Col>
                 <Col className="d-flex justify-content-end">
                   <Button variant="primary" type="submit">
-                    Post
+                    Post in Group
                   </Button>
                 </Col>
               </Row>
