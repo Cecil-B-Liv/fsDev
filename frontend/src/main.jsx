@@ -20,6 +20,7 @@ import ProtectedRoute from "./Utils/ProtectedRoutes";
 import GroupMange from "./components/groupManage";
 import SearchResults from "./components/searchResult";
 import OtherProfileComponent from "./components/otherProfileComponent";
+import GroupMemberList from "./components/groupMemberList";
 
 import "./index.css";
 
@@ -103,7 +104,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "groupmembers",
-                element: <FriendList />,
+                element: <GroupMemberList />,
               },
               {
                 path: "groupmanage",
