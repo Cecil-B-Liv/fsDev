@@ -53,6 +53,7 @@ export const sendFriendRequest = async (req, res) => {
 export const sendGroupJoinRequest = async (req, res) => {
     try {
         const currentUserId = req.session.userId;
+        console.log(req.body);
         const { groupId } = req.body;
         const user = await User.findById(currentUserId);
 
@@ -68,12 +69,12 @@ export const sendGroupJoinRequest = async (req, res) => {
         }
 
         // Check if the request already exists
-        if (group.pendingRequests.includes(currentUserId)) {
+        if (group.pendingJoinRequests.includes(currentUserId)) {
             return res.status(400).json({ msg: "Group join request already sent" });
         }
 
         // Add the user's ID to the group's pendingRequests array
-        group.pendingRequests.push(currentUserId);
+        group.pendingJoinRequests.push(currentUserId);
         await group.save();
 
         // Create a notification for the group admin

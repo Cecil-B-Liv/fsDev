@@ -1,10 +1,10 @@
-import { Container, Image, Row, Col, Nav } from "react-bootstrap";
-import {Button} from "react-bootstrap";
+import { Container, Image, Row, Col, Nav, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Outlet, Link, useParams } from "react-router-dom";
 
 import { getGroup } from "../apis/group";
 import { checkAuth } from "../apis/auth.js";
+import { sendGroupJoinRequest } from "../apis/users.js";
 
 export default function GroupWall() {
   const { groupId } = useParams(); // Get groupId from URL params
@@ -15,6 +15,7 @@ export default function GroupWall() {
   const [error, setError] = useState(null);
   const [groupDetails, setGroupDetails] = useState({});
   const [isMember, setIsMember] = useState(false);
+  const [joinRequestSent, setJoinRequestSent] = useState(false);
 
   // FETCH GROUP DETAILS
   useEffect(() => {
@@ -22,7 +23,6 @@ export default function GroupWall() {
       try {
         const response = await getGroup(groupId);
         setGroupDetails(response);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching group details:", error);
         setError(error);
@@ -77,6 +77,16 @@ export default function GroupWall() {
   // Check if the group is public or if the current user is a member
   const canViewContent = groupDetails.groupVisibility === "public" || isMember;
 
+  // HANDLE JOIN REQUEST
+  const handleJoinRequest = async () => {
+    try {
+      await sendGroupJoinRequest({groupId});
+      setJoinRequestSent(true); // Mark the request as sent
+    } catch (error) {
+      console.error("Error sending join request:", error);
+    }
+  };
+
   return (
     <Container fluid className="p-0 m-0">
       {/* Group Image */}
@@ -120,33 +130,44 @@ export default function GroupWall() {
               : "Group Description: Loading..."}
           </h3>
         </Col>
-        <Col>
-        {isMember ? (
-              <Button
-                variant="success"
-                className="px-4 py-2"
-                disabled
-                style={{
-                  fontSize: '16px',
-                  cursor: 'not-allowed', // The cursor indicates that the button is disabled
-                }}
-              >
-                ✔️ Member
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                className="px-4 py-2"
-                style={{
-                  fontSize: '16px',
-                }}
-                onClick={() => {
-                  // Add your join request logic here
-                }}
-              >
-                Send Join Request
-              </Button>
-            )}
+
+        {/* IS MEMBER BUTTON */}
+        <Col className="text-center">
+          {isMember ? (
+            <Button
+              variant="success"
+              className="px-4 py-2"
+              disabled
+              style={{
+                fontSize: "16px",
+                cursor: "not-allowed",
+              }}
+            >
+              ✔️ Member
+            </Button>
+          ) : joinRequestSent ? (
+            <Button
+              variant="secondary"
+              className="px-4 py-2"
+              disabled
+              style={{
+                fontSize: "16px",
+              }}
+            >
+              Request Sent
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              className="px-4 py-2"
+              style={{
+                fontSize: "16px",
+              }}
+              onClick={handleJoinRequest}
+            >
+              Send Join Request
+            </Button>
+          )}
         </Col>
       </Row>
 
@@ -226,17 +247,20 @@ export default function GroupWall() {
           {canViewContent ? (
             <Outlet />
           ) : (
-            <p className="text-center" style={{ 
-              fontSize: '1.5rem', 
-              color: '#721c24', 
-              fontWeight: 'bold', 
-              padding: '20px', 
-              backgroundColor: '#f8d7da', 
-              borderRadius: '8px', 
-              border: '1px solid #f5c6cb', 
-              maxWidth: '600px', 
-              margin: '20px auto' 
-            }}>
+            <p
+              className="text-center"
+              style={{
+                fontSize: "1.5rem",
+                color: "#721c24",
+                fontWeight: "bold",
+                padding: "20px",
+                backgroundColor: "#f8d7da",
+                borderRadius: "8px",
+                border: "1px solid #f5c6cb",
+                maxWidth: "600px",
+                margin: "20px auto",
+              }}
+            >
               You do not have permission to view the content of this group.
             </p>
           )}
